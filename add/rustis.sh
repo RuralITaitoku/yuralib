@@ -1,10 +1,10 @@
 
 set +x
-mkdir -p $YURA_HOME/src
-cd $YURA_HOME/src
+mkdir -p $YURA_HOME/prj
+cd $YURA_HOME/prj
 git clone git@github.com:RuralITaitoku/rustis.git
 
-cd $YURA_HOME/src/rustis
+cd $YURA_HOME/prj/rustis
 
 
 if which cargo ; then
