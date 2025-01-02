@@ -17,3 +17,4 @@ add_subdirectory(test)
 #target_link_libraries(my_program module1::module1 module2::module2)
 
 add_subdirectory(try-cv-241215)
+add_subdirectory(try-lap-250102)

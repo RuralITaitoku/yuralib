@@ -7,6 +7,9 @@ if [ "$1" = "run" ]; then
 elif [ "$1" = "cap" ]; then
 	cd ./build/try-cv-241215
 	./try-cv
+elif [ "$1" = "lap" ]; then
+	cd ./build/try-lap-250102
+	./try-lap
 elif [ "$1" = "clean" ]; then
 	rm -r build
 else
