@@ -6,7 +6,16 @@ project(MyProject)
 set(SRC_FILES try-eigen-241214.cpp)
 add_executable(run ${SRC_FILES})
 
-include_directories(/opt/homebrew/include/eigen3)
+if(EXISTS "/opt/homebrew")
+    message(STATUS "Homebrew is installed.")
+    # Homebrewがインストールされている場合の処理
+    include_directories(/opt/homebrew/include/eigen3)
+else()
+    message(STATUS "Homebrew is not installed.")
+    # Homebrewがインストールされていない場合の処理
+    include_directories(/usr/include/eigen3)
+endif()
+
 # find_package(Eigen3 REQUIRED  VERSION 3.4)
 #find_package(Eigen3 REQUIRED  VERSION 3.4)
 #target_link_libraries(my_executable Eigen::Eigen)
