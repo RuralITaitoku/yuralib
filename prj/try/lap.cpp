@@ -56,8 +56,7 @@ cost lap(int dim, cost **assigncost, col *rowsol, row *colsol, cost *u, cost *v)
     // COLUMN REDUCTION
     for (j = dim; j--;)  // reverse order gives better results.
     {
-        // find minimum cost over rows.
-        min = assigncost[0][j];
+        // find minimum cost over rows.min = assigncost[0][j];
         imin = 0;
         for (i = 1; i < dim; i++)
             if (assigncost[i][j] < min) {
