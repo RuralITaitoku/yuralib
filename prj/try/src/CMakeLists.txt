@@ -27,3 +27,4 @@ add_subdirectory(test)
 
 add_subdirectory(try-cv-241215)
 add_subdirectory(try-lap-250102)
+add_subdirectory(try-task-250105)

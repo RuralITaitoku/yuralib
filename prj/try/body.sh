@@ -10,6 +10,9 @@ elif [ "$1" = "cap" ]; then
 elif [ "$1" = "lap" ]; then
 	cd ./build/try-lap-250102
 	./try-lap
+elif [ "$1" = "task" ]; then
+	cd ./build/try-task-250105
+	./try-task
 elif [ "$1" = "clean" ]; then
 	rm -r build
 else

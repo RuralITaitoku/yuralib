@@ -1,4 +1,7 @@
 #include <opencv2/opencv.hpp>
+#include "task.hpp"
+
+
 
 using namespace cv;
 
@@ -237,6 +240,7 @@ double lap(cv::Mat& cost, cv::Mat& rowsol, cv::Mat& colsol, cv::Mat& u, cv::Mat&
                                 unassigned = true;
                                 break;
                             } else {
+
                                 // else add to list to be scanned right away.
                                 // そうでない場合は、すぐにスキャンされるリストに追加します。
                                 collist[k] = collist[up];
@@ -275,14 +279,14 @@ double lap(cv::Mat& cost, cv::Mat& rowsol, cv::Mat& colsol, cv::Mat& u, cv::Mat&
     return 0.0;
 }
 
-void pathfinding(int number, int base, int depth, cv::Mat& rowsol) {
+void pathfinding_body(int number, int base, int depth, cv::Mat& rowsol) {
     if (base <= 0) {
         return;
     }
     int next_number = number / base;
     // DP("depth=" << depth << ", " << (number % base));
     rowsol.at<int>(depth - 1, 0) = (number % base);
-    pathfinding(next_number, base - 1, depth - 1, rowsol);
+    pathfinding_body(next_number, base - 1, depth - 1, rowsol);
 }
 
 int factorial(int n) {
@@ -315,6 +319,8 @@ void debug(cv::Mat& m, cv::Mat& rowsol) {
     }
 }
 
+
+
 int main() {
 
     DP("test");
@@ -331,17 +337,16 @@ int main() {
     cv::Mat u = cv::Mat(4, 1, CV_64FC1);
     cv::Mat colsol = cv::Mat(1, 4, CV_32SC1);
     cv::Mat v = cv::Mat(4, 1, CV_64FC1);
-    int f = factorial(rowsol.rows);
+    
     // DP("f=" << f);
     colsol = -1;
     //DPM(colsol);
     double min = std::numeric_limits<double>::max();
     cv::Mat min_rowsol;
-    for (;f > 0; f--) {
-        DP("f=" << f);
+    for (int f = factorial(rowsol.rows); f--;) {
         int base = cost.cols;
         int depth = base;
-        pathfinding(f, base, depth, rowsol);
+        pathfinding_body(f, base, depth, rowsol);
         colsol = -1;
         for (int i = rowsol.rows - 1; i >= 0; i--) {
             int no = rowsol.at<int>(i, 0);
@@ -378,7 +383,18 @@ int main() {
 
 
 
-    lap(cost, rowsol, colsol, u, v);
+    //lap(cost, rowsol, colsol, u, v);
+    task_mng mng;
+
+    task task1;
+    task1.name = "test1";
+    task task2;
+    task2.name = "test2";
+
+    mng.add_task(task1);
+    mng.add_task(task2);
+    mng.setup();
+    mng.loop(); 
 
 
     return 0;
