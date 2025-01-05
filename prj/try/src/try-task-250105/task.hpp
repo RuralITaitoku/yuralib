@@ -4,8 +4,15 @@
 #include <chrono>
 #include <thread>
 
+#ifndef __TASK__
+#define __TASK__
+
 class task {
 public:
+    int next_millis = 0;
+    virtual ~task() {
+        std::cout << "taskデストラクタ" << std::endl;
+    };
 
     int millis() {
         // システムクロックを取得
@@ -16,73 +23,54 @@ public:
         auto milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(duration);
         return static_cast<int>(milliseconds.count());
     }
-    virtual void setup() = 0;
-    /*{
-        next_millis = millis() + 1000;
-        std::cout << "setup" << next_millis << std::endl;
-    }*/
-
+    virtual void setup() {};
     virtual int loop() = 0;
-    
-    /*{
-        std::cout << name << ":loop" << std::endl;
-        return 1000;
-    }*/
 };
-
 
 
 class task_mng : public task {
-public: 
-    int max_wait = 12 * 60 * 60 * 1000;
-    std::vector<task> task_lists;
-    
-    void  add_task(task& task) {
-        task_lists.push_back(task);
+public:
+    std::vector<task*> task_lists;
+
+    void add_task(task& t) {
+        task_lists.push_back(&t);
     }
 
-    virtual void setup() {
-        for (task& t: task_lists) {
-            t.setup();
-        }
+    void setup() override {
     }
-
-    virtual int loop() {
-        std::cout << "mng loop" << std::endl;
-
+    int loop() override {
+        std::cout << "task_mng loop" << std::endl;
         for (;;) {
             int now = millis();
-            int min_next = now + max_wait;
-            for (task& t: task_lists) {
-                int next = t.next_millis;
-                if (0 < next) {
-                    if (next <= now){
-                        next = t.loop();
-                        if (next < 0) {
-                            t.next_millis = -1;
-                            next = now + max_wait;
-                        } else if (next == 0) {
-                            next = now;
-                            t.next_millis = 0;
-                        } else {
-                            next += now;
-                            t.next_millis = next;
-                        }
-                    }
-                    if (next < min_next) {
-                        min_next = next;
-                    }
+            for (task* t: task_lists) {
+                int next = t->next_millis;
+                if (next < 0 || next > now) {
+                    continue;
+                }
+                next = t->loop();
+                if (next < 0) {
+                    t->next_millis = -1;
+                    continue;    
+                }
+                t->next_millis = now + next;
+            }
+            int min_next = now + (24 * 60 * 60 * 1000);
+            for (task* t: task_lists) {
+                int next = t->next_millis;
+                if (next < -1) {
+                    continue;
+                }
+                if (next < min_next) {
+                    min_next = next;
                 }
             }
-            if (min_next < now) {
-                std::cout << "min_next=" << min_next << std::endl;
-                std::cout << "now     =" << now << std::endl;
-                std::cout << "min_next < now!!!!!" << std::endl;
-                min_next = now;
+            if ((min_next - now) > 0) {
+                std::this_thread::sleep_for(std::chrono::milliseconds(min_next - now));
             }
-            std::this_thread::sleep_for(std::chrono::milliseconds(min_next - now));
         }
-
         return 0;
     }
 };
+
+
+#endif
