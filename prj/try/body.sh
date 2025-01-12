@@ -13,6 +13,9 @@ elif [ "$1" = "lap" ]; then
 elif [ "$1" = "task" ]; then
 	cd ./build/try-task-250105
 	./try-task
+elif [ "$1" = "rnd" ]; then
+	cd ./build/try-rnd-250111
+	./try-rnd
 elif [ "$1" = "clean" ]; then
 	rm -r build
 else

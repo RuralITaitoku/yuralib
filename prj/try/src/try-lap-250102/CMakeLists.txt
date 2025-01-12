@@ -5,7 +5,10 @@ project(MyProject)
 
 find_package(OpenCV REQUIRED)
 
-set(SRC_FILES try-lap.cpp)
+set(SRC_FILES
+        try-lap.cpp
+        lap.cpp
+     )
 add_executable(try-lap ${SRC_FILES})
 
 target_link_libraries(try-lap ${OpenCV_LIBS})

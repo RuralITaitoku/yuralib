@@ -1,7 +1,6 @@
 #include <opencv2/opencv.hpp>
 #include "task.hpp"
-
-
+#include "lap.h"
 
 using namespace cv;
 
@@ -319,12 +318,7 @@ void debug(cv::Mat& m, cv::Mat& rowsol) {
     }
 }
 
-
-
-int main() {
-
-    DP("test");
-
+int test() {
     std::vector<double> data = 
             {
                 1, 2, 3, 1,
@@ -380,22 +374,53 @@ int main() {
     DPM(min_rowsol);
     debug(cost, min_rowsol);
 
+    return 0;
+}
+
+int test_lap_org() {
+
+    int dim = 10;        // Set the dimension of matrix to 10, dim is the problem size
+
+    std::vector<std::vector<double>> costVec = {
+         {0,1,2},
+         {0,1,2},
+         {0,1,2}    
+    };
+
+
+    cost ** costMatrix;    // A matrix to store all the costs from vertex i to vertex j
+    col *rowsol;         // An array to store column indexes assigned to row in solution  
+    row *colsol;         // An array to store row indexes assigned to column in solution 
+    cost *u;             // u          - dual variables, row reduction numbers
+    cost *v;             // v          - dual variables, column reduction numbers
+    rowsol = new col[dim];
+    colsol = new row[dim];
+    u = new cost[dim];
+    v = new cost[dim];
+    costMatrix = new cost*[dim];
+    for(int i=0;i<dim;i++){
+        costMatrix[i]  =  new cost[dim];
+    }
+    // Assign costs to the costMatrix
+    for(int i=0; i<dim; ++i){
+        for(int j=0; j<dim; ++j){
+            costMatrix[i][j]  =  (double)(rand() % 100);
+   	    }
+    }
+    cost totalCost = lap(dim, costMatrix, rowsol, colsol, u, v);
+
+    DP("最小コスト" << totalCost);
+
+    return 0;
+}
 
 
 
-    //lap(cost, rowsol, colsol, u, v);
-    task_mng mng;
+int main() {
 
-    task task1;
-    task1.name = "test1";
-    task task2;
-    task2.name = "test2";
+    DP("test");
 
-    mng.add_task(task1);
-    mng.add_task(task2);
-    mng.setup();
-    mng.loop(); 
-
+    test_lap_org();
 
     return 0;
 }

@@ -3,9 +3,6 @@ project(MyProject)
 
 # set(CMAKE_CXX_STANDARD 11)
 
-set(SRC_FILES try-eigen-241214.cpp)
-add_executable(run ${SRC_FILES})
-
 if(EXISTS "/opt/homebrew")
     message(STATUS "Homebrew is installed.")
     # Homebrewがインストールされている場合の処理
@@ -28,3 +25,4 @@ add_subdirectory(test)
 add_subdirectory(try-cv-241215)
 add_subdirectory(try-lap-250102)
 add_subdirectory(try-task-250105)
+add_subdirectory(try-rnd-250111)
