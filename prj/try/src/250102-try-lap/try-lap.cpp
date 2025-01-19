@@ -95,7 +95,7 @@ int test_lap_org() {
 
     std::vector<std::vector<double>> costMatrix;
     get_test(costMatrix);
-    // get_rand_test(dim, 0, costMatrix);
+    // get_rand_test(10, 0, costMatrix);
 
     int dim = costMatrix.size();        // Set the dimension of matrix to 10, dim is the problem size
 

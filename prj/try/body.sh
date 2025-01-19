@@ -16,6 +16,9 @@ elif [ "$1" = "task" ]; then
 elif [ "$1" = "rnd" ]; then
 	cd ./build/try-rnd-250111
 	./try-rnd
+elif [ "$1" = "gtest" ]; then
+	cd ./build/250118-try-gtest
+	./try-gtest
 elif [ "$1" = "clean" ]; then
 	rm -r build
 else

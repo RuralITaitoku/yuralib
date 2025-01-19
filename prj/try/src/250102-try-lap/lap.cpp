@@ -28,12 +28,35 @@
 
 #define DP(x) std::cout << __FILE__ << ":" << __LINE__ << " " << x << std::endl;
 
+void debug(std::vector<int>& rowsol
+         , std::vector<int>& colsol
+         , std::vector<double>& u
+         , std::vector<double>& v
+         , std::vector<int>& freeunassigned, int numfree) {
+        DP("colsol");
+        for (int debug_col: colsol) std::cout << std::setw(4) << debug_col;
+        std::cout << std::endl;
+        for (double debug_v: v) std::cout << std::setw(4) << debug_v;
+        std::cout << std::endl;
+        DP("rowsol");
+        for (int debug_row: rowsol) std::cout << std::setw(4) << debug_row;
+        std::cout << std::endl;
+        for (double debug_u: u) std::cout << std::setw(4) << debug_u;
+        std::cout << std::endl;
+        DP("freeunassigned");
+        for (int debug_i = numfree; debug_i--; )  std::cout << std::setw(4) << freeunassigned[debug_i];
+        std::cout << std::endl;
+}
+
+
+
+
 /*This function is the jv shortest augmenting path algorithm to solve the assignment problem*/
 double lap(const std::vector<std::vector<double>>& assigncost
          , std::vector<int>& rowsol
          , std::vector<int>& colsol
          , std::vector<double>& u
-         , std::vector<double>&v)
+         , std::vector<double>& v)
 
 // input:
 // dim        - problem size
@@ -63,6 +86,7 @@ double lap(const std::vector<std::vector<double>>& assigncost
 
     // COLUMN REDUCTION 列の削減
 DP("COLUMN REDUCTION");
+    std::cout << "--------- STEP1 -------------------" << std::endl;
     for (j = dim; j--;)  // reverse order gives better results.
     {
         // find minimum cost over rows.
@@ -92,24 +116,12 @@ DP("COLUMN REDUCTION");
             colsol[j] = -1;  // row already assigned, column not assigned.
         }
     }
-    DP("colsol");
-    for (int debug_col: colsol) std::cout << std::setw(4) << debug_col;
-    std::cout << std::endl;
-    for (double debug_v: v) std::cout << std::setw(4) << debug_v;
-    std::cout << std::endl;
-    DP("rowsol");
-    for (int debug_row: rowsol) std::cout << std::setw(4) << debug_row;
-    std::cout << std::endl;
-    for (double debug_u: u) std::cout << std::setw(4) << debug_u;
-    std::cout << std::endl;
-    DP("matches");
-    for (int debug_matches: matches) std::cout << std::setw(4) << debug_matches;
-    std::cout << std::endl;
-
+    debug(rowsol, colsol, u, v, freeunassigned, numfree);
 
 
     // REDUCTION TRANSFER　　削減　移転
 DP("REDUCTION TRANSFER");
+    std::cout << "--------- STEP2 -------------------" << std::endl;
     for (i = 0; i < dim; i++) {
         if (matches[i] == 0) { // fill list of unassigned 'free' rows.
             freeunassigned[numfree++] = i;
@@ -118,15 +130,18 @@ DP("REDUCTION TRANSFER");
             min =  std::numeric_limits<double>::max();;
             for (j = 0; j < dim; j++) {
                 if (j != j1) {
-                    if (assigncost[i][j] - v[j] < min) min = assigncost[i][j] - v[j];
+                    if (assigncost[i][j] - v[j] < min) {
+                        min = assigncost[i][j] - v[j];
+                    }
                 }
             }
             v[j1] = v[j1] - min;
         }
     }
+    debug(rowsol, colsol, u, v, freeunassigned, numfree);
 
 DP("AUGMENTING ROW REDUCTION");
-    //   AUGMENTING ROW REDUCTION
+    //   AUGMENTING ROW REDUCTION 増強　行　削減
     int loopcnt = 0;  // do-loop to be done twice.
     do {
         loopcnt++;
@@ -139,11 +154,14 @@ DP("AUGMENTING ROW REDUCTION");
         while (k < prvnumfree) {
             i = freeunassigned[k];
             k++;
+            DP("k=" << k << " i=" << i);
 
             //       find minimum and second minimum reduced cost over columns.
             umin = assigncost[i][0] - v[0];
             j1 = 0;
             usubmin =  std::numeric_limits<double>::max();;
+
+
             for (j = 1; j < dim; j++) {
                 h = assigncost[i][j] - v[j];
                 if (h < usubmin)
@@ -159,38 +177,48 @@ DP("AUGMENTING ROW REDUCTION");
             }
 
             i0 = colsol[j1];
-            if (umin < usubmin)
-                //         change the reduction of the minimum column to increase the minimum
-                //         reduced cost in the row to the subminimum.
+            if (umin < usubmin) {
+                // change the reduction of the minimum column to increase the minimum reduced cost in the row to the subminimum.
+                // 最小列の削減を変更して、行の最小削減コストを最小値未満まで増加します。       
                 v[j1] = v[j1] - (usubmin - umin);
-            else              // minimum and subminimum equal.
+            } else {              // minimum and subminimum equal.
                 if (i0 > -1)  // minimum column j1 is assigned.
-            {
+                {
                 //           swap columns j1 and j2, as j2 may be unassigned.
-                j1 = j2;
-                i0 = colsol[j2];
+                    j1 = j2;
+                    i0 = colsol[j2];
+                }
             }
 
             //       (re-)assign i to j1, possibly de-assigning an i0.
             rowsol[i] = j1;
             colsol[j1] = i;
-
-            if (i0 > -1)  // minimum column j1 assigned earlier.
-                if (umin < usubmin)
+            if (i0 > -1) { // minimum column j1 assigned earlier.
+                if (umin < usubmin) {
                     //           put in current k, and go back to that k.
                     //           continue augmenting path i - j1 with i0.
                     freeunassigned[--k] = i0;
-                else
+                } else {
                     //           no further augmenting reduction possible.
                     //           store i0 in list of free rows for next phase.
                     freeunassigned[numfree++] = i0;
+                }
+            }
+            DP("k=" << k << " i0=" << i0);
+            debug(rowsol, colsol, u, v, freeunassigned, numfree);
+
         }
-
-
-
-
-
+        std::cout << "---------------------------" << loopcnt << std::endl;
     } while (loopcnt < 2);  // repeat once.
+
+
+
+
+
+
+
+
+
 
     // AUGMENT SOLUTION for each free row.
     for (f = 0; f < numfree; f++) {
