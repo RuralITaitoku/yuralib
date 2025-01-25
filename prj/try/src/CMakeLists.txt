@@ -26,6 +26,7 @@ else()
     # Homebrewがインストールされていない場合の処理
     include_directories(/usr/include/eigen3)
 endif()
+include_directories(${PROJECT_SOURCE_DIR}/include)  
 
 # find_package(Eigen3 REQUIRED  VERSION 3.4)
 #find_package(Eigen3 REQUIRED  VERSION 3.4)
