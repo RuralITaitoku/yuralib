@@ -1,7 +1,21 @@
 cmake_minimum_required(VERSION 3.10)
-project(MyProject)
+project(TryProject)
 
 # set(CMAKE_CXX_STANDARD 11)
+# Google TestをFetchContentでダウンロード
+cmake_policy(SET CMP0135 NEW)
+include(FetchContent)
+FetchContent_Declare(
+  googletest
+  URL https://github.com/google/googletest/archive/refs/tags/release-1.12.1.zip
+  DOWNLOAD_EXTRACT_TIMESTAMP TRUE
+  )
+# ダウンロードしたgtestを使用可能にする
+FetchContent_MakeAvailable(googletest)
+
+
+
+
 
 if(EXISTS "/opt/homebrew")
     message(STATUS "Homebrew is installed.")
@@ -27,3 +41,4 @@ add_subdirectory(250102-try-lap)
 add_subdirectory(250105-try-task)
 add_subdirectory(250111-try-rnd)
 add_subdirectory(250118-try-gtest)
+add_subdirectory(250125-try-utf8)

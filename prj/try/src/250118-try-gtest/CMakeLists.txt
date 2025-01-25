@@ -1,18 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
-project(MyProject)
+project(TryProject)
 
 # set(CMAKE_CXX_STANDARD 11)
-
-# Google TestをFetchContentでダウンロード
-cmake_policy(SET CMP0135 NEW)
-include(FetchContent)
-FetchContent_Declare(
-  googletest
-  URL https://github.com/google/googletest/archive/refs/tags/release-1.12.1.zip
-  DOWNLOAD_EXTRACT_TIMESTAMP TRUE
-  )
-# ダウンロードしたgtestを使用可能にする
-FetchContent_MakeAvailable(googletest)
 
 # テストの設定を有効化
 enable_testing()
