@@ -1,5 +1,5 @@
 
-
+set -x
 if [ "$1" = "run" ]; then
 	echo run
 	cd build
@@ -19,7 +19,7 @@ elif [ "$1" = "rnd" ]; then
 elif [ "$1" = "gtest" ]; then
 	cd ./build/250118-try-gtest
 	./try-gtest
-elif [ "$1" = "utf" ]; then
+elif [ "$1" = "u" ]; then
 	cd ./build/250125-try-utf8
 	./try-utf8lines
 elif [ "$1" = "clean" ]; then

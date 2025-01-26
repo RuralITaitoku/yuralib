@@ -3,6 +3,7 @@
 #ifndef __UTF8LINES__
 #define __UTF8LINES__
 
+#define DP(x) std::cout << __FILE__ << ":" << __LINE__ << " " << x << std::endl
 
 class utf8lines {
 public:
@@ -34,6 +35,20 @@ public:
             }
         }
         return true;
+    }
+
+    void put(int j, const std::string& str) {
+        if (line.size() < (j + str.size())) {
+            int last = j + str.size();
+            for (int left = line.size(); left < last; ++left) {
+                line.push_back(' ');
+            }
+        }
+        int left = j;
+        for (char ch : str) {
+            line[left] = ch;
+            left++;
+        }
     }
 
 

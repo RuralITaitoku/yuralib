@@ -12,3 +12,14 @@ TEST(Utf8LinesTest, AssignmentOperator_DifferentValues) {
  
     EXPECT_EQ(line, "test");
 }
+
+TEST(Utf8LinesTest, test02) {
+    utf8lines line;
+    std::string ans = "test";
+    line.put(2, "test");
+    line.put(4, "test");
+    line.print();
+    EXPECT_EQ(line, "  tetest");
+}
+
+
