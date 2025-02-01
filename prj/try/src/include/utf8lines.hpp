@@ -50,7 +50,73 @@ public:
             left++;
         }
     }
+    int get(std::string& str, int i, int size) {
+        DP("get");
+        for (int j = size; j--;) {
+            DP("j=" << j);
+            if (i < line.size()) {
+                str += line[i++];
+            }
+        }
+        return i;
+    }
 
+    int next(int index, std::string& str, int& dw) {
+        unsigned char ch = line[index];
+        str.clear();
+        if (ch < 0x80) {
+            dw++;
+            index = get(str, index, 1);
+        } else if (ch < 0xc0) {
+            do {
+                index ++;
+                if (index >= line.size()) {
+                    return index;
+                }
+                ch = line[index];
+            } while((0x80 <= ch) && (ch < 0xc0));
+            return index;
+        } else if (ch < 0xe0) {
+            dw+=2;
+            index = get(str, index, 2);
+        } else if (ch < 0xf7) {
+            dw+=2;
+            index = get(str, index, 4);
+        } else if (ch < 0xfc) {
+            dw+=2;
+            index = get(str, index, 5);
+        } else  {
+            dw+=2;
+            index = get(str, index, 6);
+        }
+        return index;
+    }
+
+    int prev(int index, std::string& str) {
+        for(;;) {
+            index--;
+            unsigned char ch = line[index];
+            if (ch < 0x80) {
+                get(str, index, 1);
+                return index;
+            } else if (ch < 0xc0) {
+            } else if (ch < 0xe0) {
+                get(str, index, 2);
+                return index;
+            } else if (ch < 0xf7) {
+                get(str, index, 4);
+                return index;
+            } else if (ch < 0xfc) {
+                get(str, index, 5);
+                return index;
+            } else  {
+                get(str, index, 6);
+                return index;
+            }
+        }
+
+
+    }
 
     void print(int rows=-1) {
         for (char ch: line) {
