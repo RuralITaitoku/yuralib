@@ -38,12 +38,4 @@ TEST(Utf8LinesTest, get00) {
 TEST(Utf8LinesTest, get01) {
     float fd = INT_MAX;
     unsigned char* ch = (unsigned char*)&fd;
-
-    std::cout << std:: hex << (int)ch[0] 
-    << " " << (int)ch[1] 
-    << " " << (int)ch[2] 
-    << " " << (int)ch[3] 
-    << std::endl;
-
-
 }

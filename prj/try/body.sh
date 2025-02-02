@@ -22,6 +22,12 @@ elif [ "$1" = "gtest" ]; then
 elif [ "$1" = "u" ]; then
 	cd ./build/250125-try-utf8
 	./try-utf8lines
+elif [ "$1" = "s" ]; then
+	cd ./build/250201-try-sdl
+	./try-sdl
+elif [ "$1" = "d" ]; then
+	cd ./build/250202-try-dijkstra 
+	./try-dijkstra
 elif [ "$1" = "clean" ]; then
 	rm -r build
 else

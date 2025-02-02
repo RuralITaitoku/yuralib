@@ -43,3 +43,6 @@ add_subdirectory(250105-try-task)
 add_subdirectory(250111-try-rnd)
 add_subdirectory(250118-try-gtest)
 add_subdirectory(250125-try-utf8)
+add_subdirectory(250201-try-sdl)
+add_subdirectory(250202-try-dijkstra)
+
