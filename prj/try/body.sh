@@ -27,7 +27,7 @@ elif [ "$1" = "s" ]; then
 	./try-sdl
 elif [ "$1" = "d" ]; then
 	cd ./build/250202-try-dijkstra 
-	./try-dijkstra
+	./try-dijkstra --gtest_filter=DijkstraTest.*
 elif [ "$1" = "clean" ]; then
 	rm -r build
 else
