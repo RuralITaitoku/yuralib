@@ -54,7 +54,7 @@ void debug(const std::vector< std::vector<double> > &mat
     for (int i = 0; i < mat.size(); ++i) {
         for (int j = 0; j < mat[i].size(); ++j) {
             int s = state[i][j];
-            std::cout << esc_fg(s) << std::setw(4) << mat[i][j] << esc_end();
+            std::cout << esc_fg(s) << std::fixed << std::setprecision(1) << std::setw(5) << mat[i][j] << esc_end();
         }
         std::cout << std::endl;
     }
@@ -79,12 +79,12 @@ TEST(DijkstraTest, 01) {
     std::vector< std::vector<double> > dijkstra(rows, std::vector<double>(cols));
     std::vector< std::vector<int8_t> > state(rows, std::vector<int8_t>(cols, 0));
     std::vector< std::vector<int> > from_id(rows, std::vector<int>(cols, -1));
-    std::vector< std::vector<double> > min(rows, std::vector<double>(cols, std::numeric_limits<double>::max()));
+    std::vector< std::vector<double> > min(rows, std::vector<double>(cols, 0));
     std::vector< int > id_list;
 
     for (int i = rows; i--;) {
         for (int j = cols; j--;) {
-            dijkstra[i][j] = rnd.next(0, 100);
+            dijkstra[i][j] = rnd.next(0, 10);
         }
     }
     int s_col = 1;
@@ -170,7 +170,7 @@ TEST(DijkstraTest, 01) {
         if (ch == 'q') {
             break;
         }
-        debug(dijkstra, state);
+        debug(min, state);
         std::cout << "id_list.size = " << id_list.size() << std::endl;
         for (int idid : id_list) {
             std::cout << " (" << id2rows(idid) << "," << id2cols(idid) << ")";
