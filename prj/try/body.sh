@@ -25,6 +25,9 @@ elif [ "$1" = "u" ]; then
 elif [ "$1" = "s" ]; then
 	cd ./build/250201-try-sdl
 	./try-sdl
+elif [ "$1" = "e" ]; then
+	cd ./build/250215-try-ekf
+	./try-ekf
 elif [ "$1" = "d" ]; then
 	cd ./build/250202-try-dijkstra 
 	./try-dijkstra --gtest_filter=DijkstraTest.*
