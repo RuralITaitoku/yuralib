@@ -1,6 +1,6 @@
 
 CPP=g++
-CPPFLAGS= -g -Wall -DDEBUG -fPIC -I./include/ -std=c++17
+CPPFLAGS= -g -Wall -DDEBUG  -I./include/ -std=c++17
 
 #LIB_SRCS = $(wildcard lib/*.cpp)
 #LIB_OBJS = $(LIB_SRCS:.cpp=.o)
@@ -12,15 +12,24 @@ CPPFLAGS= -g -Wall -DDEBUG -fPIC -I./include/ -std=c++17
 
 
 SRCS = $(wildcard src/*.cpp)
-OBJS = $(SRCS:.cpp=.o)
+OBJS = $(patsubst src/%.cpp, build/%.o, $(SRCS))
+
+
 
 all: ivvi
 
+
 ivvi: $(OBJS)
-	g++ -o $@ build/$(OBJS) 
+	g++ -o $@ $(OBJS) 
 
-%.o: %.cpp
-	mkdir -p build/src
-	$(CPP) $(CPPFLAGS) -o build/$@ -c $<
+build/%.o: src/%.cpp | build
+	$(CPP) $(CPPFLAGS) -o $@ -c $<
+
+# $(OBJS): $(SRCS) | build
+
+build:
+	mkdir -p build
 
 
+clean:
+	rm -r build

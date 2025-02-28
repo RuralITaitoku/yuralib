@@ -15,5 +15,6 @@ int main() {
   auto ch0 = yura.get_char();
   auto ch1 = yura.get_char();
   std::cout << "ch0 = " << ch0 << "ch1 = " << ch1 << std::endl; 
+  std::cout << yura.esc_cursor(10, 11);
   return 0;
 }
