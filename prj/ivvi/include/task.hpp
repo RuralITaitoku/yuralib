@@ -42,6 +42,7 @@ public:
         std::cout << "task_mng loop" << std::endl;
         for (;;) {
             int now = millis();
+            std::cout << __LINE__ << std::endl;
             for (task* t: task_lists) {
                 int next = t->next_millis;
                 if (next < 0 || next > now) {
@@ -55,6 +56,7 @@ public:
                 t->next_millis = now + next;
             }
             int min_next = now + (24 * 60 * 60 * 1000);
+            std::cout << __LINE__ << "_"<< (min_next - now) <<std::endl;
             for (task* t: task_lists) {
                 int next = t->next_millis;
                 if (next < -1) {
@@ -64,13 +66,15 @@ public:
                     min_next = next;
                 }
             }
+            std::cout << __LINE__ << std::endl;
             if ((min_next - now) > 0) {
                 std::this_thread::sleep_for(std::chrono::milliseconds(min_next - now));
             }
+            std::cout << __LINE__ << std::endl;
         }
         return 0;
     }
 };
 
 
-#endif
+#endif              

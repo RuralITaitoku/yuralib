@@ -1,6 +1,5 @@
 #include "yuraterm.hpp"
 
-
 yuraterm::yuraterm() {
     struct termios  new_termios;
 
@@ -58,9 +57,9 @@ std::string yuraterm::esc_bg(int color) {
 }
 std::string yuraterm::esc_cursor(int row, int col){
     std::string result = "\e[";
-    result += row;
+    result += std::to_string(row);
     result += ";";
-    result += col;
+    result += std::to_string(col);
     result += "H";
     return result;
 }
