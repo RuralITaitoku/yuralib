@@ -33,3 +33,5 @@ build:
 
 clean:
 	rm -r build
+
+build/main.o: include/task.hpp
