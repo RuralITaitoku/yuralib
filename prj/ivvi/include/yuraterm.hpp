@@ -1,5 +1,4 @@
-#ifndef __YURA_TERM_HPP__
-#define __YURA_TERM_HPP__
+#pragma once
 
 #include <cstdio>
 #include <termios.h>
@@ -19,7 +18,7 @@ public:
 
     unsigned char get_char();
     std::tuple<int, int> get_term_size();
-    std::string esc_home();
+    static std::string esc_home();
     std::string esc_clean();
     std::string esc_end();
     std::string esc_fg(int color);
@@ -27,4 +26,3 @@ public:
     std::string esc_cursor(int row, int col);
 };
 
-#endif

@@ -1,11 +1,11 @@
-
+#pragma once
 #include <iostream>
+#include <string>
 #include <vector>
+#include <map>
 #include <chrono>
 #include <thread>
 
-#ifndef __TASK__
-#define __TASK__
 
 class task {
 public:
@@ -14,8 +14,9 @@ public:
     virtual ~task();
 
     int millis();
+    void next(int m);
     virtual void setup() {};
-    virtual int loop() = 0;
+    virtual int loop(std::map<std::string, std::string>& circle) = 0;
 };
 
 class task_mng : public task {
@@ -24,8 +25,5 @@ public:
 
     void add_task(task& t);
     void setup() override;
-    int loop() override;
+    int loop(std::map<std::string, std::string>& circle) override;
 };
-
-
-#endif

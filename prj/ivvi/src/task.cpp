@@ -18,14 +18,25 @@ int task::millis() {
     return static_cast<int>(milliseconds.count() - my_epoch);
 }
 
+void task::next(int m) {
+    if (m < 0) {
+        next_millis = -1;
+    } else {
+        next_millis = millis() + m;
+    }
+}
+
 void task_mng::add_task(task& t) {
     task_lists.push_back(&t);
 }
 
 void task_mng::setup() {
+    for (task* t: task_lists) {
+        t->setup();
+    }
 }
 
-int task_mng::loop() {
+int task_mng::loop(std::map<std::string, std::string>& circle) {
     std::cout << "task_mng loop" << std::endl;
     for (;;) {
         int now = millis();
@@ -34,12 +45,15 @@ int task_mng::loop() {
             if (next < 0 || next > now) {
                 continue;
             }
-            next = t->loop();
+            next = t->loop(circle);
             if (next < 0) {
                 t->next_millis = -1;
                 continue;    
             }
             t->next_millis = now + next;
+        }
+        if (circle["mng"] == "quit;") {
+            return 0;
         }
         int min_next = now + (24 * 60 * 60 * 1000);
         for (task* t: task_lists) {
