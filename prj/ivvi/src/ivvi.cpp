@@ -10,9 +10,23 @@ void ivvi_screen::setup() {
   width = w;
   height = h;
   data.resize(w * h, static_cast<uint64_t>(' '));
+  draw_line(1, 1, 100, 30, 'a');
 }
 int ivvi_screen::loop(std::map<std::string, std::string>& circle) {
   //std::cout << yuraterm::esc_home() << "ivvi_screen" << millis() << std::endl;
+  std::string line;
+  std::cout << yura.esc_cursor(1, 1) ; 
+  for (int i = 0; i < height; i++) {
+    line = "";
+    for (int j = 0; j < width; j++) {
+      auto ch = data[(i * width) + j];
+      if (ch < 0x80) {
+        line += static_cast<char>(ch);
+      }
+    }
+    std::cout << line << std::endl;
+  }
+
   std::cout << yura.esc_cursor(cursor_row, cursor_col) ; 
   return 1000;
 }
