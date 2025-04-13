@@ -18,12 +18,15 @@ OBJS = $(patsubst src/%.cpp, build/%.o, $(SRCS))
 
 all: ivvi
 
+main.cpp :task.hpp
+
 
 ivvi: $(OBJS)
 	g++ -o $@ $(OBJS) 
 
 build/%.o: src/%.cpp | build
 	$(CPP) $(CPPFLAGS) -o $@ -c $<
+
 
 # $(OBJS): $(SRCS) | build
 

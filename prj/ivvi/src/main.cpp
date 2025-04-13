@@ -1,44 +1,71 @@
 #include <iostream>
 #include <sys/ioctl.h>
 #include <unistd.h>
+#include <vector>
 #include "yuraterm.hpp"
-#include "task.hpp"
+#include "task.hpp"  
 
+typedef struct {
+  int width;
+  int height;
+  std::vector<char> screen;
+} screen;
+
+void init(screen& s, int w, int h, char ch = ' ') {
+  s.width = w;
+  s.height = h;
+  s.screen.resize(w * h, ' ');
+}
 
 class Dog : public task {
   public:
       void setup() override {
+        std::cout << "setupワンワン " << millis() << std::endl;
       }
       int loop() override {
           std::cout << "ワンワン " << millis() << std::endl;
           return 1000;
       }
-};
+  };
   
-
   class Cat : public task {
   public:
       void setup() override {
+        std::cout << "setupニャーニャー " << millis() << std::endl;
       }
       int loop() override {
           std::cout << "ニャーニャー " << millis() << std::endl;
           return 3300;
       }
-};
+  };
   
 int main() {
-  yuraterm yura;
+  task_mng mng;
 
   Dog dog;
   Cat cat;
-  task_mng mng;
-
   mng.add_task(dog);
   mng.add_task(cat);
-  std::cout << "t" << std::endl;
+
   mng.setup();
   mng.loop();
 
+
+
+
+  for (;;) {
+
+
+
+    std::string input;
+    std::cin >> input;
+    if (input == "q") {
+      break;
+    }
+  }
+  return 0;
+
+  /*
   auto [width, height] = yura.get_term_size();
  
   std::cout << "Terminal size: " << width << "x" << height << std::endl;
@@ -61,5 +88,5 @@ int main() {
     }
     std::cout << yura.esc_cursor(lr, lc);
   }
-  return 0;
+  */
 }
