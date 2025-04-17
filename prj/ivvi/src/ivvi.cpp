@@ -4,6 +4,7 @@
 #include <locale>
 #include <array>
 
+#define DP(x) std::cout << __FILE__ << ":" << __LINE__ << " " << x << std::endl;
 
 void ivvi_screen::setup() {
   auto [w, h] = yura.get_term_size();
@@ -11,6 +12,9 @@ void ivvi_screen::setup() {
   height = h;
   data.resize(w * h, static_cast<uint64_t>(' '));
   draw_line(1, 1, 100, 30, 'a');
+  DP("");
+  draw_string(10, 10, "ivvi_screen::setup draw_string test");
+  DP("");
 }
 int ivvi_screen::loop(std::map<std::string, std::string>& circle) {
   //std::cout << yuraterm::esc_home() << "ivvi_screen" << millis() << std::endl;
@@ -83,8 +87,15 @@ int ivvi_screen::next_utf8(std::string& utf8, int index) {
   } else {
     throw std::runtime_error("Invalid UTF-8 encoding");
   }
-  if (index + byte_size > utf8_length) {
-    throw std::runtime_error("Invalid UTF-8 encoding: incomplete character");
+  if (index + byte_size > utf8_length + 1) {
+    std::string msg = "Invalid UTF-8 encoding: incomplete character";
+    msg += "index=";
+    msg += std::to_string(index);
+    msg += ",byte_size=";
+    msg += std::to_string(byte_size);
+    msg += ",utf8_length=";
+    msg += std::to_string(utf8_length);
+    throw std::runtime_error(msg);
   }
   return index + byte_size;
 }
@@ -162,11 +173,20 @@ void ivvi_screen::draw_line(int x1, int y1, int x2, int y2, uint64_t ch) {
 
 void ivvi_screen::draw_string(int x, int y, std::string str) {
   int index = 0;
-  std::string str_utf8 = get_utf8(str, index);
-  int byte_size = str_utf8.length();
-  
+  int dx = 0;
+  while(index < str.length()) {
+    std::string str_utf8 = get_utf8(str, index);
+    int byte_size = str_utf8.length();
+    if (byte_size < 0x80) {
+      dx++;
+    } else {
+      dx += 2;
+    }
+    index += byte_size;
+    uint64_t ch = get_int64(str_utf8);
+    put(x + dx, y, ch);
+  }
 }
-
 
 
 
@@ -177,7 +197,11 @@ int ivvi::loop(std::map<std::string, std::string>& circle) {
     //std::cout << "ivvi loop" << std::endl;
     char ch = screen.yura.get_char();
 
-    if (ch == 'g') {
+    if (ch == '\n') {
+      lr++;
+      lc=2;
+      screen.validate();
+    } else if (ch == 'g') {
       lc++;
       screen.validate();
     } else if (ch == 's') {
@@ -204,6 +228,12 @@ int ivvi::loop(std::map<std::string, std::string>& circle) {
     lc = std::min(screen.width, lc);
     lr = std::max(1, lr);
     lr = std::min(screen.height, lr);
+    std::string msg = "row=";
+    msg += std::to_string(lr);
+    msg += ",col=";
+    msg += std::to_string(lc);
+    msg += "  ";
+    screen.draw_string(2, 3, msg);
     screen.cursor(lr, lc);
     return 10;
 }
