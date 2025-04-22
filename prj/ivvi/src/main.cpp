@@ -1,36 +1,40 @@
 #include "task.hpp"
 #include "ivvi.hpp"
+#include "yura25.hpp"
 #include <fstream>
 #include <sstream>
 
-/**
- * @brief テキストファイルを読み込む。
- * @param filename テキストファイル名
- * @return ファイルのテキスト
- */
-std::string load(const std::string& filename) {
-    std::ifstream file(filename);
-    if (file.is_open()) {
-        std::stringstream buffer;
-        buffer << file.rdbuf();
-        return buffer.str();
-    } else {
-        // ファイルを開けなかった場合のエラー処理
-        // ここでは空の文字列を返すが、例外を投げるなどの処理も考えられる
-        return "";
-    }
-}
-  
-int main(int argc, char** argv) {
 
+
+bool test_split(std::vector<std::string>& args) {
+
+  for (auto file_name : args) {
+    DP(file_name);
+    auto data = yura::load(file_name);
+    auto lines = yura::split(data);
+    for (auto line : lines) {
+      DP(line);
+    }
+  }
+  std::string input;
+  std::getline(std::cin, input);
+  if (input == "q") {
+    return false;
+  }
+  return true;
+}
+
+int main(int argc, char** argv) {
   ivvi iv;
   task_mng mng;
   std::map<std::string, std::string> circle;
   std::vector<std::string> args;
-  for (int i = 0; i < argc; i++) {
+  for (int i = 1; i < argc; i++) {
     args.push_back(argv[i]);
   }
-
+  if (!test_split(args)) {
+    return 0;
+  }
   mng.add_task(iv.screen);
   mng.add_task(iv);
   mng.setup();
