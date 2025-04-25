@@ -1,5 +1,6 @@
-
 #include "yura25.hpp"
+#include <stdexcept>
+
 /**
  * @brief テキストファイルを読み込む。
  * @param filename テキストファイル名
@@ -38,12 +39,7 @@ std::vector<std::string> yura::split(const std::string& str, const std::string& 
     return result;
 }
 
-
-
-
-
-
-int get_utf8_byte_size(const std::string& str, int start_byte, int utf8_size = 1) {
+int yura::get_utf8_byte_size(const std::string& str, int start_byte, int utf8_size) {
     if (start_byte < 0 || start_byte >= str.length()) {
         throw std::out_of_range("開始バイト位置が文字列の範囲外です。");
     }
