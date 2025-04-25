@@ -39,6 +39,13 @@ std::vector<std::string> yura::split(const std::string& str, const std::string& 
     return result;
 }
 
+/**
+ * @brief 文字列を指定位置の指定文字数でのバイト数を取得する。
+ * @param str 文字列
+ * @param start_byte 指定位置をバイト数で指定。
+ * @param utf8_size 文字数
+ * @return 分割した文字列の配列
+ */
 int yura::get_utf8_byte_size(const std::string& str, int start_byte, int utf8_size) {
     if (start_byte < 0 || start_byte >= str.length()) {
         throw std::out_of_range("開始バイト位置が文字列の範囲外です。");
