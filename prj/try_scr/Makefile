@@ -14,7 +14,7 @@ try: $(OBJS)
 
 
 build/%.o : src/%.cpp | build
-	$(CC) -c $< -o $@
+	$(CC) -c $< -o $@ -I./include
 
 clean:
 	rm -r build
