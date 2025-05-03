@@ -1,5 +1,5 @@
 
-CPP=g++
+CPP=clang++
 CPPFLAGS= -g -Wall -DDEBUG  -I./include/ -std=c++17
 
 #LIB_SRCS = $(wildcard lib/*.cpp)
@@ -21,7 +21,7 @@ all: try
 
 
 try: $(OBJS)
-	g++ -o $@ $(OBJS) 
+	$(CPP)  -o $@ $(OBJS) -lsqlite3
 
 objs/%.o: src/%.cpp | objs
 	$(CPP) $(CPPFLAGS) -o $@ -c $<
