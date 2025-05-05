@@ -64,4 +64,7 @@ std::string yuraterm::esc_cursor(int row, int col){
     return result;
 }
 
- 
+void yuraterm::setup_screen() {
+
+
+}

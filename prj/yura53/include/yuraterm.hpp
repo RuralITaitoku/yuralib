@@ -10,7 +10,7 @@
 
 class yuraterm {
     struct termios old_termios;
-
+    std::vector<int64_t> screen;
 public:
 
     yuraterm();
@@ -25,7 +25,7 @@ public:
     std::string esc_bg(int color);
     std::string esc_cursor(int row, int col);
   
-    void init_screen();
+    void setup_screen();
     void print();
 
 };
