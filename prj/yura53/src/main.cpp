@@ -1,5 +1,6 @@
-# include <iostream>
-# include <vector>
+#include <iostream>
+#include <vector>
+#include "ivvi.hpp"
 
 int main(int argc, char** argv) {
     std::string str;
@@ -13,12 +14,15 @@ int main(int argc, char** argv) {
     std::string output_filename;
 
     for (auto arg: args) {
-        std::cout << arg << std::endl;
         if (arg == "md2html") {
             std::cout << "md2html" << std::endl;
         }
         if (arg == "sqlite") {
             std::cout << "sqlite test" << std::endl;
+        }
+        if (arg == "ivvi") {
+            std::cout << "ivvi" << std::endl;
+            ivvi iv;
         }
     }
 }
