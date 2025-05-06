@@ -24,7 +24,7 @@ public:
     std::string esc_fg(int color);
     std::string esc_bg(int color);
     std::string esc_cursor(int row, int col);
-  
+
     void setup_screen();
     void print();
 

@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
 #include "ivvi.hpp"
+#include "markdown.hpp"
+
 
 int main(int argc, char** argv) {
     std::string str;
@@ -23,6 +25,16 @@ int main(int argc, char** argv) {
         }
         if (arg == "ivvi") {
             std::cout << "ivvi" << std::endl;
+        }
+        if (arg == "markdown") {
+            markdown md;
+            std::string str_md;
+
+            str_md += "# test\n";
+            str_md += "[test]\n";
+            
+
+            std::cout << md.html(str_md) << std::endl;
         }
     }
     ivvi iv;

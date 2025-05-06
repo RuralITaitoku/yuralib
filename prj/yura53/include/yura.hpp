@@ -33,4 +33,15 @@ namespace yura {
      */
     int get_utf8_byte_size(const std::string& str, int start_byte, int utf8_size = 1);
 
-}
+    /**
+     * @brief 16進数表記の文字であるかの判定
+     * @param c 判定する文字
+     * @return true:16進表記の構成文字である。
+     */
+    bool is_hex_digit(char c);
+
+    
+    std::string urldecode(const std::string& encoded_str);
+    std::string urlencode(const std::string& str);
+    std::string esc_html(const std::string& str);
+};

@@ -86,3 +86,80 @@ int yura::get_utf8_byte_size(const std::string& str, int start_byte, int utf8_si
     }
     return current_byte - start_byte;
 }
+
+
+bool yura::is_hex_digit(char c) {
+    return (c >= 'A' && c <= 'F') || (c >= 'a' && c <= 'f') || (isdigit(c));
+}
+  
+std::string yura::urldecode(const std::string& encoded_str) {
+    std::string decoded_str;
+  
+    for (size_t i = 0; i < encoded_str.size(); ++i) {
+      if (encoded_str[i] == '%') {
+        if (i + 2 < encoded_str.size() && is_hex_digit(encoded_str[i + 1]) &&
+            is_hex_digit(encoded_str[i + 2])) {
+          // 16進数コードの場合
+          char hex_char[3] = {encoded_str[i + 1], encoded_str[i + 2], '\0'};
+          unsigned int code = std::stoul(hex_char, nullptr, 16);
+          decoded_str += static_cast<char>(code);
+          i += 2;
+        } else {
+          // エラー処理
+          std::cerr << "Invalid URL encoding: " << encoded_str << std::endl;
+          return "";
+        }
+      } else if (encoded_str[i] == '+') {
+          decoded_str += ' ';
+      } else {
+          decoded_str += encoded_str[i];
+  
+      }
+    }
+  
+    return decoded_str;
+}
+  
+std::string yura::urlencode(const std::string& str) {
+    std::string encoded_str;
+  
+    for (size_t i = 0; i < str.size(); i++) {
+        unsigned char c = str[i];
+        if (isalnum(c) || c == '-' || c == '_' || c == '.' || c == '*' ||
+            c == ',' || c == ':' || c == '@' || c == '=' || c == '+' ||
+            c == '$' || c == '(' || c == ')' || c == '[' || c == ']' ||
+            c == '{' || c == '}' || c == ';' || c == '&' || c == '%' ||
+            c == '<' || c == '>' || c == ',' || c == '?' || c == '/' ||
+            c == '\\' || c == '^' || c == '`' || c == '|' || c == '~') {
+            encoded_str += c;
+        } else {
+            encoded_str += "%";
+            char hex_digits[3];
+            snprintf(hex_digits, 3, "%02X", (int) c);
+            hex_digits[2] = '\0';
+            encoded_str.append(hex_digits, 2);
+        }
+    }
+    return encoded_str;
+}
+  
+std::string yura::esc_html(const std::string& str) {
+    std::string esc_html;
+    for (size_t i = 0; i < str.size(); i++) {
+        unsigned char c = str[i];
+        if (c == '<') {
+            esc_html += "&lt;";
+        } else if (c == '>') {
+            esc_html += "&gt;";
+        } else if ( c == '&') {
+            esc_html += "&amp;";
+        } else if ( c == '"') {
+            esc_html += "&quot;";
+        } else {
+            esc_html += c;
+        }
+    }
+    return esc_html;
+}
+
+  
