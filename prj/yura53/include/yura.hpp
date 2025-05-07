@@ -38,10 +38,17 @@ namespace yura {
      * @param c 判定する文字
      * @return true:16進表記の構成文字である。
      */
-    bool is_hex_digit(char c);
-
-    
+    bool is_hex_digit(char c);    
     std::string urldecode(const std::string& encoded_str);
     std::string urlencode(const std::string& str);
     std::string esc_html(const std::string& str);
+
+    // 次のコメントのメソッドをC++14で実装して。
+    /**
+     * @brief ファイルの存在チェック
+     * @param filename ファイル名
+     * @return true:ファイルが存在する。
+     */
+    bool fileExists(const std::string &filename) ;
+
 };

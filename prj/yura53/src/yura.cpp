@@ -162,4 +162,7 @@ std::string yura::esc_html(const std::string& str) {
     return esc_html;
 }
 
-  
+bool yura::fileExists(const std::string &filename) {
+    std::ifstream f(filename);
+    return f.good();
+}
