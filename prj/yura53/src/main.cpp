@@ -14,7 +14,16 @@ int main(int argc, char** argv) {
     }
     std::string input_filename;
     std::string output_filename;
-
+    for (int i = 0; i < (args.size() - 1); i++) {
+        auto arg = args[i];
+        if (arg == "-i") {
+            input_filename = args[++i];
+        } else if (arg == "-o") {
+            output_filename = args[++i];
+        }
+    }
+    std::cout << "input : " << input_filename << std::endl;
+    std::cout << "output : " << output_filename << std::endl;
     task_mng mng;
     for (auto arg: args) {
         if (arg == "md2html") {

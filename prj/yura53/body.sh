@@ -1,13 +1,7 @@
-
-
-
-
-
-
-
 echo run
 run() {
-	./try
+	echo $*
+	./try $*
 }
 
 echo clean
@@ -19,8 +13,8 @@ set -x
 if [ "$1" = "clean" ]; then # test
 	clean
 elif [ "$1" = "run" ]; then
-	run
+	shift 
+	run $*
 else 
 	make
-
 fi
