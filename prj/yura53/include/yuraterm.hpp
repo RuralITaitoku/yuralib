@@ -10,7 +10,10 @@
 
 class yuraterm {
     struct termios old_termios;
+    int width;
+    int height;
     std::vector<int64_t> screen;
+
 public:
 
     yuraterm();

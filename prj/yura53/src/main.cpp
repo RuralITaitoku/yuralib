@@ -14,6 +14,7 @@ int main(int argc, char** argv) {
     }
     std::string input_filename;
     std::string output_filename;
+    std::string template_filename;
     for (int i = 0; i < (args.size() - 1); i++) {
         auto arg = args[i];
         if (arg == "-i") {
@@ -39,11 +40,9 @@ int main(int argc, char** argv) {
             markdown md;
             std::string str_md;
 
-            str_md += "# test\n";
-            str_md += "[test]\n";
-            
-
-            std::cout << md.html(str_md) << std::endl;
+            str_md = yura::load(input_filename);
+            auto str_html = md.html(str_md);
+            yura::save(output_filename, str_html);
         }
     }
     ivvi iv;

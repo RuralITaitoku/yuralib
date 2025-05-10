@@ -12,6 +12,7 @@ yuraterm::yuraterm() {
     new_termios.c_cc[VTIME] = 0; // タイムアウトなし
 
     tcsetattr(STDIN_FILENO, TCSANOW, &new_termios); // 変更を適用
+    get_term_size();
 }
 
 yuraterm::~yuraterm() {
@@ -29,8 +30,8 @@ std::tuple<int, int> yuraterm::get_term_size() {
     if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &size_ioctl) == -1) {
         throw std::runtime_error("");
     }
-    int width = size_ioctl.ws_col;
-    int height = size_ioctl.ws_row;
+    width = size_ioctl.ws_col;
+    height = size_ioctl.ws_row;
     return std::make_tuple(width, height);
 }
 
@@ -65,6 +66,5 @@ std::string yuraterm::esc_cursor(int row, int col){
 }
 
 void yuraterm::setup_screen() {
-
-
+    screen.resize(width * height, static_cast<uint64_t>(' '));
 }

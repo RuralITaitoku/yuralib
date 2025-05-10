@@ -14,6 +14,24 @@ namespace yura {
      * @return ファイルのテキスト
      */
     std::string load(const std::string& filename);
+
+    // 次のコメントのメソッドをC++14で実装して。
+    /**
+     * @brief テキストファイルを書き込む
+     * @param filename テキストファイル名
+     * @param text テキストファイル
+     */
+    void save(const std::string& filename, const std::string& text);
+
+    /**
+     * @brief 文字列の指定文字列を別の文字列に置換
+     * @param str 元の文字列
+     * @param from 置換対象文字列
+     * @param to 置換文字列
+     * @return 置換した文字列
+     */
+    std::string replace_all(std::string str, const std::string& from, const std::string& to);
+
     /**
      * @brief 文字列を指定文字で分割する
      * @param str 分割する文字列
@@ -22,8 +40,6 @@ namespace yura {
      */
     std::vector<std::string> split(const std::string& str, const std::string& term = "\n");
 
-
-    // 次のコメントのメソッドをC++14で実装して。
     /**
      * @brief 文字列の開始位置から指定UTF9の文字数までのバイト数を求める。
      * @param str 対象の文字列

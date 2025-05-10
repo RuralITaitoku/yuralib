@@ -34,5 +34,6 @@ objs:
 
 
 clean:
-	rm -r objs
+	rm -r objs/*.o
+	rm -r html/0*.html
 

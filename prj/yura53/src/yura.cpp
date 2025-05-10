@@ -18,6 +18,37 @@ std::string yura::load(const std::string& filename) {
 }
 
 /**
+ * @brief テキストファイルを書き込む
+ * @param filename テキストファイル名
+ * @param text テキストファイル
+ */
+void yura::save(const std::string& filename, const std::string& text) {
+    std::ofstream ofs(filename);
+    if (ofs.is_open()) {
+        ofs << text << std::endl;
+        ofs.close();
+    } else {
+        std::cerr << "ファイルを開けませんでした: " << filename << std::endl;
+    }
+}
+
+/**
+ * @brief 文字列の指定文字列を別の文字列に置換
+ * @param str 元の文字列
+ * @param from 置換対象文字列
+ * @param to 置換文字列
+ * @return 置換した文字列
+ */
+std::string yura::replace_all(std::string str, const std::string& from, const std::string& to) {
+    std::string::size_type pos = str.find(from);
+    while (pos != std::string::npos) {
+        str.replace(pos, from.length(), to);
+        pos = str.find(from, pos + to.length());
+    }
+    return str;
+}
+
+/**
  * @brief 文字列を指定文字で分割する
  * @param str 分割する文字列
  * @param term 区切り文字
