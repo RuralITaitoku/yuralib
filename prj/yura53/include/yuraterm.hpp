@@ -1,12 +1,14 @@
 #pragma once
 
 #include <cstdio>
+#include <cstdint>
 #include <termios.h>
 #include <unistd.h>
 #include <sys/ioctl.h>
 #include <stdexcept>
 #include <tuple>
 #include <iostream>
+#include <vector>
 
 class yuraterm {
     struct termios old_termios;

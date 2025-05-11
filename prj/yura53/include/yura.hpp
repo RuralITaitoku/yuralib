@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 #include <fstream>
 #include <sstream>
 
@@ -38,7 +39,7 @@ namespace yura {
      * @param term 区切り文字
      * @return 分割した文字列の配列
      */
-    std::vector<std::string> split(const std::string& str, const std::string& term = "\n");
+    std::vector< std::string > split(const std::string& str, const std::string& term = "\n");
 
     /**
      * @brief 文字列の開始位置から指定UTF9の文字数までのバイト数を求める。

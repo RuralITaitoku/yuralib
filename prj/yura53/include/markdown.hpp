@@ -1,5 +1,7 @@
 #pragma once
 #include <sstream>
+#include <string>
+#include <vector>
 #include "yura.hpp"
 
 class markdown {
