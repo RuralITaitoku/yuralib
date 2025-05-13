@@ -39,5 +39,5 @@ objs:
 
 clean:
 	rm -r objs/*.o
-	rm -r html/0*.html
+	find html/*.html -not -name "temp.html"	-delete
 
