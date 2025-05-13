@@ -21,6 +21,8 @@ int main(int argc, char** argv) {
             input_filename = args[++i];
         } else if (arg == "-o") {
             output_filename = args[++i];
+        } else if (arg == "-t") {
+            template_filename = args[++i];
         }
     }
     std::cout << "input : " << input_filename << std::endl;
@@ -38,11 +40,11 @@ int main(int argc, char** argv) {
         }
         if (arg == "markdown") {
             markdown md;
-            std::string str_md;
-
-            str_md = yura::load(input_filename);
+            auto str_md = yura::load(input_filename);
             auto str_html = md.html(str_md);
-            yura::save(output_filename, str_html);
+            auto str_template = yura::load(template_filename);
+            std::cout << str_template << std::endl;
+            yura::save(output_filename, yura::replace_all(str_template, "@@@html@@@", str_html));
         }
     }
     ivvi iv;
