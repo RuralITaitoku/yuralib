@@ -27,8 +27,6 @@ int markdown::line_render(const std::string& line, std::string& html) {
                 std::string name = line.substr(si, ei - si);
                 si = ei + 1;
                 ei = line.find("(", si);
-                DP("si = " << si);
-                DP("ei = " << ei);
                 std::string url;
                 if (si == ei) {
                     si = ei + 1;
@@ -72,7 +70,6 @@ int markdown::render(const std::string& md, std::string& html) {
     std::string line;
     std::vector<std::string> lines;
     std::ostringstream oss;
-    DP("");
     while (std::getline(iss, line)) {
         lines.push_back(line);
     }

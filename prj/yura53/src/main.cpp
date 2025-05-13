@@ -25,8 +25,8 @@ int main(int argc, char** argv) {
             template_filename = args[++i];
         }
     }
-    std::cout << "input : " << input_filename << std::endl;
-    std::cout << "output : " << output_filename << std::endl;
+    // DP("input : " << input_filename);
+    // DP("output : " << output_filename);
     task_mng mng;
     for (auto arg: args) {
         if (arg == "md2html") {
@@ -43,13 +43,8 @@ int main(int argc, char** argv) {
             auto str_md = yura::load(input_filename);
             auto str_html = md.html(str_md);
             auto str_template = yura::load(template_filename);
-            std::cout << str_template << std::endl;
+            //std::cout << str_template << std::endl;
             yura::save(output_filename, yura::replace_all(str_template, "@@@html@@@", str_html));
         }
     }
-    ivvi iv;
-    std::map<std::string, std::string> circle;
-    mng.add_task(iv);
-    mng.setup();
-    mng.loop(circle);
 }

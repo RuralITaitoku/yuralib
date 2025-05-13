@@ -14,11 +14,13 @@ CPPFLAGS= -g -Wall -DDEBUG  -I./include/ -std=c++17
 SRCS = $(wildcard src/*.cpp)
 OBJS = $(patsubst src/%.cpp, objs/%.o, $(SRCS))
 
+MD_SRCS = $(wildcard src/*.md)
+HTML = $(patsubst src/%.md, html/%.html, $(MD_SRCS))
 
 
-all: try
+all: try html
 
-
+html: $(HTML)
 
 try: $(OBJS)
 	$(CPP)  -o $@ $(OBJS) -lsqlite3
@@ -26,6 +28,8 @@ try: $(OBJS)
 objs/%.o: src/%.cpp | objs
 	$(CPP) $(CPPFLAGS) -o $@ -c $<
 
+html/%.html: src/%.md
+	./try markdown -o $@ -i $< -t html/temp.html
 
 # $(OBJS): $(SRCS) | build
 
