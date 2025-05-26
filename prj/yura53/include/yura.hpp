@@ -7,7 +7,9 @@
 #include <sstream>
 
 #define DP(x) std::cout << __FILE__ << ":" << __LINE__ << " " << x << std::endl;
-
+/**
+ * - [ ] CSV形式ファイルの読み書き
+ */
 namespace yura {
     /**
      * @brief テキストファイルを読み込む。
@@ -16,7 +18,6 @@ namespace yura {
      */
     std::string load(const std::string& filename);
 
-    // 次のコメントのメソッドをC++14で実装して。
     /**
      * @brief テキストファイルを書き込む
      * @param filename テキストファイル名
