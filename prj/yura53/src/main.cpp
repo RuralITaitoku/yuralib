@@ -2,7 +2,7 @@
 #include <vector>
 #include "ivvi.hpp"
 #include "markdown.hpp"
-
+#include "jap_notation.hpp"
 
 int main(int argc, char** argv) {
     std::string str;
@@ -45,6 +45,10 @@ int main(int argc, char** argv) {
             auto str_template = yura::load(template_filename);
             //std::cout << str_template << std::endl;
             yura::save(output_filename, yura::replace_all(str_template, "@@@html@@@", str_html));
+        }
+        if (arg == "jap") {
+            jap_notation jap;
+            jap.run();
         }
     }
 }
