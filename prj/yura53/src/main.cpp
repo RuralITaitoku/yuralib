@@ -2,7 +2,44 @@
 #include <vector>
 #include "ivvi.hpp"
 #include "markdown.hpp"
-#include "jap_notation.hpp"
+
+void jap_notation() {
+    std::cout << "jap notation" << std::endl;
+    std::string line;
+    std::vector<std::string> stack;
+
+    for (;;) {
+        std::cin >> line;
+        std::cout << "-" << line << std::endl;
+        if (line == "") {
+            std::cout << "--- help" << std::endl;
+            std::cout << "ps : print stack" << std::endl;
+            std::cout << "cs : clear stack" << std::endl;
+        } else if (line == "ps") {
+            std::cout << "--- print stack" << std::endl;
+            int no = 0;
+            for (auto l: stack) {
+                std::cout << no++ << ":";
+                std::cout << l << std::endl;
+            }
+        } else if (line == "cs") {
+            std::cout << "--- clear stack" << std::endl;
+            stack.clear();
+
+        } else if (line == "q") {
+            std::cout << "--- quit" << std::endl;
+            return;
+        } else {
+            stack.push_back(line);
+        }
+
+
+    }
+
+
+
+}
+
 
 int main(int argc, char** argv) {
     std::string str;
@@ -47,8 +84,9 @@ int main(int argc, char** argv) {
             yura::save(output_filename, yura::replace_all(str_template, "@@@html@@@", str_html));
         }
         if (arg == "jap") {
-            jap_notation jap;
-            jap.run();
+            jap_notation();
         }
     }
 }
+
+
