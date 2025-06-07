@@ -32,12 +32,7 @@ void jap_notation() {
         } else {
             stack.push_back(line);
         }
-
-
     }
-
-
-
 }
 
 
