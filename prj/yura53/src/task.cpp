@@ -18,7 +18,7 @@ int task::millis() {
     return static_cast<int>(milliseconds.count() - my_epoch);
 }
 
-void task::next(int m) {
+void task::set_next(int m) {
     if (m < 0) {
         next_millis = -1;
     } else {

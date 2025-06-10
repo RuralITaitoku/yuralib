@@ -14,7 +14,7 @@ public:
     virtual ~task();
 
     int millis();
-    void next(int m);
+    void set_next(int m);
     virtual void setup() {};
     virtual int loop(std::map<std::string, std::string>& circle) = 0;
 };
