@@ -36,8 +36,12 @@ html/%.html: src/%.md
 objs:
 	mkdir -p objs
 
+install:
+	cp ./try ~/bin/try
 
 clean:
 	rm -r objs/*.o
 	find html/*.html -not -name "temp.html"	-delete
+
+
 

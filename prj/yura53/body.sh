@@ -17,4 +17,5 @@ elif [ "$1" = "run" ]; then
 	run $*
 else 
 	make
+	make install
 fi

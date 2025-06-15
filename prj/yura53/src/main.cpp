@@ -3,13 +3,20 @@
 #include "ivvi.hpp"
 #include "markdown.hpp"
 
+class jap_jap {
+public:
+    virtual std::string name() = 0;
+};
+
+std::vector<jap_jap*> jap_vec;
+
 void jap_notation() {
     std::cout << "jap notation" << std::endl;
     std::string line;
     std::vector<std::string> stack;
 
     for (;;) {
-        std::cin >> line;
+        std::getline(std::cin, line);
         std::cout << "-" << line << std::endl;
         if (line == "") {
             std::cout << "--- help" << std::endl;
@@ -25,7 +32,10 @@ void jap_notation() {
         } else if (line == "cs") {
             std::cout << "--- clear stack" << std::endl;
             stack.clear();
-
+        } else if (line == "t") {
+            for (auto jap: jap_vec) {
+                std::cout << jap->name() << std::endl;
+            }
         } else if (line == "q") {
             std::cout << "--- quit" << std::endl;
             return;
@@ -34,7 +44,6 @@ void jap_notation() {
         }
     }
 }
-
 
 int main(int argc, char** argv) {
     std::string str;
