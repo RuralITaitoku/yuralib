@@ -2,13 +2,7 @@
 #include <vector>
 #include "ivvi.hpp"
 #include "markdown.hpp"
-
-class jap_jap {
-public:
-    virtual std::string name() = 0;
-};
-
-std::vector<jap_jap*> jap_vec;
+#include "jap.hpp"
 
 void jap_notation() {
     std::cout << "jap notation" << std::endl;
@@ -32,10 +26,6 @@ void jap_notation() {
         } else if (line == "cs") {
             std::cout << "--- clear stack" << std::endl;
             stack.clear();
-        } else if (line == "t") {
-            for (auto jap: jap_vec) {
-                std::cout << jap->name() << std::endl;
-            }
         } else if (line == "q") {
             std::cout << "--- quit" << std::endl;
             return;
@@ -56,7 +46,7 @@ int main(int argc, char** argv) {
     std::string input_filename;
     std::string output_filename;
     std::string template_filename;
-    for (int i = 0; i < (args.size() - 1); i++) {
+    for (size_t i = 0; i < (args.size() - 1); i++) {
         auto arg = args[i];
         if (arg == "-i") {
             input_filename = args[++i];
