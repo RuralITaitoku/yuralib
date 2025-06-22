@@ -3,12 +3,44 @@
 #include "ivvi.hpp"
 #include "markdown.hpp"
 #include "jap.hpp"
+#include <memory>
+
+std::vector<std::shared_ptr<jap>> jap_vec;
+
+class save_csv_tsv : public jap {
+public:
+    std::string help() {
+        std::string help;
+        help += "---\n";
+        help += "スタック先頭～\n";
+        help += "ファイル名\n";
+        help += "save : スタックの先頭からファイル名までを保存\n";
+        help += "---\n";
+        help += "save csv to tsv:\n";
+        return help;
+    }
+
+    bool run(std::string &cmd, std::vector<std::string> &stack) {
+        if (cmd == "save") {
+            std::cout << "セーブな感じ" << std::endl;
+            return true;
+        }
+        if (cmd == "save csv to tsv") {
+            std::cout << "セーブな感じtsv" << std::endl;
+            return true;
+        }
+        return false;
+    }
+};
+
 
 void jap_notation() {
     std::cout << "jap notation" << std::endl;
     std::string line;
     std::vector<std::string> stack;
 
+    auto jap0 = std::make_shared<save_csv_tsv>();
+    jap_vec.push_back(jap0);
     for (;;) {
         std::getline(std::cin, line);
         std::cout << "-" << line << std::endl;
@@ -16,6 +48,9 @@ void jap_notation() {
             std::cout << "--- help" << std::endl;
             std::cout << "ps : print stack" << std::endl;
             std::cout << "cs : clear stack" << std::endl;
+            for (auto jap : jap_vec) {
+                std::cout << jap->help();
+            }
         } else if (line == "ps") {
             std::cout << "--- print stack" << std::endl;
             int no = 0;
@@ -30,7 +65,17 @@ void jap_notation() {
             std::cout << "--- quit" << std::endl;
             return;
         } else {
-            stack.push_back(line);
+            bool f_run;
+            for (auto jap : jap_vec) {
+                if(jap->run(line, stack)) {
+                    f_run = true;
+                    break;
+                }
+            }
+
+            if (!f_run) {
+                stack.push_back(line);
+            }
         }
     }
 }
