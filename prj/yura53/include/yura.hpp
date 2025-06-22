@@ -49,7 +49,7 @@ namespace yura {
      * @param utf8_size UTF8の文字数
      * @return バイト数
      */
-    int get_utf8_byte_size(const std::string& str, int start_byte, int utf8_size = 1);
+    int get_utf8_byte_size(const std::string& str, size_t start_byte, int utf8_size = 1);
 
     /**
      * @brief 16進数表記の文字であるかの判定

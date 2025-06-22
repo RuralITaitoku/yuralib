@@ -77,7 +77,7 @@ std::vector<std::string> yura::split(const std::string& str, const std::string& 
  * @param utf8_size 文字数
  * @return 分割した文字列の配列
  */
-int yura::get_utf8_byte_size(const std::string& str, int start_byte, int utf8_size) {
+int yura::get_utf8_byte_size(const std::string& str, size_t start_byte, int utf8_size) {
     if (start_byte < 0 || start_byte >= str.length()) {
         throw std::out_of_range("開始バイト位置が文字列の範囲外です。");
     }
@@ -85,7 +85,7 @@ int yura::get_utf8_byte_size(const std::string& str, int start_byte, int utf8_si
         throw std::invalid_argument("UTF8の文字数は正の数である必要があります。");
     }
 
-    int current_byte = start_byte;
+    size_t current_byte = start_byte;
     int processed_chars = 0;
 
     while (processed_chars < utf8_size && current_byte < str.length()) {
