@@ -4,6 +4,7 @@
 #include "markdown.hpp"
 #include "jap.hpp"
 #include <memory>
+#include <sstream>
 
 std::vector<std::shared_ptr<jap>> jap_vec;
 
@@ -22,7 +23,9 @@ public:
 
     bool run(std::string &cmd, std::vector<std::string> &stack) {
         if (cmd == "save") {
-            std::cout << "セーブな感じ" << std::endl;
+            std::ostringstream oss;
+            oss << "セーブな感じ2" << std::endl;
+            std::cout << oss.str();
             return true;
         }
         if (cmd == "save csv to tsv") {
@@ -44,7 +47,7 @@ void jap_notation() {
     for (;;) {
         std::getline(std::cin, line);
         std::cout << "-" << line << std::endl;
-        if (line == "") {
+        if (line == "" || line == "h") {
             std::cout << "--- help" << std::endl;
             std::cout << "ps : print stack" << std::endl;
             std::cout << "cs : clear stack" << std::endl;
