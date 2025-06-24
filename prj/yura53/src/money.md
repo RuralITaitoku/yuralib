@@ -1,7 +1,7 @@
 # 2025年入出金
 
 
-``` csv 2025money.csv
+``` jap
 日付,        支出,   収入,  分類     ,  備考
 2025/1/2,     1729,       0,  動力光熱費, 
 2025/1/2,     2000,       0,  動力光熱費, 
@@ -93,7 +93,7 @@
 雑費,        =sumif(A,D), =sumif(A,D),,
 修繕費,      =sumif(A,D), =sumif(A,D),,
 農薬 衛生費,      @sumif(A,D), @sumif(A,D),,
-2025money.tsv
+2025money.txt
 save csv to tsv
 ```
 

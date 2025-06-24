@@ -12,11 +12,11 @@ class save_csv_tsv : public jap {
 public:
     std::string help() {
         std::string help;
-        help += "---\n";
+        help += "-\n";
         help += "スタック先頭～\n";
         help += "ファイル名\n";
         help += "save : スタックの先頭からファイル名までを保存\n";
-        help += "---\n";
+        help += "-\n";
         help += "save csv to tsv:\n";
         return help;
     }
