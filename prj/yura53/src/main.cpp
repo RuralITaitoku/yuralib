@@ -10,6 +10,7 @@ std::vector<std::shared_ptr<jap>> jap_vec;
 
 class save_csv_tsv : public jap {
 public:
+    virtual ~save_csv_tsv() {}
     std::string help() {
         std::string help;
         help += "-\n";
@@ -18,20 +19,37 @@ public:
         help += "save : スタックの先頭からファイル名までを保存\n";
         help += "-\n";
         help += "save csv to tsv:\n";
+        help += "-\n";
+        help += "csv to tsv:\n";
         return help;
     }
 
     bool run(std::string &cmd, std::vector<std::string> &stack) {
         if (cmd == "save") {
+            auto filename = stack.back();
+            std::cout << "filename=" << filename << std::endl;
             std::ostringstream oss;
             oss << "セーブな感じ2" << std::endl;
             std::cout << oss.str();
+            return true;
+        }
+        if (cmd == "csv to tsv") {
+            for (int i = 0; i < stack.size(); i++) {
+                auto vec = yura::split(stack[i], ",");
+                std::string result;
+                for (auto a: vec) {
+                    result += a;
+                    result += "\t";
+                }
+                stack[i] = result;
+            }
             return true;
         }
         if (cmd == "save csv to tsv") {
             std::cout << "セーブな感じtsv" << std::endl;
             return true;
         }
+            std::cout << "falseな感じtsv" << std::endl;
         return false;
     }
 };
@@ -68,7 +86,7 @@ void jap_notation() {
             std::cout << "--- quit" << std::endl;
             return;
         } else {
-            bool f_run;
+            bool f_run = false;
             for (auto jap : jap_vec) {
                 if(jap->run(line, stack)) {
                     f_run = true;
@@ -77,6 +95,7 @@ void jap_notation() {
             }
 
             if (!f_run) {
+                std::cout << "stackkkk" << std::endl;
                 stack.push_back(line);
             }
         }

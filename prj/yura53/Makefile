@@ -1,4 +1,5 @@
 
+# CPP=clang++
 CPP=g++
 CPPFLAGS= -g -Wall -DDEBUG  -I./include/ -std=c++17
 
