@@ -81,6 +81,12 @@ namespace yura {
      * @return トリムした文字列
      */
     std::string rtrim(const std::string& s);
+
+    /**
+     * @brief トリム 
+     * @param s 対象文字列
+     * @return トリムした文字列
+     */
     std::string trim(const std::string& s);
 
 };

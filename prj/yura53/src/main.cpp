@@ -1,8 +1,8 @@
-#include <iostream>
-#include <vector>
 #include "ivvi.hpp"
 #include "markdown.hpp"
 #include "jap.hpp"
+#include <iostream>
+#include <vector>
 #include <memory>
 #include <sstream>
 
@@ -27,18 +27,21 @@ public:
     bool run(std::string &cmd, std::vector<std::string> &stack) {
         if (cmd == "save") {
             auto filename = stack.back();
+            stack.pop_back();
             std::cout << "filename=" << filename << std::endl;
             std::ostringstream oss;
-            oss << "セーブな感じ2" << std::endl;
-            std::cout << oss.str();
+            for (auto line: stack) {
+                oss << line << std::endl;
+            }
+            yura::save(filename, oss.str());
             return true;
         }
         if (cmd == "csv to tsv") {
-            for (int i = 0; i < stack.size(); i++) {
+            for (size_t i = 0; i < stack.size(); i++) {
                 auto vec = yura::split(stack[i], ",");
                 std::string result;
                 for (auto a: vec) {
-                    result += a;
+                    result += yura::trim(a);
                     result += "\t";
                 }
                 stack[i] = result;
@@ -49,7 +52,6 @@ public:
             std::cout << "セーブな感じtsv" << std::endl;
             return true;
         }
-            std::cout << "falseな感じtsv" << std::endl;
         return false;
     }
 };
