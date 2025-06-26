@@ -118,6 +118,34 @@ int yura::get_utf8_byte_size(const std::string& str, size_t start_byte, int utf8
     return current_byte - start_byte;
 }
 
+// 左トリム (Leading whitespace)
+std::string yura::ltrim(const std::string& s) {
+    // std::find_if は、指定された範囲内で条件を満たす最初の要素を指すイテレータを返します。
+    // ここでは、空白文字でない最初の文字を探します。
+    size_t first = s.find_first_not_of(" \t\n\r\f\v"); // よく使われる空白文字を指定
+    if (std::string::npos == first) { // 文字列がすべて空白の場合
+        return "";
+    }
+    return s.substr(first); // 最初に見つかった空白でない文字以降を返します。
+}
+
+// 右トリム (Trailing whitespace)
+std::string yura::rtrim(const std::string& s) {
+    // std::find_last_not_of は、指定された文字セットに含まれない最後の文字を探します。
+    // ここでは、空白文字でない最後の文字を探します。
+    size_t last = s.find_last_not_of(" \t\n\r\f\v");
+    if (std::string::npos == last) { // 文字列がすべて空白の場合
+        return "";
+    }
+    // last + 1 は、最後の空白でない文字を含めて部分文字列を抽出するためです。
+    return s.substr(0, last + 1);
+}
+
+// 左右トリム (Both leading and trailing whitespace)
+std::string yura::trim(const std::string& s) {
+    return ltrim(rtrim(s)); // まず右をトリムし、次に左をトリムします。
+}
+
 
 bool yura::is_hex_digit(char c) {
     return (c >= 'A' && c <= 'F') || (c >= 'a' && c <= 'f') || (isdigit(c));

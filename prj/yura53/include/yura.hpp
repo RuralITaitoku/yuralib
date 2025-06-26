@@ -61,12 +61,26 @@ namespace yura {
     std::string urlencode(const std::string& str);
     std::string esc_html(const std::string& str);
 
-    // 次のコメントのメソッドをC++14で実装して。
     /**
      * @brief ファイルの存在チェック
      * @param filename ファイル名
      * @return true:ファイルが存在する。
      */
     bool fileExists(const std::string &filename) ;
+
+    /**
+     * @brief 左トリム (Leading whitespace)
+     * @param s 対象文字列
+     * @return トリムした文字列
+     */
+    std::string ltrim(const std::string& s);
+
+    /**
+     * @brief 右トリム (Trailing whitespace)
+     * @param s 対象文字列
+     * @return トリムした文字列
+     */
+    std::string rtrim(const std::string& s);
+    std::string trim(const std::string& s);
 
 };
