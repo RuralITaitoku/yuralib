@@ -93,8 +93,9 @@
 雑費,        =sumif(A,D), =sumif(A,D),,
 修繕費,      =sumif(A,D), =sumif(A,D),,
 農薬 衛生費,      @sumif(A,D), @sumif(A,D),,
+csv to tsv
 2025money.txt
-save csv to tsv
+save
 ```
 
 ## 種別

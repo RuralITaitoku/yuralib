@@ -15,8 +15,8 @@ CPPFLAGS= -g -Wall -DDEBUG  -I./include/ -std=c++17
 SRCS = $(wildcard src/*.cpp)
 OBJS = $(patsubst src/%.cpp, objs/%.o, $(SRCS))
 
-MD_SRCS = $(wildcard src/*.md)
-HTML = $(patsubst src/%.md, html/%.html, $(MD_SRCS))
+MD_SRCS = $(wildcard md/*.md)
+HTML = $(patsubst md/%.md, html/%.html, $(MD_SRCS))
 
 
 all: try html
@@ -29,7 +29,7 @@ try: $(OBJS)
 objs/%.o: src/%.cpp | objs
 	$(CPP) $(CPPFLAGS) -o $@ -c $<
 
-html/%.html: src/%.md
+html/%.html: md/%.md
 	./try markdown -o $@ -i $< -t html/temp.html
 
 # $(OBJS): $(SRCS) | build
