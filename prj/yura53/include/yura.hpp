@@ -89,4 +89,6 @@ namespace yura {
      */
     std::string trim(const std::string& s);
 
+
+    int today();
 };

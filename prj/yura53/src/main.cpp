@@ -81,6 +81,8 @@ void jap_notation() {
                 std::cout << no++ << ":";
                 std::cout << l << std::endl;
             }
+        } else if (line == "today") {
+            yura::today();
         } else if (line == "cs") {
             std::cout << "--- clear stack" << std::endl;
             stack.clear();

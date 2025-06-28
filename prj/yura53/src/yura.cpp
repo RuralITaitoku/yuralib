@@ -1,5 +1,8 @@
 #include "yura.hpp"
 #include <stdexcept>
+#include <chrono>
+#include <ctime>   // std::time_t, std::localtimeを使うため
+#include <iomanip> // std::put_timeを使うため
 
 /**
  * @brief テキストファイルを読み込む。
@@ -224,4 +227,27 @@ std::string yura::esc_html(const std::string& str) {
 bool yura::fileExists(const std::string &filename) {
     std::ifstream f(filename);
     return f.good();
+}
+
+
+
+int yura::today() {
+    // 現在時刻のタイムスタンプを取得
+    // std::chrono::system_clock::to_time_t を使うと、chrono::time_point を time_t に変換できます
+    std::time_t now_c = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+
+    // ローカルタイムに変換
+    // 注意: std::localtime はスレッドセーフではない可能性があります。
+    // マルチスレッド環境では localtime_r (Linux/macOS) や localtime_s (Windows) を検討してください。
+    std::tm* local_time = std::localtime(&now_c);
+
+    // 年月日を出力
+    // tm_year は1900年からの年数、tm_mon は0から11、tm_mday は1から31
+    std::cout << "Today's date: "
+              << (local_time->tm_year + 1900) << "年"
+              << (local_time->tm_mon + 1) << "月"
+              << local_time->tm_mday << "日"
+              << std::endl;
+
+    return 0;
 }

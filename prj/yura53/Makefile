@@ -1,7 +1,7 @@
 
 # CPP=clang++
 CPP=g++
-CPPFLAGS= -g -Wall -DDEBUG  -I./include/ -std=c++17
+CPPFLAGS= -g -Wall -DDEBUG  -I./include/ -std=c++20
 
 #LIB_SRCS = $(wildcard lib/*.cpp)
 #LIB_OBJS = $(LIB_SRCS:.cpp=.o)
