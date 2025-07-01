@@ -21,7 +21,7 @@ HTML = $(patsubst md/%.md, html/%.html, $(MD_SRCS))
 
 all: try html
 
-html: $(HTML)
+html: $(HTML)  
 
 try: $(OBJS)
 	$(CPP)  -o $@ $(OBJS) -lsqlite3
@@ -29,8 +29,13 @@ try: $(OBJS)
 objs/%.o: src/%.cpp | objs
 	$(CPP) $(CPPFLAGS) -o $@ -c $<
 
-html/%.html: md/%.md
+html/%.html: md/%.md html/sidemenu.html
 	./try markdown -o $@ -i $< -t html/temp.html
+
+html/sidemenu.html: md/sidemenu.md
+	@echo ----------------------------------------------SideMenu
+	./try markdown -o $@ -i $< -t html/temp.html
+
 
 # $(OBJS): $(SRCS) | build
 
