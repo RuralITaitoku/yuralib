@@ -132,6 +132,7 @@ int main(int argc, char** argv) {
     }
     // DP("input : " << input_filename);
     // DP("output : " << output_filename);
+    // DP("replace_word : " << replace_word);
     task_mng mng;
     for (auto arg: args) {
         if (arg == "md2html") {
