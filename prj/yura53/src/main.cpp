@@ -74,6 +74,7 @@ void jap_notation() {
             for (auto jap : jap_vec) {
                 std::cout << jap->help();
             }
+
         } else if (line == "ps") {
             std::cout << "--- print stack" << std::endl;
             int no = 0;
