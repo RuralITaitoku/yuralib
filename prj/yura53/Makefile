@@ -33,7 +33,6 @@ html/%.html: md/%.md html/sidemenu.html
 	./try markdown -o $@ -i $< -t html/sidemenu.html
 
 html/sidemenu.html: md/sidemenu.md html/temp.html
-	@echo ----------------------------------------------SideMenu
 	./try markdown -o $@ -i $< -t html/temp.html -rw '@@@sidemenu@@@'
 
 
