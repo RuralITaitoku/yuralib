@@ -1,6 +1,6 @@
 
-CPP=clang++
-# CPP=g++
+# CPP=clang++
+CPP=g++
 CPPFLAGS= -g -Wall -DDEBUG  -I./include/ -std=c++20
 
 #LIB_SRCS = $(wildcard lib/*.cpp)
