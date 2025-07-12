@@ -89,4 +89,13 @@ namespace yura {
      */
     std::string trim(const std::string& s);
 
+    /**
+     * @brief テキストをcsvデータに変換する。
+     * @param text テキスト
+     * @return csv
+     */
+    std::vector<std::vector<std::string>> to_csv(std::string &text);
+    std::string to_csv_text(std::vector<std::vector<std::string>> &csv);
+
+    int today();
 };

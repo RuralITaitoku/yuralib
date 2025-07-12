@@ -1,7 +1,7 @@
 
 # CPP=clang++
 CPP=g++
-CPPFLAGS= -g -Wall -DDEBUG  -I./include/ -std=c++17
+CPPFLAGS= -g -Wall -DDEBUG  -I./include/ -std=c++20
 
 #LIB_SRCS = $(wildcard lib/*.cpp)
 #LIB_OBJS = $(LIB_SRCS:.cpp=.o)
@@ -21,7 +21,7 @@ HTML = $(patsubst md/%.md, html/%.html, $(MD_SRCS))
 
 all: try html
 
-html: $(HTML)
+html: $(HTML)  
 
 try: $(OBJS)
 	$(CPP)  -o $@ $(OBJS) -lsqlite3
@@ -29,8 +29,12 @@ try: $(OBJS)
 objs/%.o: src/%.cpp | objs
 	$(CPP) $(CPPFLAGS) -o $@ -c $<
 
-html/%.html: md/%.md
-	./try markdown -o $@ -i $< -t html/temp.html
+html/%.html: md/%.md html/sidemenu.html
+	./try markdown -o $@ -i $< -t html/sidemenu.html
+
+html/sidemenu.html: md/sidemenu.md html/temp.html
+	./try markdown -o $@ -i $< -t html/temp.html -rw '@@@sidemenu@@@'
+
 
 # $(OBJS): $(SRCS) | build
 
