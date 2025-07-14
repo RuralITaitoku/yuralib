@@ -229,8 +229,6 @@ bool yura::fileExists(const std::string &filename) {
     return f.good();
 }
 
-
-
 int yura::today() {
     // 現在時刻のタイムスタンプを取得
     // std::chrono::system_clock::to_time_t を使うと、chrono::time_point を time_t に変換できます
@@ -248,6 +246,33 @@ int yura::today() {
               << (local_time->tm_mon + 1) << "月"
               << local_time->tm_mday << "日"
               << std::endl;
+    int today = (local_time->tm_year + 1900) * 10000 + (local_time->tm_mon + 1) * 100 + local_time->tm_mday;
+    return today;
+}
 
-    return 0;
+int add_days(int base, int days_to_add) {
+    int y = base / 10000;
+    int m = (base / 100) % 100;
+    int d = (base % 100);
+
+    // 基準となる日付を設定
+    std::tm t = {}; // ゼロ初期化
+    t.tm_year = y - 1900; // 年は1900年からの経過年数
+    t.tm_mon = m - 1;        // 月は0から11 (0=1月, 1=2月, ..., 11=12月)
+    t.tm_mday = d;          // 日は1から31
+
+    // mktime() を使って time_t に変換し、日付を正規化
+    // この時点で mktime は tm_mday の値を調整し、月の終わりを越えても正しく処理します。
+    std::mktime(&t);
+
+    // 日数を加算
+    t.tm_mday += days_to_add;
+
+    // 再び mktime() を呼び出して日付を正規化
+    // tm_mday が月の範囲を超えても、mktime が自動的に正しい月と年に調整してくれます。
+    std::mktime(&t);
+
+    int result = 0;
+
+    return result;
 }

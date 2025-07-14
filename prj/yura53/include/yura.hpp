@@ -98,4 +98,5 @@ namespace yura {
     std::string to_csv_text(std::vector<std::vector<std::string>> &csv);
 
     int today();
+    int add_days(int base, int days);
 };
