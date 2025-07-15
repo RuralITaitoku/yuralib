@@ -56,14 +56,37 @@ public:
     }
 };
 
+class dialy_jap : public jap {
+public:
+    virtual ~dialy_jap() {}
+    std::string help() {
+        std::string help;
+        help += "-\n";
+        help += "today : 今日の日付を日本語でスタック。\n";
+        help += "-\n";
+        help += "save csv to tsv:\n";
+        help += "-\n";
+        help += "csv to tsv:\n";
+        return help;
+    }
+
+    bool run(std::string &cmd, std::vector<std::string> &stack) {
+        if (cmd == "today") {
+            stack.push_back("aaaaa");
+            return true;
+        }
+        return false;
+    }
+};
+
 
 void jap_notation() {
     std::cout << "jap notation" << std::endl;
     std::string line;
     std::vector<std::string> stack;
 
-    auto jap0 = std::make_shared<save_csv_tsv>();
-    jap_vec.push_back(jap0);
+    jap_vec.push_back(std::make_shared<save_csv_tsv>());
+    jap_vec.push_back(std::make_shared<dialy_jap>());
     for (;;) {
         std::getline(std::cin, line);
         std::cout << "-" << line << std::endl;
@@ -82,8 +105,6 @@ void jap_notation() {
                 std::cout << no++ << ":";
                 std::cout << l << std::endl;
             }
-        } else if (line == "today") {
-            yura::today();
         } else if (line == "cs") {
             std::cout << "--- clear stack" << std::endl;
             stack.clear();
