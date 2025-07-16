@@ -72,7 +72,8 @@ public:
 
     bool run(std::string &cmd, std::vector<std::string> &stack) {
         if (cmd == "today") {
-            stack.push_back("aaaaa");
+            int ymd = yura::today();
+            stack.push_back(std::to_string(ymd));
             return true;
         }
         return false;
