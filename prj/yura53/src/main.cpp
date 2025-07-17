@@ -14,9 +14,8 @@ public:
     std::string help() {
         std::string help;
         help += "-\n";
-        help += "スタック先頭～\n";
         help += "ファイル名\n";
-        help += "save : スタックの先頭からファイル名までを保存\n";
+        help += "save : スタックの先頭からをファイル名で保存\n";
         help += "-\n";
         help += "save csv to tsv:\n";
         help += "-\n";
@@ -62,11 +61,11 @@ public:
     std::string help() {
         std::string help;
         help += "-\n";
-        help += "today : 今日の日付を日本語でスタック。\n";
+        help += "today : 今日の日付を整数でスタック。\n";
         help += "-\n";
-        help += "save csv to tsv:\n";
-        help += "-\n";
-        help += "csv to tsv:\n";
+        help += "開始日(整数)から\n";
+        help += "終了日(整数)まで\n";
+        help += "make ymd link : 日付リンクのソースを作る❓\n";
         return help;
     }
 
