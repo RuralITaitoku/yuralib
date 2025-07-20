@@ -26,8 +26,6 @@ html: $(HTML)
 try: $(OBJS)
 	$(CPP)  -o $@ $(OBJS) -lsqlite3
 
-tryclip: 
-	g++ src/clipboard.mm -o tryclip -framework Cocoa
 
 objs/%.o: src/%.cpp | objs
 	$(CPP) $(CPPFLAGS) -o $@ -c $<
