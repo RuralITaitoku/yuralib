@@ -1,4 +1,5 @@
-
+#include <string>
+#include <cstdio>
 
 
 class yura_popen {
