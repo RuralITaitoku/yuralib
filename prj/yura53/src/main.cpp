@@ -79,6 +79,28 @@ public:
     }
 };
 
+class shell_jap : public jap {
+public:
+    virtual ~shell_jap() {}
+    std::string help() {
+        std::string help;
+        help += "-\n";
+        help += "シェルコマンド\n";
+        help += ". : シェルコマンド実行❓\n";
+        return help;
+    }
+
+    bool run(std::string &cmd, std::vector<std::string> &stack) {
+        if (cmd == ".") {
+            auto cmd = stack.back();
+            stack.pop_back();
+            std::cout << cmd << std::endl;
+            return true;
+        }
+        return false;
+    }
+};
+
 
 void jap_notation() {
     std::cout << "jap notation" << std::endl;
@@ -87,9 +109,10 @@ void jap_notation() {
 
     jap_vec.push_back(std::make_shared<save_csv_tsv>());
     jap_vec.push_back(std::make_shared<dialy_jap>());
+    jap_vec.push_back(std::make_shared<shell_jap>());
     for (;;) {
         std::getline(std::cin, line);
-        std::cout << "-" << line << std::endl;
+        //std::cout << "-" << line << std::endl;
         if (line == "" || line == "h") {
             std::cout << "--- help" << std::endl;
             std::cout << "ps : print stack" << std::endl;
@@ -121,7 +144,6 @@ void jap_notation() {
             }
 
             if (!f_run) {
-                std::cout << "stackkkk" << std::endl;
                 stack.push_back(line);
             }
         }
