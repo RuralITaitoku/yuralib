@@ -94,7 +94,7 @@ public:
         if (cmd == ".") {
             auto cmd = stack.back();
             stack.pop_back();
-            std::cout << cmd << std::endl;
+            yura::exec(cmd);
             return true;
         }
         return false;

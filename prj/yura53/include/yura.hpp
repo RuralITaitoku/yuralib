@@ -5,6 +5,7 @@
 #include <vector>
 #include <fstream>
 #include <sstream>
+#include "yura_popen.hpp"
 
 #define DP(x) std::cout << __FILE__ << ":" << __LINE__ << " " << x << std::endl;
 /**
@@ -99,4 +100,5 @@ namespace yura {
 
     int today();
     int add_days(int base, int days);
+    int exec(std::string& cmd);
 };

@@ -250,7 +250,7 @@ int yura::today() {
     return today;
 }
 
-int add_days(int base, int days_to_add) {
+int yura::add_days(int base, int days_to_add) {
     int y = base / 10000;
     int m = (base / 100) % 100;
     int d = (base % 100);
@@ -290,3 +290,9 @@ int add_days(int base, int days_to_add) {
 // e296a0	■	□	▢	▣	▤	▥	▦	▧	▨	▩	▪	▫	▬	▭	▮	▯
     // "▖" "▗" "▘" "▝" "▙" "▚" "▛" "▜" "▞" "▟" "▐" "▎"
 
+
+int yura::exec(std::string& cmd) {
+    yura_popen pipe;
+    pipe.exec(cmd);
+    return 0;
+}
