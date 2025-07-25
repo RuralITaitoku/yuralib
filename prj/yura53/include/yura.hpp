@@ -5,7 +5,7 @@
 #include <vector>
 #include <fstream>
 #include <sstream>
-#include "yura_popen.hpp"
+#include "yura_pipe.hpp"
 
 #define DP(x) std::cout << __FILE__ << ":" << __LINE__ << " " << x << std::endl;
 /**

@@ -4,7 +4,9 @@
 #include <cstdio>
 
 
-class yura_popen {
+class yura_pipe {
+
+ 
     public:
     int exec(const std::string& cmd);
 

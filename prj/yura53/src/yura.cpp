@@ -292,7 +292,7 @@ int yura::add_days(int base, int days_to_add) {
 
 
 int yura::exec(std::string& cmd) {
-    yura_popen pipe;
+    yura_pipe pipe;
     pipe.exec(cmd);
     return 0;
 }
