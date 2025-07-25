@@ -86,12 +86,12 @@ public:
         std::string help;
         help += "-\n";
         help += "シェルコマンド\n";
-        help += ". : シェルコマンド実行❓\n";
+        help += "sh : シェルコマンド実行❓\n";
         return help;
     }
 
     bool run(std::string &cmd, std::vector<std::string> &stack) {
-        if (cmd == ".") {
+        if (cmd == "sh") {
             auto cmd = stack.back();
             stack.pop_back();
             yura::exec(cmd);
