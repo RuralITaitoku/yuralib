@@ -4,7 +4,7 @@
 
 class jap_forth : public jap {
     public:
-
+        virtual ~jap_forth(){}
         std::string help() {
             std::string help;
             help += "-\n";
