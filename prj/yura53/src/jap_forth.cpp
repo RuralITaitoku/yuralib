@@ -32,6 +32,8 @@ void jap_forth::forth(std::vector<std::string> &stack) {
             } else if (ch == ':') {
                 word_name = yura::trim(cmd);
                 word_start = jap_stack.size();
+                auto& word_stack = words[word_name];
+                word_stack.clear();
                 cmd.clear();
             } else if (ch == ';') {
                 jap_stack.push_back(yura::trim(cmd));
