@@ -16,27 +16,38 @@ void jap_forth::forth(std::vector<std::string> &stack) {
     for (auto line: stack) {
         size_t start = 0;
         size_t end = line.size();
-        std::string word_name;
+        std::string word_name = 0;
         size_t word_start = 0;
+        bool space = true;
         for (auto i = start; i < end; ++i) {
             auto ch = line[i];
             if (ch == '.') {
                 jap_stack.push_back(cmd);
                 jap_stack.push_back(".");
                 cmd.clear();
-            }
-            if (ch == ':') {
+            } else if (ch == ':') {
                 word_name = yura::trim(cmd);
                 word_start = jap_stack.size();
                 cmd.clear();
-            }
-            if (ch == ';') {
+            } else if (ch == ';') {
                 auto word_stack = words[word_name];
                 for (size_t jap_i = word_start; jap_i < jap_stack.size(); ++jap_i) {
                     word_stack.push_back(jap_stack[jap_i]);
                 }
                 jap_stack.push_back(";");
                 cmd.clear();
+            } else if ((ch == ' ') ||
+                        (ch == '\t') ||
+                        (ch == '\r') ||
+                        (ch == '\n'))  {
+                if (!space) {
+                    jap_stack.push_back(cmd);
+                }
+                space = true;
+                cmd.clear();
+            } else {
+                cmd.push_back(ch);
+                space = false;
             }
         }
     }
