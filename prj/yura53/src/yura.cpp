@@ -296,3 +296,8 @@ int yura::exec(std::string& cmd) {
     pipe.exec(cmd);
     return 0;
 }
+
+bool yura::is_all_whitespace(const std::string& str) {
+    return (str.find_first_not_of(" \t\r\n") == std::string::npos);
+}
+

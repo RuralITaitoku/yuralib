@@ -1,11 +1,10 @@
 #include "ivvi.hpp"
 #include "markdown.hpp"
-#include "jap.hpp"
+#include "jap_forth.hpp"
 #include <iostream>
 #include <vector>
 #include <memory>
 #include <sstream>
-
 std::vector<std::shared_ptr<jap>> jap_vec;
 
 class save_csv_tsv : public jap {
@@ -110,6 +109,7 @@ void jap_notation() {
     jap_vec.push_back(std::make_shared<save_csv_tsv>());
     jap_vec.push_back(std::make_shared<dialy_jap>());
     jap_vec.push_back(std::make_shared<shell_jap>());
+    jap_vec.push_back(std::make_shared<jap_forth>());
     for (;;) {
         std::getline(std::cin, line);
         //std::cout << "-" << line << std::endl;

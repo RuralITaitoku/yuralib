@@ -101,4 +101,6 @@ namespace yura {
     int today();
     int add_days(int base, int days);
     int exec(std::string& cmd);
+    bool is_all_whitespace(const std::string& str) ;
+
 };
