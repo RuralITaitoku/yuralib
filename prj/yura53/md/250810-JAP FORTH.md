@@ -28,3 +28,20 @@ false: 間違い . ;
 
 条件 :true :false if
 条件 :true loop
+
+条件: 条件 ;
+Yesの場合:a b c;
+Noの場合:a b c;
+
+何とかチェック:条件 Yesの場合 Noの場合;
+
+何とかチェック
+
+test: 条件;Yes: Yesの場合;No: Noの場合; if
+
+1. 条件:                  ;
+   1. Yes:                  ;
+   2. No:                   ; if
+2. 開始フレームから終了フレームまで:               ;
+   1. フレーム事の処理:               ; loop
+3. 

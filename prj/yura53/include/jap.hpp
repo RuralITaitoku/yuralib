@@ -1,5 +1,6 @@
-#pragma onece
+#pragma once
 #include <iostream>
+#include <vector>
 
 class jap {
 public:
