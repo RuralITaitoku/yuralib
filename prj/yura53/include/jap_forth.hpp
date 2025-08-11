@@ -20,8 +20,18 @@ class jap_forth : public jap {
             return help;
         }
         bool run(std::string &cmd, std::vector<std::string> &stack);
+        std::string pop(std::vector<std::string>& stack);
+        // スタックのトップから2番目の値を複製し、スタックのトップに移動
+        void over();
+        // スタックのトップにある2つの値の位置を入れ替え
+        void swap();
+        // スタックのトップにある3つの値を循環的に移動
+        void rot();
+        // スタックのトップにある値を複製
+        void dup();
     private:
         std::map<std::string, std::vector<std::string>> words;
-        void forth0(std::vector<std::string> &stack);
         void forth1(std::vector<std::string> &stack);
+        void loop();
+
 };
