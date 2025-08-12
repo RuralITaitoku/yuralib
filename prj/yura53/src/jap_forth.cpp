@@ -13,16 +13,9 @@ bool jap_forth::run(std::string &cmd, std::vector<std::string> &stack) {
     return false;
 }
 
-std::string jap_forth::pop(std::vector<std::string>& stack) {
-    std::string result = stack.back();
-    stack.pop_back();
-    return result;
-}
-
-
 void jap_forth::forth1(std::vector<std::string> &stack) {
     DP("jap-forth 1");
-    auto& jap_stack = words[""];// ルートスタック
+    auto& jap_stack = workspace[""];// ルートスタック
     jap_stack.clear();
     //TypeCheck<decltype(jap_stack)> check;
     std::string cmd;
@@ -40,7 +33,9 @@ void jap_forth::forth1(std::vector<std::string> &stack) {
                 if (type == SPACE) {
                     cmd.push_back(ch);
                 } else {
-                    jap_stack.push_back(cmd);
+                    if (!yura::is_all_whitespace(cmd)) {
+                        jap_stack.push_back(cmd);
+                    }
                     cmd.clear();
                 }
                 type = SPACE;
@@ -49,7 +44,9 @@ void jap_forth::forth1(std::vector<std::string> &stack) {
                 || ch == '=' || ch == '<'|| ch == '>'|| ch == '!'
                 || ch == ',' || ch == '.' ){
                 if (type != CTRL) {
-                    jap_stack.push_back(cmd);
+                    if (!yura::is_all_whitespace(cmd)) {
+                        jap_stack.push_back(cmd);
+                    }
                     cmd.clear();
                 }
                 cmd.push_back(ch);
@@ -60,19 +57,48 @@ void jap_forth::forth1(std::vector<std::string> &stack) {
             }
         }
         if (!cmd.empty()) {
-            jap_stack.push_back(cmd);
+            if (!yura::is_all_whitespace(cmd)) {
+                jap_stack.push_back(cmd);
+            }
         }
     }
+}
+
+std::string jap_forth::pop(std::vector<std::string>& stack, int index) {
+    int  pi = stack.size() - 1 - index;
+    if ((pi < 0) || (static_cast<int>(stack.size()) <= pi)) {
+        DP("インデックスが範囲外：" << pi);
+        DP("stack.size() = " << stack.size());
+    }
+    auto cmd = stack[pi];
+    stack.pop_back();
+    return cmd;
 }
 
 void jap_forth::loop() {
     DP("ループ");
     DP("マップの状態");
-    for (const auto& pair: words) {
+    for (const auto& pair: workspace) {
         auto body = pair.second;
         std::cout << "name:" << pair.first << std::endl;
         for (auto w: body) {
             std::cout << "- " << w << std::endl;
         }
     }
+    std::vector<std::string> stack;
+    std::string wd = "";
+    auto& jap = workspace[wd];
+
+    for (auto cmd: jap) {
+        if (cmd == ".") {
+            auto str = pop(stack);
+            std::cout << str << std::endl;
+        } else {
+            stack.push_back(cmd);
+        }
+
+    }
+
+
+
 }
