@@ -34,4 +34,6 @@ class jap_forth : public jap {
         void forth1(std::vector<std::string> &stack);
         void loop();
 
-};
+        void print_map();
+        void print_stack(std::vector<std::string> &stack);
+    };

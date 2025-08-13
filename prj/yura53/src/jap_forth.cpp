@@ -75,8 +75,7 @@ std::string jap_forth::pop(std::vector<std::string>& stack, int index) {
     return cmd;
 }
 
-void jap_forth::loop() {
-    DP("ループ");
+void jap_forth::print_map() {
     DP("マップの状態");
     for (const auto& pair: workspace) {
         auto body = pair.second;
@@ -85,18 +84,32 @@ void jap_forth::loop() {
             std::cout << "- " << w << std::endl;
         }
     }
+}
+void jap_forth::print_stack(std::vector<std::string> &stack) {
+    DP("スタックの状態");
+    for (auto cmd: stack) {
+        DP("-\"" << cmd << "\"");
+    }
+}
+
+void jap_forth::loop() {
+    DP("ループ");
     std::vector<std::string> stack;
     std::string wd = "";
     auto& jap = workspace[wd];
+    print_map();
 
     for (auto cmd: jap) {
         if (cmd == ".") {
+            DP("stack.size = " << stack.size());
             auto str = pop(stack);
+            DP("stack.size = " << stack.size());
             std::cout << str << std::endl;
+            print_map();
         } else {
             stack.push_back(cmd);
         }
-
+        print_stack(stack);
     }
 
 
