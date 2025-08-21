@@ -16,9 +16,9 @@ public:
         help += "ファイル名\n";
         help += "save : スタックの先頭からをファイル名で保存\n";
         help += "-\n";
-        help += "save csv to tsv:\n";
+        help += "save_csv_to_tsv:\n";
         help += "-\n";
-        help += "csv to tsv:\n";
+        help += "csv_to_tsv:\n";
         return help;
     }
 
@@ -34,7 +34,7 @@ public:
             yura::save(filename, oss.str());
             return true;
         }
-        if (cmd == "csv to tsv") {
+        if (cmd == "csv_to_tsv") {
             for (size_t i = 0; i < stack.size(); i++) {
                 auto vec = yura::split(stack[i], ",");
                 std::string result;
@@ -46,7 +46,7 @@ public:
             }
             return true;
         }
-        if (cmd == "save csv to tsv") {
+        if (cmd == "save_csv_to_tsv") {
             std::cout << "セーブな感じtsv" << std::endl;
             return true;
         }
