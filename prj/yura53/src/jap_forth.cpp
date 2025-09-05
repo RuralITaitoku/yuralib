@@ -111,7 +111,4 @@ void jap_forth::loop() {
         }
         print_stack(stack);
     }
-
-
-
 }
