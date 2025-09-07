@@ -25,7 +25,6 @@ std::string yura_pipe::pexec(const std::string& cmd) {
 
 
 int test_pipe() {
-    FILE* pipe = nullptr; // ファイルポインタの初期化
     char buffer[128];     // コマンドの出力を格納するバッファ
     std::string result = ""; // コマンドの出力を連結する文字列
 
@@ -40,7 +39,7 @@ int test_pipe() {
     }
 
     // パイプから出力を読み取り、result に追加していく
-    while (fgets(buffer, sizeof(buffer), pipe) != nullptr) {
+    while (fgets(buffer, sizeof(buffer), pipe.get()) != nullptr) {
         result += buffer;
     }
 
