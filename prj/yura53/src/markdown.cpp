@@ -37,7 +37,7 @@ int markdown::line_render(const std::string& line, std::string& html) {
                     }
                 }
                 if (url.size() == 0) {
-                    oss << "<a href='./" << yura::urlencode(name) << "'>" << name << "</a>";
+                    oss << "<a href='./" << yura::urlencode(name) << ".html'>" << name << "</a>";
                 } else {
                     if (img) {
                         oss << "<img src='" << url << "' alt='" << name << "' />";
