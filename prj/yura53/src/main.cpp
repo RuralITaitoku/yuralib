@@ -1,6 +1,7 @@
 #include "ivvi.hpp"
 #include "markdown.hpp"
 #include "jap_forth.hpp"
+#include "jap_zero.hpp"
 #include <iostream>
 #include <vector>
 #include <memory>
@@ -198,6 +199,10 @@ int main(int argc, char** argv) {
         }
         if (arg == "jap") {
             jap_notation();
+        }
+        if (arg == "jap0") {
+            jap_zero jz;
+            jz.main();
         }
     }
 }

@@ -1,4 +1,5 @@
 #include "yura_pipe.hpp"
+#include <memory>
 
 int yura_pipe::exec(const std::string& cmd) {
 
@@ -7,54 +8,40 @@ int yura_pipe::exec(const std::string& cmd) {
     return 1;
 }
 
-
-
-
-
-int test_pipe() {
-    FILE* pipe = nullptr; // ファイルポインタの初期化
+std::string yura_pipe::pexec(const std::string& cmd) {
     char buffer[128];     // コマンドの出力を格納するバッファ
-    std::string result = ""; // コマンドの出力を連結する文字列
+    std::string result;
 
-    // 実行したいコマンド
-    // 例: Linux/macOS では "ls -l"、Windows では "dir"
-    // 環境に合わせて変更してください。
-#ifdef _WIN32
-    const char* command = "dir";
-#else
-    const char* command = "ls -l";
-#endif
-
-    // popen を使ってコマンドを実行し、パイプを開く
-    // "r" は読み込みモード (コマンドの出力を読み取る)
-    pipe = popen(command, "r");
-
-    // popen が失敗した場合のチェック
+    std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(cmd.c_str(), "r"), pclose);
     if (!pipe) {
-        std::cerr << "popen() に失敗しました！" << std::endl;
-        return 1;
+        throw std::runtime_error("popen() に失敗しました！");
     }
-
     // パイプから出力を読み取り、result に追加していく
-    while (fgets(buffer, sizeof(buffer), pipe) != nullptr) {
+    while (fgets(buffer, sizeof(buffer), pipe.get()) != nullptr) {
         result += buffer;
     }
 
-    // コマンドの出力を表示
-    std::cout << "コマンドの出力:\n" << result << std::endl;
+    return result;
+}
 
-    // pclose を使ってパイプを閉じる
-    int status = pclose(pipe);
 
-    // pclose の戻り値をチェック (コマンドの終了ステータス)
-    if (status == -1) {
-        std::cerr << "pclose() に失敗しました！" << std::endl;
-        return 1;
-    } else {
-        if (status != 0) {
-            std::cerr << "コマンドがエラーで終了しました。ステータス: " << status << std::endl;
-            return 1;
-        }
+int test_pipe() {
+    char buffer[128];     // コマンドの出力を格納するバッファ
+    std::string result = ""; // コマンドの出力を連結する文字列
+
+    std::string command = "ls -l";
+    // popen を使ってコマンドを実行し、パイプを開く
+    // "r" は読み込みモード (コマンドの出力を読み取る)
+    std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(command.c_str(), "r"), pclose);
+
+    // popen が失敗した場合のチェック
+    if (!pipe) {
+        throw std::runtime_error("popen() に失敗しました！");
+    }
+
+    // パイプから出力を読み取り、result に追加していく
+    while (fgets(buffer, sizeof(buffer), pipe.get()) != nullptr) {
+        result += buffer;
     }
 
     return 0;
