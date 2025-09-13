@@ -5,13 +5,13 @@ template<typename T> class TypeCheck;
 #define DP(x) std::cout << __FILE__ << ":" << __LINE__ << " " << x << std::endl;
 
 bool jap_zero::run(std::string &cmd, std::vector<std::string> &stack) {
-    if (cmd == "jap_zero" || cmd == "jf") {
+    if (cmd == "jap0" || cmd == "jf") {
     }
     return false;
 }
-
+std::vector<std::string> &stack;
 void jap_zero::main() {
-    std::cout << "main" << std::endl;
+    std::cout << "jap0 main" << std::endl;
     std::string line;
     for(;;) {
         getline(std::cin, line);
