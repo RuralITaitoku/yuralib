@@ -4,6 +4,8 @@
 #include <ctime>   // std::time_t, std::localtimeを使うため
 #include <iomanip> // std::put_timeを使うため
 
+//#include <cstdint>
+
 /**
  * @brief テキストファイルを読み込む。
  * @param filename テキストファイル名
@@ -276,6 +278,114 @@ int yura::add_days(int base, int days_to_add) {
 
     return result;
 }
+
+
+/**
+ * @brief 現在のUTC時刻をYYYYMMDDHHMMSSmmm形式のuint64_tで取得します。
+ * @details C++11の`std::chrono::system_clock`と`<ctime>`を利用して、
+ *          高精度なミリ秒単位の時刻を取得し、指定された形式に変換します。
+ * @return 変換された時刻を表すuint64_t値。
+ */
+uint64_t yura::get_current_time_uint64_t() {
+    // 現在のシステム時刻（高分解能）を取得
+    auto now = std::chrono::system_clock::now();
+    
+    // 時刻をミリ秒単位に変換
+    auto milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch()) % 1000;
+    
+    // std::time_t型に変換
+    std::time_t now_time_t = std::chrono::system_clock::to_time_t(now);
+    
+    // UTC時刻に変換（スレッドセーフなgmtime_rを使用）
+    std::tm time_info{};
+#ifdef _WIN32
+    gmtime_s(&time_info, &now_time_t); // Windows
+#else
+    gmtime_r(&now_time_t, &time_info); // POSIX
+#endif
+
+    // 各要素からuint64_tの数値を構築
+    uint64_t result = 0;
+    result += (uint64_t)(time_info.tm_year + 1900) * 10000000000000ULL; // YYYY
+    result += (uint64_t)(time_info.tm_mon + 1) * 100000000000ULL;      // MM
+    result += (uint64_t)time_info.tm_mday * 1000000000ULL;             // DD
+    result += (uint64_t)time_info.tm_hour * 10000000ULL;               // HH
+    result += (uint64_t)time_info.tm_min * 100000ULL;                  // MM
+    result += (uint64_t)time_info.tm_sec * 1000ULL;                    // SS
+    result += (uint64_t)milliseconds.count();                          // mmm
+
+    return result;
+}
+
+
+
+
+/**
+ * @brief YYYYMMDDHHMMSSmmm形式のuint64_tからstd::tm構造体とミリ秒を取得します。
+ * @param timestamp YYYYMMDDHHMMSSmmm形式のuint64_t値。
+ * @param tm 変換結果を格納するstd::tm構造体への参照。
+ * @param milliseconds 変換結果を格納するミリ秒への参照。
+ * @return 変換に成功した場合はtrue、無効な形式の場合はfalse。
+ */
+bool yura::from_uint64_t_to_tm(uint64_t timestamp, std::tm& tm, int& milliseconds) {
+    if (timestamp > 99999999999999999ULL) { // YYYYMMDDHHMMSSmmmの桁数チェック
+        return false;
+    }
+
+    milliseconds = timestamp % 1000;
+    uint64_t temp = timestamp / 1000;
+
+    tm.tm_sec = temp % 100;
+    temp /= 100;
+    tm.tm_min = temp % 100;
+    temp /= 100;
+    tm.tm_hour = temp % 100;
+    temp /= 100;
+    tm.tm_mday = temp % 100;
+    temp /= 100;
+    tm.tm_mon = (temp % 100) - 1; // tm_monは0から始まる
+    temp /= 100;
+    tm.tm_year = (temp % 10000) - 1900; // tm_yearは1900年からの年数
+    tm.tm_isdst = -1; // mktimeに夏時間判定を任せる
+
+    // mktimeでの変換が失敗する可能性を考慮し、ここでは単純な抽出のみ行う
+    return true;
+}
+
+/**
+ * @brief YYYYMMDDHHMMSSmmm形式のuint64_tのstartとendの差をミリ秒で求めます。
+ * @param start 開始時刻（uint64_t）。
+ * @param end 終了時刻（uint64_t）。
+ * @return startとendの差のミリ秒。start > endの場合は負の値になります。
+ * @throw std::invalid_argument 無効なタイムスタンプが入力された場合にスローされます。
+ */
+int64_t yura::diff_milli_secound(uint64_t start, uint64_t end) {
+    std::tm start_tm{}, end_tm{};
+    int start_ms = 0, end_ms = 0;
+
+    if (!from_uint64_t_to_tm(start, start_tm, start_ms)) {
+        throw std::invalid_argument("Invalid start timestamp");
+    }
+    if (!from_uint64_t_to_tm(end, end_tm, end_ms)) {
+        throw std::invalid_argument("Invalid end timestamp");
+    }
+
+    // std::time_tに変換して秒単位の差分を計算
+    std::time_t start_t = std::mktime(&start_tm);
+    std::time_t end_t = std::mktime(&end_tm);
+
+    if (start_t == -1 || end_t == -1) {
+        throw std::invalid_argument("Could not convert timestamps to time_t");
+    }
+
+    // 秒単位の差にミリ秒の差を足して、全体のミリ秒差分を算出
+    int64_t diff_seconds = static_cast<int64_t>(end_t - start_t);
+    int64_t diff_ms = static_cast<int64_t>(end_ms - start_ms);
+
+    return diff_seconds * 1000 + diff_ms;
+}
+
+
 
 // e29480	─	━	│	┃	┄	┅	┆	┇	┈	┉	┊	┋	┌	┍	┎	┏
 // e29490	┐	┑	┒	┓	└	┕	┖	┗	┘	┙	┚	┛	├	┝	┞	┟

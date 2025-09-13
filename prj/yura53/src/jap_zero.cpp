@@ -9,10 +9,10 @@ bool jap_zero::run(std::string &cmd, std::vector<std::string> &stack) {
     }
     return false;
 }
-std::vector<std::string> &stack;
 void jap_zero::main() {
     std::cout << "jap0 main" << std::endl;
     std::string line;
+    std::vector<std::string> stack;
     for(;;) {
         getline(std::cin, line);
         std::cout << line << std::endl;

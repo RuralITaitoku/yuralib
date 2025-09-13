@@ -98,8 +98,56 @@ namespace yura {
     std::vector<std::vector<std::string>> to_csv(std::string &text);
     std::string to_csv_text(std::vector<std::vector<std::string>> &csv);
 
+    /**
+     * @brief 現在の日付をYYYYMMDD形式の整数で取得します。
+     * @details システムの現在時刻を取得し、ローカルタイムに変換した後、
+     *          年、月、日の各要素を抽出し、`YYYY * 10000 + MM * 100 + DD`の形式の
+     *          整数に変換して返します。
+     *          **注意:** このメソッドは内部で`std::localtime`を使用しており、スレッドセーフではありません。
+     * @return 現在の日付を表すYYYYMMDD形式の整数。
+     */
     int today();
+    /**
+     * @brief YYYYMMDD形式の整数で表された日付に、指定した日数を加算します。
+     * @details 内部で`std::mktime`を使用することで、月の繰り上がりや年の繰り上がりを
+     *          自動で処理し、正確な日付計算を行います。
+     *          **注意**: このメソッドはローカルタイムを基準に動作するため、
+     *          夏時間（Daylight Saving Time）の影響を受ける可能性があります。
+     * @param base YYYYMMDD形式の整数で表された基準日。
+     * @param days_to_add 加算する日数（負の数を指定することで減算も可能）。
+     * @return 日数が加算された後の日付をYYYYMMDD形式の整数で返します。
+     *         日付の変換に失敗した場合の戻り値は未定義です。
+     */
     int add_days(int base, int days);
+
+    /**
+     * @brief 現在のUTC時刻をYYYYMMDDHHMMSSmmm形式のuint64_tで取得します。
+     * @details C++11の`std::chrono::system_clock`と`<ctime>`を利用して、
+     *          高精度なミリ秒単位の時刻を取得し、指定された形式に変換します。
+     * @return 変換された時刻を表すuint64_t値。
+     */
+    uint64_t get_current_time_uint64_t();
+
+    /**
+     * @brief YYYYMMDDHHMMSSmmm形式のuint64_tからstd::tm構造体とミリ秒を取得します。
+     * @param timestamp YYYYMMDDHHMMSSmmm形式のuint64_t値。
+     * @param tm 変換結果を格納するstd::tm構造体への参照。
+     * @param milliseconds 変換結果を格納するミリ秒への参照。
+     * @return 変換に成功した場合はtrue、無効な形式の場合はfalse。
+     */
+    bool from_uint64_t_to_tm(uint64_t timestamp, std::tm& tm, int& milliseconds);
+
+    /**
+     * @brief YYYYMMDDHHMMSSmmm形式のuint64_tのstartとendの差をミリ秒で求めます。
+     * @param start 開始時刻（uint64_t）。
+     * @param end 終了時刻（uint64_t）。
+     * @return startとendの差のミリ秒。start > endの場合は負の値になります。
+     * @throw std::invalid_argument 無効なタイムスタンプが入力された場合にスローされます。
+     */
+    int64_t diff_milli_secound(uint64_t start, uint64_t end);
+
+
+
     int exec(std::string& cmd);
     bool is_all_whitespace(const std::string& str) ;
 
