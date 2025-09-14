@@ -12,7 +12,7 @@ std::string yura_pipe::pexec(const std::string& cmd) {
     char buffer[128];     // コマンドの出力を格納するバッファ
     std::string result;
 
-    std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(cmd.c_str(), "r"), pclose);
+    std::unique_ptr<FILE, int(*)(FILE*)> pipe(popen(cmd.c_str(), "r"), pclose);
     if (!pipe) {
         throw std::runtime_error("popen() に失敗しました！");
     }
@@ -32,7 +32,7 @@ int test_pipe() {
     std::string command = "ls -l";
     // popen を使ってコマンドを実行し、パイプを開く
     // "r" は読み込みモード (コマンドの出力を読み取る)
-    std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(command.c_str(), "r"), pclose);
+    std::unique_ptr<FILE, int(*)(FILE*)> pipe(popen(command.c_str(), "r"), pclose);
 
     // popen が失敗した場合のチェック
     if (!pipe) {
