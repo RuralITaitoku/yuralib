@@ -15,19 +15,28 @@ CPPFLAGS= -g -Wall -DDEBUG  -I./include/ -std=c++20
 SRCS = $(wildcard src/*.cpp)
 OBJS = $(patsubst src/%.cpp, objs/%.o, $(SRCS))
 
+JAP_SRCS = $(wildcard src_jap/*.cpp)
+JAP_OBJS = $(patsubst src_jap/%.cpp, objs/%.o, $(JAP_SRCS))
+
 MD_SRCS = $(wildcard md/*.md)
 HTML = $(patsubst md/%.md, html/%.html, $(MD_SRCS))
 
 
-all: try html
+all: try html jap
 
 html: $(HTML)  
 
 try: $(OBJS)
-	$(CPP)  -o $@ $(OBJS) -lsqlite3
+	$(CPP)  -o $@ $^ -lsqlite3
+
+jap: $(JAP_OBJS)
+	$(CPP)  -o $@ $^ -lsqlite3
 
 
 objs/%.o: src/%.cpp | objs
+	$(CPP) $(CPPFLAGS) -o $@ -c $<
+
+objs/%.o: src_jap/%.cpp | objs
 	$(CPP) $(CPPFLAGS) -o $@ -c $<
 
 html/%.html: md/%.md html/sidemenu.html
@@ -47,6 +56,7 @@ install:
 
 clean:
 	rm -r objs/*.o
+	rm ./try ./jap
 	find html/*.html -not -name "temp.html"	-delete
 
 

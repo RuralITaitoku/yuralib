@@ -20,3 +20,11 @@ void jap_zero::main() {
     }
 
 }
+
+
+int main() {
+    std::cout << "main jap" << std::endl;
+    jap_zero jap0;
+
+    jap0.main();
+}
