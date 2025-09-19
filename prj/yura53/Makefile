@@ -53,6 +53,7 @@ objs:
 
 install:
 	cp ./try ~/bin/try
+	cp ./jap ~/bin/jap
 
 clean:
 	rm -r objs/*.o
