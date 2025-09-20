@@ -1,6 +1,5 @@
 #include "jap_zero.hpp"
 #include <cstdlib>
-
 template<typename T> class TypeCheck;
 #define DP(x) std::cout << __FILE__ << ":" << __LINE__ << " " << x << std::endl;
 
