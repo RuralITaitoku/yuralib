@@ -8,6 +8,17 @@ bool jap_zero::run(std::string &cmd, std::vector<std::string> &stack) {
     }
     return false;
 }
+
+void jap_zero::system(std::string& cmd) {
+    auto result = std::system(cmd.c_str());
+    if (result == 0) {
+        std::cout << "正常終了" << std::endl;
+    } else {
+        std::cout << "異常終了:" << result << std::endl;
+    }
+
+}
+
 void jap_zero::main() {
     std::string line;
     std::vector<std::string> stack;
@@ -33,12 +44,11 @@ void jap_zero::main() {
                 stack.pop_back();
             }
         } else if (line == "s" || line == "status") {
-            auto result = std::system("git status");
-            if (result == 0) {
-                std::cout << "正常終了" << std::endl;
-            } else {
-                std::cout << "異常終了:" << result << std::endl;
-            }
+            std::string git_cmd("git status");
+            system(git_cmd);
+        } else if (line == "a" || line == "git add") {
+            std::string git_cmd("git add .;git status");
+            system(git_cmd);
         } else if (line == "commit") {
         } else if (line == "q") {
                 std::cout << "jap終了" << std::endl;

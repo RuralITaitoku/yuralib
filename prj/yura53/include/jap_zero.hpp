@@ -20,7 +20,7 @@ class jap_zero : public jap {
             return help;
         }
         bool run(std::string &cmd, std::vector<std::string> &stack);
-
+        void system(std::string &cmd);
         void main();
     private:
 };
