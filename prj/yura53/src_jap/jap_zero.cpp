@@ -31,6 +31,8 @@ std::string jap_zero::escape(std::string &str) {
         } else if (ch == '"') {
             result += '\\';
             result += ch;
+        } else {
+            result += ch;
         }
     }
     return result;
