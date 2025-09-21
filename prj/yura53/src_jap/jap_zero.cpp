@@ -10,6 +10,7 @@ bool jap_zero::run(std::string &cmd, std::vector<std::string> &stack) {
 }
 
 void jap_zero::system(std::string& cmd) {
+    std::cout << cmd << std::endl;
     auto result = std::system(cmd.c_str());
     if (result == 0) {
         std::cout << "正常終了" << std::endl;
@@ -19,8 +20,25 @@ void jap_zero::system(std::string& cmd) {
 
 }
 
+std::string jap_zero::escape(std::string &str) {
+    std::string result;
+
+    for (size_t i = 0; i < str.size(); ++i) {
+        auto ch = str[i];
+        if (ch == '\\') {
+            result += ch;
+            i++;
+        } else if (ch == '"') {
+            result += '\\';
+            result += ch;
+        }
+    }
+    return result;
+}
+
+
+
 void jap_zero::main() {
-    std::cout << "git pull" << std::endl;
     std::string git_cmd("git pull");
     system(git_cmd);
     std::string line;
@@ -53,7 +71,12 @@ void jap_zero::main() {
         } else if (line == "a" || line == "add") {
             git_cmd = "git add .;git status";
             system(git_cmd);
-        } else if (line == "commit") {
+        } else if (line == "c" || line == "commit") {
+            git_cmd = "git commit -m \"";
+            auto msg = stack.back();
+            git_cmd += escape(msg);
+            git_cmd += '\"';
+            system(git_cmd);            
         } else if (line == "p" || line == "push") {
             git_cmd = "git push;git status";
             system(git_cmd);

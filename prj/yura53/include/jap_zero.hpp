@@ -21,6 +21,7 @@ class jap_zero : public jap {
         }
         bool run(std::string &cmd, std::vector<std::string> &stack);
         void system(std::string &cmd);
+        std::string escape(std::string &str);
         void main();
     private:
 };
