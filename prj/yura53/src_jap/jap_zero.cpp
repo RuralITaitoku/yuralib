@@ -89,7 +89,6 @@ void jap_zero::main() {
             stack.push_back(line);
         }
     }
-
 }
 
 
