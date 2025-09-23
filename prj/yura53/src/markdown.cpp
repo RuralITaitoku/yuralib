@@ -65,7 +65,12 @@ int markdown::line_render(const std::string& line, std::string& html) {
 }
 
 
-int markdown::render(const std::string& md, std::string& html) {
+int markdown::render(const std::string& md, std::string& html, std::string& toc_html) {
+    /*
+    let mut toc_html = String::from("<div class='table_of_contents'>\n");
+    toc_html.push_str(&format!("　　　　　<a href='#row{}'>{}</a><br/>\n", bm_index, &esc_html(&line)));
+    html.push_str(&format!("<h4 id='row{}'>{}</h4>\n", bm_index, &esc_html(&line)));
+    */
     std::istringstream iss(md);
     std::string line;
     std::vector<std::string> lines;
@@ -102,7 +107,8 @@ int markdown::render(const std::string& md, std::string& html) {
 
 std::string markdown::html(const std::string& md) {
     std::string html;
-    auto result = render(md, html);
+    std::string toc_html;
+    auto result = render(md, html, toc_html);
     if (result) {
         DP("Error");
     }

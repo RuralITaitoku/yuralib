@@ -70,6 +70,9 @@ void jap_zero::main() {
         } else if (line == "s" || line == "status") {
             git_cmd = "git status";
             system(git_cmd);
+        } else if (line == "d" || line == "diff") {
+            git_cmd = "git diff";
+            system(git_cmd);
         } else if (line == "a" || line == "add") {
             git_cmd = "git add .;git status";
             system(git_cmd);

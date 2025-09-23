@@ -16,6 +16,11 @@ body {
     border-radius: 5px; /* 少し角を丸くする */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* হালকা শ্যাডো */
 }
+.table_of_contents {
+    background-color:#EEEEFF;
+    border: 1px solid #000022;
+    border-radius: 10px;
+}
 
 /* ヘッダーのスタイル */
 header {

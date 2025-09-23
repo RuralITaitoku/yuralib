@@ -11,7 +11,7 @@ public:
         NG = 1
     };
     int line_render(const std::string& line, std::string& html);
-    int render(const std::string& md, std::string& html);
+    int render(const std::string& md, std::string& html, std::string& toc_html);
     std::string html(const std::string& md);
 
 };
