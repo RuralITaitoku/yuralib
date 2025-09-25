@@ -83,7 +83,7 @@ void jap_zero::main() {
             git_cmd += '\"';
             system(git_cmd);            
         } else if (line == "p" || line == "push") {
-            git_cmd = "git push;git status";
+            git_cmd = "git push";
             system(git_cmd);
         } else if (line == "q") {
                 std::cout << "jap終了" << std::endl;
