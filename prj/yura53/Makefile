@@ -29,7 +29,7 @@ html: $(HTML)
 try: $(OBJS)
 	$(CPP)  -o $@ $^ -lsqlite3
 
-jap: $(JAP_OBJS) objs/yura_pipe.o
+jap: $(JAP_OBJS) objs/yuraterm.o objs/yura_pipe.o
 	$(CPP)  -o $@ $^ -lsqlite3
 
 

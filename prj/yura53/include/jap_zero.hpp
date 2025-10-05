@@ -1,6 +1,7 @@
 #pragma once
 #include "jap.hpp"
 #include <map>
+#include "yuraterm.hpp"
 
 class jap_csv : public jap {
     public:

@@ -41,7 +41,7 @@ std::string jap_zero::escape(std::string &str) {
     return result;
 }
 
-
+void ivvi ();
 
 void jap_zero::main() {
     std::string git_cmd("git pull");
@@ -87,7 +87,11 @@ void jap_zero::main() {
             auto msg = stack.back();
             git_cmd += escape(msg);
             git_cmd += '\"';
-            system(git_cmd);            
+            system(git_cmd);
+        } else if (line == "iv") {
+            std::cout << "iv" << std::endl;
+            ivvi();
+            std::cout << "quit iv" << std::endl;   
         } else if (line == "p" || line == "push") {
             git_cmd = "git push";
             system(git_cmd);
@@ -96,6 +100,38 @@ void jap_zero::main() {
             return;
         } else {
             stack.push_back(line);
+        }
+    }
+}
+
+void ivvi () {
+    yuraterm term;
+    int row = 1;
+    int col = 1;
+    auto [ width, heigth] = term.get_term_size();
+    while (auto ch = term.get_char()) {
+        if (ch == 'q') {
+            break;
+        } else if (ch == 'j') {
+            if (row < heigth) {
+                row++;
+            }
+            term.to_cursor(row, col);
+        } else if (ch == 'k') {
+            if (row > 1) {
+                row--;
+            }
+            term.to_cursor(row, col);
+        } else if (ch == 'h') {
+            if (col > 1) {
+                col--;
+            }
+            term.to_cursor(row, col);
+        } else if (ch == 'l') {
+            if (col < width) {
+                col++;
+            }
+            term.to_cursor(row, col);
         }
     }
 }
