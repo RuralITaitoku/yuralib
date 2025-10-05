@@ -1,5 +1,7 @@
 #include "jap_csv.hpp"
 
+#include <iostream>
+
 class save_csv_tsv : public jap {
 public:
     virtual ~save_csv_tsv() {}

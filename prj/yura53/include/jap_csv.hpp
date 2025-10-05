@@ -1,5 +1,7 @@
 #pragma once
 #include "jap.hpp"
+#include "yura.hpp"
+#include <map>
 
 class jap_csv : public jap {
     public:
@@ -9,7 +11,7 @@ class jap_csv : public jap {
             CTRL = 3,
         };
 
-        virtual ~jap_forth(){}
+        virtual ~jap_csv(){}
         std::string help() {
             std::string help;
             help += "-\n";

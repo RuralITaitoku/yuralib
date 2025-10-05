@@ -78,6 +78,7 @@ void jap_zero::main() {
             system(git_cmd);
         } else if (line == "a" || line == "add") {
             git_cmd = "git add .;git status";
+            system(git_cmd);
         } else if (line == "b" || line == "branch") {
             git_cmd = "git branch -vv";
             system(git_cmd);
