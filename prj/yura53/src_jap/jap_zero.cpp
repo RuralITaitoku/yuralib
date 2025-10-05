@@ -1,5 +1,8 @@
 #include "jap_zero.hpp"
 #include <cstdlib>
+
+
+
 template<typename T> class TypeCheck;
 #define DP(x) std::cout << __FILE__ << ":" << __LINE__ << " " << x << std::endl;
 
@@ -75,6 +78,8 @@ void jap_zero::main() {
             system(git_cmd);
         } else if (line == "a" || line == "add") {
             git_cmd = "git add .;git status";
+        } else if (line == "b" || line == "branch") {
+            git_cmd = "git branch -vv";
             system(git_cmd);
         } else if (line == "c" || line == "commit") {
             git_cmd = "git commit -m \"";

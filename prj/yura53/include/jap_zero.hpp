@@ -2,6 +2,19 @@
 #include "jap.hpp"
 #include <map>
 
+class jap_csv : public jap {
+    public:
+        std::string help() {
+            std::string help;
+            help += "-\n";
+            help += "jap_forth コマンド\n";
+            help += "jap_forth ( jf ) : トップスタックをjap_forchとして処理\n";
+            help += "-\n";
+            return help;
+        }
+        bool run(std::string &cmd, std::vector<std::string> &stack);
+};
+
 class jap_zero : public jap {
     public:
         enum Type {
