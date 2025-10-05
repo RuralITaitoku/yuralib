@@ -80,7 +80,7 @@ void jap_zero::main() {
             git_cmd = "git add .;git status";
             system(git_cmd);
         } else if (line == "b" || line == "branch") {
-            git_cmd = "git branch -vv";
+            git_cmd = "git branch -a -vv";
             system(git_cmd);
         } else if (line == "c" || line == "commit") {
             git_cmd = "git commit -m \"";
