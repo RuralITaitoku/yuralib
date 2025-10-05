@@ -65,6 +65,14 @@ std::string yuraterm::esc_cursor(int row, int col){
     return result;
 }
 
+void yuraterm::to_cursor(int row, int col) {
+
+    printf("\e[%d;%dH", row, col);
+}
+
+
 void yuraterm::setup_screen() {
     screen.resize(width * height, static_cast<uint64_t>(' '));
+
+
 }
