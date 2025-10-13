@@ -1,132 +1,0 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ページのタイトル</title>
-    <link rel="stylesheet" href="style.css"> </head>
-<body>
-
-    <header>
-        <h1>ヘッダー</h1>
-    </header>
-
-    <main>
-        <table>
-            <tr>
-                <td style="vertical-align: top;"><h2> 農作業</h2>
-<a href='./2025%E5%B9%B4%E8%BE%B2%E6%A5%AD.html'>2025年農業</a><br />
-
-<hr/>
-<a href='./11111.html'>11111</a><br />
-
-<a href='./11111.html'>11111</a><br />
-
-<a href='./11111.html'>11111</a><br />
-
-<a href='./11111.html'>11111</a><br />
-
-<hr/>
-<a href='./aa.html'>aa</a><br />
-
-</td>
-                <td><h2> JAP FORTH</h2>
-<br />
-
-<h3> FORTHスタック操作</h3>
-.	スタックのトップにある値をポップして表示します。	3 4 . -&gt; 4<br />
-
-DUP	スタックのトップにある値を複製します。	3 DUP -&gt; 3 3<br />
-
-DROP	スタックのトップにある値を削除します。	3 4 DROP -&gt; 3<br />
-
-SWAP	スタックのトップにある2つの値の位置を入れ替えます。	3 4 SWAP -&gt; 4 3<br />
-
-OVER	スタックのトップから2番目の値を複製し、スタックのトップに移動させます。	3 4 OVER -&gt; 3 4 3<br />
-
-ROT	スタックのトップにある3つの値を循環的に移動させます。<br />
-
-<h3> FORTHループ</h3>
-- 5 0 DO I . LOOP<br />
-
-<br />
-
-<h3> FORTH条件分岐</h3>
-- (flag -- ) IF ... THEN<br />
-
-- (flag -- ) IF ... ELSE ... THEN<br />
-
-<br />
-
-<h3> ループ</h3>
-- body: 処理;<br />
-
-- body n loop<br />
-
-<h3> 条件分岐</h3>
-- true:  正解処理;<br />
-
-- false: 間違い処理<br />
-
-- :true :false (flag --) if<br />
-
-<br />
-
-if: いろいろ ;<br />
-
-true: 正解 . ;<br />
-
-false: 間違い . ;<br />
-
-<br />
-
-条件 :true :false if<br />
-
-条件 :true loop<br />
-
-<br />
-
-条件: 条件 ;<br />
-
-Yesの場合:a b c;<br />
-
-Noの場合:a b c;<br />
-
-<br />
-
-何とかチェック:条件 Yesの場合 Noの場合;<br />
-
-<br />
-
-何とかチェック<br />
-
-<br />
-
-test: 条件;Yes: Yesの場合;No: Noの場合; if<br />
-
-<br />
-
-1. 条件:                  ;<br />
-
-   1. Yes:                  ;<br />
-
-   2. No:                   ; if<br />
-
-2. 開始フレームから終了フレームまで:               ;<br />
-
-   1. フレーム事の処理:               ; loop<br />
-
-3. <br />
-
-</td>
-            </tr>
-        </table>
-        
-    </main>
-
-    <footer>
-        <p>&copy; 2025 著作権表示</p>
-    </footer>
-
-</html>
-
