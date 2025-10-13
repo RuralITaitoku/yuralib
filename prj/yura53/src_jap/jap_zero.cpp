@@ -1,6 +1,9 @@
 #include "jap_zero.hpp"
 #include <cstdlib>
+#include <fstream>
 
+
+std::ofstream debug_log("log.txt");
 
 
 template<typename T> class TypeCheck;
@@ -91,7 +94,6 @@ void jap_zero::main() {
         } else if (line == "iv") {
             std::cout << "iv" << std::endl;
             ivvi();
-            std::cout << "quit iv" << std::endl;   
         } else if (line == "p" || line == "push") {
             git_cmd = "git push";
             system(git_cmd);
@@ -108,12 +110,13 @@ void ivvi () {
     yuraterm term;
     int row = 1;
     int col = 1;
-    auto [ width, heigth] = term.get_term_size();
+    auto [ width, height] = term.get_term_size();
+    debug_log << "-width=" << width << " height=" << height << std::endl;
     while (auto ch = term.get_char()) {
         if (ch == 'q') {
             break;
         } else if (ch == 'j') {
-            if (row < heigth) {
+            if (row < height) {
                 row++;
             }
             term.to_cursor(row, col);
