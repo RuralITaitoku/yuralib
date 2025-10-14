@@ -1,6 +1,7 @@
 #include "yuraterm.hpp"
 
 yuraterm::yuraterm() {
+    std::cout << "\e[?1049h";
     struct termios  new_termios;
 
     tcgetattr(STDIN_FILENO, &old_termios); // 現在の設定を取得
@@ -16,7 +17,9 @@ yuraterm::yuraterm() {
 }
 
 yuraterm::~yuraterm() {
+
     tcsetattr(STDIN_FILENO, TCSANOW, &old_termios); // 元の設定に戻す 
+    std::cout << "\e[?1049l";
 }
 
 unsigned char yuraterm::get_char() {
