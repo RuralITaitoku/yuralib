@@ -44,7 +44,7 @@ std::string jap_zero::escape(std::string &str) {
     return result;
 }
 
-void ivvi ();
+bool ivvi (std::string &cmd, std::vector<std::string>& stack);
 
 void jap_zero::main() {
     std::string git_cmd("git pull");
@@ -93,7 +93,7 @@ void jap_zero::main() {
             system(git_cmd);
         } else if (line == "iv") {
             std::cout << "iv" << std::endl;
-            ivvi();
+            ivvi(line, stack);
         } else if (line == "p" || line == "push") {
             git_cmd = "git push";
             system(git_cmd);
@@ -106,7 +106,7 @@ void jap_zero::main() {
     }
 }
 
-void ivvi () {
+bool ivvi (std::string &cmd, std::vector<std::string>& stack) {
     yuraterm term;
     int row = 1;
     int col = 1;
@@ -137,6 +137,7 @@ void ivvi () {
             term.to_cursor(row, col);
         }
     }
+    return true;
 }
 
 
