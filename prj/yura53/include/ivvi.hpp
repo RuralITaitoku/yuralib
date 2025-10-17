@@ -1,11 +1,11 @@
 #pragma once
-#include "task.hpp"
+#include "jap.hpp"
 
 
-class ivvi : public task {
+class ivvi : public jap {
 public:
     ivvi();
     ~ivvi();
-    virtual void setup();
-    virtual int loop(std::map<std::string, std::string>& circle);
+    virtual std::string help();
+    virtual bool run(std::string &cmd, std::vector<std::string>& stack);
 };

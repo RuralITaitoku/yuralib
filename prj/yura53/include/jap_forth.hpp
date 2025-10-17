@@ -36,4 +36,4 @@ class jap_forth : public jap {
 
         void print_map();
         void print_stack(std::vector<std::string> &stack);
-    };
+};

@@ -8,6 +8,7 @@
 #include <cstdint>
 #include <ctime>
 #include "yura_pipe.hpp"
+#include "yuraterm.hpp"
 
 #define DP(x) std::cout << __FILE__ << ":" << __LINE__ << " " << x << std::endl;
 /**
