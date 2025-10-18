@@ -1,11 +1,9 @@
 #include "ivvi.hpp"
-#include "yura.hpp"
 #include "task.hpp"
 #include <iostream>
 
 #include <fstream>
 
-std::ofstream debug_log("log.txt");
 
 ivvi::ivvi() {
     std::cout << "ivvi constructor" << std::endl;
@@ -19,37 +17,79 @@ std::string ivvi::help() {
     std::string result = "iv";
     return result;
 }
+
 bool ivvi::run(std::string &cmd, std::vector<std::string>& stack) {
-    yuraterm term;
     int row = 1;
     int col = 1;
-    auto [ width, height] = term.get_term_size();
-    debug_log << "-width=" << width << " height=" << height << std::endl;
-    while (auto ch = term.get_char()) {
+    auto [ width, height] = term_.get_term_size();
+    while (auto ch = term_.get_char()) {
         if (ch == 'q') {
             break;
         } else if (ch == 'j') {
             if (row < height) {
                 row++;
             }
-            term.to_cursor(row, col);
+            term_.to_cursor(row, col);
         } else if (ch == 'k') {
             if (row > 1) {
                 row--;
             }
-            term.to_cursor(row, col);
+            term_.to_cursor(row, col);
         } else if (ch == 'h') {
             if (col > 1) {
                 col--;
             }
-            term.to_cursor(row, col);
+            term_.to_cursor(row, col);
         } else if (ch == 'l') {
             if (col < width) {
                 col++;
             }
-            term.to_cursor(row, col);
+            term_.to_cursor(row, col);
         }
     }
     return true;
+}
+
+int ivvi::height() {
+    return height_;
+}
+int ivvi::width() {
+    return width_;
+}
+
+int ivvi::center_col() {
+    return center_col_;
+}
+
+int ivvi::lrow() {
+    return left_row_;
+}
+int ivvi::lcol() {
+    return left_col_;
+}
+
+int ivvi::rrow() {
+    return right_row_;
+}
+int ivvi::rcol() {
+    return right_row_;
+}
+
+void ivvi::set_left(int r, int c) {
+    row_ = r;
+    col_ = c;
+    left_row_ = r;
+    left_col_ = c;
+}
+
+void ivvi::set_right(int r, int c) {
+    row_ = r;
+    col_ = c;
+    right_row_ = r;
+    right_col_ = c;
+}
+
+int ivvi::print(const std::string& str, int fg, int bg) {
+    return 0;
 }
 
