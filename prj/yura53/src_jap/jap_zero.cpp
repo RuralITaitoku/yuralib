@@ -1,7 +1,7 @@
 #include "jap_zero.hpp"
 #include <cstdlib>
-#include <fstream>
 
+#include <fstream>
 
 std::ofstream debug_log("log.txt");
 
