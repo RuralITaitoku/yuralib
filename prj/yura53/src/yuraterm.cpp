@@ -26,7 +26,6 @@ unsigned char yuraterm::get_char() {
     return getchar();
 }
 
-
 std::tuple<int, int> yuraterm::get_term_size() {
     struct winsize size_ioctl;
 
@@ -76,6 +75,4 @@ void yuraterm::to_cursor(int row, int col) {
 
 void yuraterm::setup_screen() {
     screen.resize(width * height, static_cast<uint64_t>(' '));
-
-
 }
