@@ -45,7 +45,6 @@ std::string jap_zero::escape(std::string &str) {
     return result;
 }
 
-bool ivvi (std::string &cmd, std::vector<std::string>& stack);
 
 void jap_zero::main() {
     std::string git_cmd("git pull");
