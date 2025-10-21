@@ -1,4 +1,5 @@
 #include "jap_zero.hpp"
+#include "ivvi.hpp"
 #include <cstdlib>
 
 #include <fstream>
@@ -93,7 +94,9 @@ void jap_zero::main() {
             system(git_cmd);
         } else if (line == "iv") {
             std::cout << "iv" << std::endl;
-            ivvi(line, stack);
+            ivvi edit;
+            edit.run(line, stack);
+            //ivvi(line, stack);
         } else if (line == "p" || line == "push") {
             git_cmd = "git push";
             system(git_cmd);
@@ -106,7 +109,7 @@ void jap_zero::main() {
     }
 }
 
-bool ivvi (std::string &cmd, std::vector<std::string>& stack) {
+bool ivvi2 (std::string &cmd, std::vector<std::string>& stack) {
     yuraterm term;
     int row = 1;
     int col = 1;
