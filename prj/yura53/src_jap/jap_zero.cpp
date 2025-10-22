@@ -45,7 +45,6 @@ std::string jap_zero::escape(std::string &str) {
     return result;
 }
 
-
 void jap_zero::main() {
     std::string git_cmd("git pull");
     system(git_cmd);
@@ -107,41 +106,6 @@ void jap_zero::main() {
         }
     }
 }
-
-bool ivvi2 (std::string &cmd, std::vector<std::string>& stack) {
-    yuraterm term;
-    int row = 1;
-    int col = 1;
-    auto [ width, height] = term.get_term_size();
-    debug_log << "-width=" << width << " height=" << height << std::endl;
-    while (auto ch = term.get_char()) {
-        if (ch == 'q') {
-            break;
-        } else if (ch == 'j') {
-            if (row < height) {
-                row++;
-            }
-            term.to_cursor(row, col);
-        } else if (ch == 'k') {
-            if (row > 1) {
-                row--;
-            }
-            term.to_cursor(row, col);
-        } else if (ch == 'h') {
-            if (col > 1) {
-                col--;
-            }
-            term.to_cursor(row, col);
-        } else if (ch == 'l') {
-            if (col < width) {
-                col++;
-            }
-            term.to_cursor(row, col);
-        }
-    }
-    return true;
-}
-
 
 int main() {
     std::cout << "jap" << std::endl;
