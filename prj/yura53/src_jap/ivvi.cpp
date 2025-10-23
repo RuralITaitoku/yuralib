@@ -21,29 +21,31 @@ std::string ivvi::help() {
 bool ivvi::run(std::string &cmd, std::vector<std::string>& stack) {
     int row = 1;
     int col = 1;
+    set_right(1, 1);
     auto [ width, height] = term_.get_term_size();
     while (auto ch = term_.get_char()) {
         if (ch == 'q') {
             break;
         } else if (ch == 'j') {
-            if (row < height) {
-                row++;
+            if (rrow() < height) {
+                row = rrow() + 1;
             }
-            term_.to_cursor(row, col);
         } else if (ch == 'k') {
-            if (row > 1) {
-                row--;
+            if (rrow() > 1) {
+                row = rrow() - 1;
             }
-            term_.to_cursor(row, col);
         } else if (ch == 'h') {
-            if (col > 1) {
-                col--;
+            if (rcol() > 1) {
+                col = rcol() - 1;
             }
-            term_.to_cursor(row, col);
         } else if (ch == 'l') {
-            if (col < width) {
-                col++;
+            if (rcol() < width) {
+                col = rcol() + 1;
             }
+        }
+
+        if (ch == 'j' || ch == 'k' || ch == 'h' || ch == 'l') {
+            set_right(row, col);
             term_.to_cursor(row, col);
         }
     }
@@ -72,7 +74,7 @@ int ivvi::rrow() {
     return right_row_;
 }
 int ivvi::rcol() {
-    return right_row_;
+    return right_col_;
 }
 
 void ivvi::set_left(int r, int c) {
