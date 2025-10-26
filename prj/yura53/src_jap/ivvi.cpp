@@ -21,8 +21,9 @@ std::string ivvi::help() {
 bool ivvi::run(std::string &cmd, std::vector<std::string>& stack) {
     int row = 1;
     int col = 1;
-    set_right(1, 1);
     auto [ width, height] = term_.get_term_size();
+    set_right(1, width / 2);
+    set_left(1, 1);
     while (auto ch = term_.get_char()) {
         if (ch == 'q') {
             break;
@@ -52,6 +53,32 @@ bool ivvi::run(std::string &cmd, std::vector<std::string>& stack) {
             set_right(row, col);
             term_.to_cursor(row, col);
         }
+        if (ch == 'f') {
+            if (lrow() < height) {
+                row = lrow() + 1;
+                col = lcol();
+            }
+        } else if (ch == 'd') {
+            if (lrow() > 1) {
+                row = lrow() - 1;
+                col = lcol();
+            }
+        } else if (ch == 's') {
+            if (lcol() > 1) {
+                row = lrow();
+                col = lcol() - 1;
+            }
+        } else if (ch == 'g') {
+            if (lcol() < width) {
+                row = lrow();
+                col = lcol() + 1;
+            }
+        }
+        if (ch == 'f' || ch == 'd' || ch == 'g' || ch == 's') {
+            set_left(row, col);
+            term_.to_cursor(row, col);
+        }
+
     }
     return true;
 }
