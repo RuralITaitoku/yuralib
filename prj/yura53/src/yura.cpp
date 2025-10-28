@@ -270,6 +270,25 @@ int yura::today() {
     return today;
 }
 
+int yura::weekday() {
+    // 現在のシステム時刻（高分解能）を取得
+    auto now = std::chrono::system_clock::now();
+    
+    // std::time_t型に変換
+    std::time_t now_time_t = std::chrono::system_clock::to_time_t(now);
+    
+    // UTC時刻に変換（スレッドセーフなgmtime_rを使用）
+    std::tm time_info{};
+#ifdef _WIN32
+    gmtime_s(&time_info, &now_time_t); // Windows
+#else
+    gmtime_r(&now_time_t, &time_info); // POSIX
+#endif
+
+    return time_info.tm_wday;
+    // 1:日曜日～7:日曜日
+}
+
 int yura::add_days(int base, int days_to_add) {
     int y = base / 10000;
     int m = (base / 100) % 100;
