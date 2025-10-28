@@ -19,6 +19,10 @@ std::string ivvi::help() {
 }
 
 bool ivvi::run(std::string &cmd, std::vector<std::string>& stack) {
+    if (cmd != "iv") {
+        return false;
+    }
+
     int row = 1;
     int col = 1;
     auto [ width, height] = term_.get_term_size();
