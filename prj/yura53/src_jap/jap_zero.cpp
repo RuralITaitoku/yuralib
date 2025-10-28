@@ -102,6 +102,7 @@ void jap_zero::main() {
                 std::cout << "jap終了" << std::endl;
             return;
         } else {
+            
             stack.push_back(line);
         }
     }
