@@ -94,7 +94,13 @@ void jap_zero::main() {
             std::cout << "iv" << std::endl;
             ivvi edit;
             edit.run(line, stack);
-            //ivvi(line, stack);
+        } else if (line == "td") {
+            auto ymd = yura::today();
+            for (int i = 0; i < 33; i++){
+                stack.push_back(std::to_string(ymd));
+                ymd = yura::add_days(ymd, 1);
+            }
+                //ivvi(line, stack);
         } else if (line == "p" || line == "push") {
             git_cmd = "git push";
             system(git_cmd);

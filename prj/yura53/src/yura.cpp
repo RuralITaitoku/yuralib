@@ -311,9 +311,7 @@ int yura::add_days(int base, int days_to_add) {
     // tm_mday が月の範囲を超えても、mktime が自動的に正しい月と年に調整してくれます。
     std::mktime(&t);
 
-    int result = 0;
-
-    return result;
+    return (t.tm_year + 1900) * 10000 + (t.tm_mon + 1) * 100 + t.tm_mday;
 }
 
 
