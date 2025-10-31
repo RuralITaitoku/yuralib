@@ -110,6 +110,7 @@ namespace yura {
      * @return 現在の日付を表すYYYYMMDD形式の整数。
      */
     int today();
+
     /**
      * @brief YYYYMMDD形式の整数で表された日付に、指定した日数を加算します。
      * @details 内部で`std::mktime`を使用することで、月の繰り上がりや年の繰り上がりを
@@ -122,6 +123,22 @@ namespace yura {
      *         日付の変換に失敗した場合の戻り値は未定義です。
      */
     int add_days(int base, int days);
+
+    /**
+     * @brief 現在の日付の曜日を取得します。
+     * * このメソッドは、現在システムが認識している日付に基づき、
+     * 曜日を数値で返します。
+     *
+     * @return int 曜日を表す数値。
+     * - 1: 月曜日
+     * - 2: 火曜日
+     * - 3: 水曜日
+     * - 4: 木曜日
+     * - 5: 金曜日
+     * - 6: 土曜日
+     * - 7: 日曜日
+     */
+    int weekday();
 
     /**
      * @brief 現在のUTC時刻をYYYYMMDDHHMMSSmmm形式のuint64_tで取得します。

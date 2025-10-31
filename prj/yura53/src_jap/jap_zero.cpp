@@ -44,6 +44,10 @@ std::string jap_zero::escape(std::string &str) {
     }
     return result;
 }
+std::string getWeek(int i) {
+    std::vector<std::string> weeks = { "月", "火" , "水", "木", "金", "土", "日"};
+    return weeks[i % 7];
+}
 
 void jap_zero::main() {
     std::string git_cmd("git pull");
@@ -94,7 +98,16 @@ void jap_zero::main() {
             std::cout << "iv" << std::endl;
             ivvi edit;
             edit.run(line, stack);
-            //ivvi(line, stack);
+        } else if (line == "td") {
+            auto ymd = yura::today();
+            for (int i = 0; i < 33; i++){
+                std::string str = std::to_string(ymd/10000)
+                    + "年" + std::to_string(ymd/100 % 100)
+                    + "月" + std::to_string(ymd % 100) + "日(" + getWeek(i) + ")";
+                stack.push_back(str);
+                ymd = yura::add_days(ymd, 1);
+            }
+                //ivvi(line, stack);
         } else if (line == "p" || line == "push") {
             git_cmd = "git push";
             system(git_cmd);
@@ -102,6 +115,7 @@ void jap_zero::main() {
                 std::cout << "jap終了" << std::endl;
             return;
         } else {
+            
             stack.push_back(line);
         }
     }
