@@ -23,18 +23,20 @@ public:
 
     unsigned char get_char();
     std::tuple<int, int> get_term_size();
-    static std::string esc_home();
-    std::string esc_clean();
-    std::string esc_end();
-    std::string esc_fg(int color);
-    std::string esc_bg(int color);
-    std::string esc_cursor(int row, int col);
 
     void to_cursor(int row, int col);
     
 
     void setup_screen();
     void print();
+
+    static std::string esc_home();
+    static std::string esc_clean();
+    static std::string esc_end();
+    static std::string esc_color(int fg, int bg);
+    static std::string esc_fg(int color);
+    static std::string esc_bg(int color);
+    static std::string esc_cursor(int row, int col);
 
 };
 

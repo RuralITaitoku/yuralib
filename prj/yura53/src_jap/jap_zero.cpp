@@ -21,7 +21,7 @@ bool jap_zero::run(std::string &cmd, std::vector<std::string> &stack)
 void jap_zero::system(std::string &cmd)
 {
     std::cout << "-----------------------" << std::endl;
-    std::cout << cmd << std::endl;
+    std::cout << yuraterm::esc_fg(2) << cmd << yuraterm::esc_end() << std::endl;
     auto result = std::system(cmd.c_str());
     if (result == 0)
     {
@@ -139,6 +139,10 @@ void jap_zero::main()
             ivvi edit;
             edit.run(line, stack);
         }
+        else if (line == "today") {
+            auto ymd = yura::today();
+            stack.push_back(std::to_string(ymd));
+        }
         else if (line == "td")
         {
             auto ymd = std::stoi(stack.back());
@@ -147,10 +151,9 @@ void jap_zero::main()
             {
                 std::string str = std::to_string(ymd / 10000) + "年" + std::to_string(ymd / 100 % 100) + "月" + std::to_string(ymd % 100) + "日(" + yura::weekday_string(ymd) + ")";
                 stack.push_back(str);
+                debug_log << "- [" << str << "]" << std::endl; 
                 ymd = yura::add_days(ymd, 1);
             }
-            yura::save("test.txt", stack);
-            // ivvi(line, stack);
         }
         else if (line == "p" || line == "push")
         {

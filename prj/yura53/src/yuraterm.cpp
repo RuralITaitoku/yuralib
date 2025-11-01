@@ -46,6 +46,15 @@ std::string yuraterm::esc_clean() {
 std::string yuraterm::esc_end() {
     return "\e[0m";
 }
+std::string yuraterm::esc_color(int fg, int bg) {
+    std::string result = "\e[3";
+    result += std::to_string(fg);
+    result += "m";
+    result += "\e[4";
+    result += std::to_string(bg);
+    result += "m";
+    return result;
+}
 std::string yuraterm::esc_fg(int color) {
     std::string result = "\e[3";
     result += std::to_string(color);

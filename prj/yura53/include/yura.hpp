@@ -187,4 +187,5 @@ namespace yura {
     int exec(std::string& cmd);
     bool is_all_whitespace(const std::string& str) ;
     int get_char_bytes(unsigned char first_byte);
+
 };
