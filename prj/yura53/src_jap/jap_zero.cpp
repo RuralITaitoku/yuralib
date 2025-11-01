@@ -99,14 +99,16 @@ void jap_zero::main() {
             ivvi edit;
             edit.run(line, stack);
         } else if (line == "td") {
-            auto ymd = yura::today();
+            auto ymd = std::stoi(stack.back());
+            stack.pop_back();
             for (int i = 0; i < 33; i++){
                 std::string str = std::to_string(ymd/10000)
                     + "年" + std::to_string(ymd/100 % 100)
-                    + "月" + std::to_string(ymd % 100) + "日(" + getWeek(i) + ")";
+                    + "月" + std::to_string(ymd % 100) + "日(" + yura::weekday_string(ymd) + ")";
                 stack.push_back(str);
                 ymd = yura::add_days(ymd, 1);
             }
+            yura::save("test.txt", stack);
                 //ivvi(line, stack);
         } else if (line == "p" || line == "push") {
             git_cmd = "git push";

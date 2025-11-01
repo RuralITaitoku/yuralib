@@ -153,8 +153,8 @@ namespace yura {
      * - 6: 土曜日
      * - 7: 日曜日
      */
-    int weekday();
-    std::string weekday_string(int weekday = 0);
+    int weekday(int ymd = 0);
+    std::string weekday_string(int ymd = 0);
 
     /**
      * @brief 現在のUTC時刻をYYYYMMDDHHMMSSmmm形式のuint64_tで取得します。

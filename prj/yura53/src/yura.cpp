@@ -267,27 +267,20 @@ bool yura::fileExists(const std::string &filename) {
 }
 
 int yura::today() {
-    // 現在時刻のタイムスタンプを取得
-    // std::chrono::system_clock::to_time_t を使うと、chrono::time_point を time_t に変換できます
-    std::time_t now_c = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
 
-    // ローカルタイムに変換
-    // 注意: std::localtime はスレッドセーフではない可能性があります。
-    // マルチスレッド環境では localtime_r (Linux/macOS) や localtime_s (Windows) を検討してください。
-    std::tm* local_time = std::localtime(&now_c);
-
+    auto tm = yura::tm();
     // 年月日を出力
     // tm_year は1900年からの年数、tm_mon は0から11、tm_mday は1から31
     std::cout << "Today's date: "
-              << (local_time->tm_year + 1900) << "年"
-              << (local_time->tm_mon + 1) << "月"
-              << local_time->tm_mday << "日"
+              << (tm.tm_year + 1900) << "年"
+              << (tm.tm_mon + 1) << "月"
+              << tm.tm_mday << "日"
               << std::endl;
-    int today = (local_time->tm_year + 1900) * 10000 + (local_time->tm_mon + 1) * 100 + local_time->tm_mday;
+    int today = (tm.tm_year + 1900) * 10000 + (tm.tm_mon + 1) * 100 + tm.tm_mday;
     return today;
 }
 
-int yura::weekday() {
+int yura::weekday(int ymd) {
     // 現在のシステム時刻（高分解能）を取得
     auto now = std::chrono::system_clock::now();
     
@@ -295,7 +288,7 @@ int yura::weekday() {
     std::time_t now_time_t = std::chrono::system_clock::to_time_t(now);
     
     // UTC時刻に変換（スレッドセーフなgmtime_rを使用）
-    std::tm time_info{};
+    auto time_info = yura::tm(ymd);
 #ifdef _WIN32
     gmtime_s(&time_info, &now_time_t); // Windows
 #else
@@ -339,10 +332,8 @@ std::tm yura::tm(int ymd) {
     }
 }
 
-std::string yura::weekday_string(int weekday) {
-    if (weekday == 0) {
-        weekday = yura::weekday();
-    }
+std::string yura::weekday_string(int ymd) {
+    auto weekday = yura::weekday(ymd);
     switch(weekday) {
         case 1: return "月"; break;
         case 2: return "火"; break;
@@ -352,7 +343,7 @@ std::string yura::weekday_string(int weekday) {
         case 6: return "土"; break;
         case 7: return "日"; break;
     }
-    return "？" + weekday;
+    return "？" + std::to_string(weekday);
 }
 int yura::add_days(int base, int days_to_add) {
     int y = base / 10000;
