@@ -20,11 +20,13 @@ bool jap_zero::run(std::string &cmd, std::vector<std::string> &stack)
 
 void jap_zero::system(std::string &cmd)
 {
+    std::cout << "-----------------------" << std::endl;
     std::cout << cmd << std::endl;
     auto result = std::system(cmd.c_str());
     if (result == 0)
     {
         std::cout << "正常終了" << std::endl;
+        std::cout << "--------------------" << std::endl;
     }
     else
     {
