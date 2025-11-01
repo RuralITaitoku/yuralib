@@ -25,9 +25,16 @@ namespace yura {
     /**
      * @brief テキストファイルを書き込む
      * @param filename テキストファイル名
-     * @param text テキストファイル
+     * @param text テキスト
      */
     void save(const std::string& filename, const std::string& text);
+
+    /**
+     * @brief テキストファイルを書き込む
+     * @param filename テキストファイル名
+     * @param text_vec テキスト配列
+     */
+    void save(const std::string& filename, const std::vector<std::string>& text_vec);
 
     /**
      * @brief 文字列の指定文字列を別の文字列に置換
@@ -112,6 +119,14 @@ namespace yura {
     int today();
 
     /**
+     * @brief 指定された日付情報から `std::tm` 構造体を生成します。
+    *
+    * @param ymd 年月日を示す整数。
+    * @return 設定された年月日情報を持つ `std::tm` 構造体。
+    */
+    std::tm tm(int ymd = 0);
+
+    /**
      * @brief YYYYMMDD形式の整数で表された日付に、指定した日数を加算します。
      * @details 内部で`std::mktime`を使用することで、月の繰り上がりや年の繰り上がりを
      *          自動で処理し、正確な日付計算を行います。
@@ -139,6 +154,7 @@ namespace yura {
      * - 7: 日曜日
      */
     int weekday();
+    std::string weekday_string(int weekday = 0);
 
     /**
      * @brief 現在のUTC時刻をYYYYMMDDHHMMSSmmm形式のuint64_tで取得します。

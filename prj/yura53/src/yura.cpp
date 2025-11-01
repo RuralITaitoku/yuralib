@@ -25,12 +25,29 @@ std::string yura::load(const std::string& filename) {
 /**
  * @brief テキストファイルを書き込む
  * @param filename テキストファイル名
- * @param text テキストファイル
+ * @param text テキスト
  */
 void yura::save(const std::string& filename, const std::string& text) {
     std::ofstream ofs(filename);
     if (ofs.is_open()) {
         ofs << text << std::endl;
+        ofs.close();
+    } else {
+        std::cerr << "ファイルを開けませんでした: " << filename << std::endl;
+    }
+}
+
+/**
+ * @brief テキストファイルを書き込む
+ * @param filename テキストファイル名
+ * @param text_vec テキスト配列
+ */
+void yura::save(const std::string& filename, const std::vector<std::string>& text_vec) {
+    std::ofstream ofs(filename);
+    if (ofs.is_open()) {
+        for (auto text: text_vec) {
+            ofs << text << std::endl;
+        }
         ofs.close();
     } else {
         std::cerr << "ファイルを開けませんでした: " << filename << std::endl;
@@ -286,9 +303,57 @@ int yura::weekday() {
 #endif
 
     return time_info.tm_wday;
-    // 1:日曜日～7:日曜日
 }
 
+/**
+ * @brief 指定された日付情報から `std::tm` 構造体を生成します。
+ *
+ * @param ymd 年月日を示す整数。
+ * @return 設定された年月日情報を持つ `std::tm` 構造体。
+ */
+std::tm yura::tm(int ymd) {
+    if (ymd > 0) {
+        int y = ymd / 10000;
+        int m = (ymd / 100) % 100;
+        int d = (ymd % 100);
+        // 基準となる日付を設定
+        std::tm t = {}; // ゼロ初期化
+        t.tm_year = y - 1900; // 年は1900年からの経過年数
+        t.tm_mon = m - 1;        // 月は0から11 (0=1月, 1=2月, ..., 11=12月)
+        t.tm_mday = d;          // 日は1から31
+        std::mktime(&t);
+        return t;
+    } else {
+        // 現在のシステム時刻（高分解能）を取得
+        auto now = std::chrono::system_clock::now();
+        std::time_t now_time_t = std::chrono::system_clock::to_time_t(now);
+    
+        // UTC時刻に変換（スレッドセーフなgmtime_rを使用）
+        std::tm time_info{};
+#ifdef _WIN32
+        gmtime_s(&time_info, &now_time_t); // Windows
+#else
+        gmtime_r(&now_time_t, &time_info); // POSIX
+#endif
+        return time_info;
+    }
+}
+
+std::string yura::weekday_string(int weekday) {
+    if (weekday == 0) {
+        weekday = yura::weekday();
+    }
+    switch(weekday) {
+        case 1: return "月"; break;
+        case 2: return "火"; break;
+        case 3: return "水"; break;
+        case 4: return "木"; break;
+        case 5: return "金"; break;
+        case 6: return "土"; break;
+        case 7: return "日"; break;
+    }
+    return "？" + weekday;
+}
 int yura::add_days(int base, int days_to_add) {
     int y = base / 10000;
     int m = (base / 100) % 100;
