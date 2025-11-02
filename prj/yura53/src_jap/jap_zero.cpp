@@ -149,8 +149,12 @@ void jap_zero::main()
             stack.pop_back();
             for (int i = 0; i < 33; i++)
             {
-                std::string str = std::to_string(ymd / 10000) + "年" + std::to_string(ymd / 100 % 100) + "月" + std::to_string(ymd % 100) + "日(" + yura::weekday_string(ymd) + ")";
+                auto weekday = yura::weekday_string(ymd);
+                std::string str = std::to_string(ymd / 10000) + "年" + std::to_string(ymd / 100 % 100) + "月" + std::to_string(ymd % 100) + "日(" + weekday + ")";
                 stack.push_back(str);
+                if (weekday == "月" || weekday == "土") {
+                    debug_log << "---" << std::endl;
+                }
                 debug_log << "- [" << str << "]" << std::endl; 
                 ymd = yura::add_days(ymd, 1);
             }
@@ -167,7 +171,6 @@ void jap_zero::main()
         }
         else
         {
-
             stack.push_back(line);
         }
     }
