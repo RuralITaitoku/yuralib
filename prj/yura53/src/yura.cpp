@@ -281,19 +281,9 @@ int yura::today() {
 }
 
 int yura::weekday(int ymd) {
-    // 現在のシステム時刻（高分解能）を取得
-    auto now = std::chrono::system_clock::now();
-    
-    // std::time_t型に変換
-    std::time_t now_time_t = std::chrono::system_clock::to_time_t(now);
     
     // UTC時刻に変換（スレッドセーフなgmtime_rを使用）
     auto time_info = yura::tm(ymd);
-#ifdef _WIN32
-    gmtime_s(&time_info, &now_time_t); // Windows
-#else
-    gmtime_r(&now_time_t, &time_info); // POSIX
-#endif
 
     return time_info.tm_wday;
 }
@@ -335,6 +325,7 @@ std::tm yura::tm(int ymd) {
 std::string yura::weekday_string(int ymd) {
     auto weekday = yura::weekday(ymd);
     switch(weekday) {
+        case 0: return "日"; break;
         case 1: return "月"; break;
         case 2: return "火"; break;
         case 3: return "水"; break;
