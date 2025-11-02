@@ -1,3 +1,7 @@
 {
-    "cmake.sourceDirectory": "/mnt/c/Users/yurur/relax/yuralib/prj/try/src"
+    "cmake.sourceDirectory": "/mnt/c/Users/yurur/relax/yuralib/prj/try/src",
+    "files.associations": {
+        "string": "cpp",
+        "istream": "cpp"
+    }
 }
