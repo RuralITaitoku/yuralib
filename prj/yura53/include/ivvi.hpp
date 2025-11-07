@@ -15,7 +15,10 @@ private:
     int height_;
     int center_col_;
     yuraterm term_;
-
+    std::vector<std::string> left_buffer;
+    std::vector<std::string> right_buffer;
+    std::string top_line_;
+    std::string bottom_line_;
 public:
     ivvi();
     ~ivvi();

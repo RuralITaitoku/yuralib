@@ -129,4 +129,3 @@ void ivvi::set_right(int r, int c) {
 int ivvi::print(const std::string& str, int fg, int bg) {
     return 0;
 }
-
