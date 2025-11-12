@@ -25,7 +25,7 @@ MD_SRCS = $(wildcard md/*.md)
 HTML = $(patsubst md/%.md, html/%.html, $(MD_SRCS))
 
 
-all: try html jap jap_ut
+all: try html jap utjap
 
 html: $(HTML)  
 
@@ -35,7 +35,7 @@ try: $(OBJS)
 jap: $(JAP_OBJS) objs/yuraterm.o objs/yura_pipe.o objs/yura.o 
 	$(CPP)  -o $@ $^ -lsqlite3
 
-jap_ut:	$(UT_OBJS)																																																																																																																			t: $(UT_OBJS)
+utjap:	$(UT_OBJS)
 	$(CPP)  -o $@ $^ -lsqlite3 -lgtest -lpthread
 
 objs/%.o: src/%.cpp | objs
@@ -64,7 +64,7 @@ install:
 
 clean:
 	rm -r objs/*.o
-	rm ./try ./jap
+	rm ./try ./jap ./utjap
 	find html/*.html -not -name "temp.html"	-delete
 
 
