@@ -17,7 +17,7 @@ OBJS = $(patsubst src/%.cpp, objs/%.o, $(SRCS))
 
 JAP_SRCS = $(wildcard src_jap/*.cpp)
 JAP_OBJS = $(patsubst src_jap/%.cpp, objs/%.o, $(JAP_SRCS))
-
+JAP_OBJS += objs/yuraterm.o objs/yura_pipe.o objs/yura.o
 UT_SRCS = $(wildcard ut/*.cpp)
 UT_OBJS = $(patsubst ut/%.cpp, objs/%.o, $(UT_SRCS))
 
@@ -32,10 +32,10 @@ html: $(HTML)
 try: $(OBJS)
 	$(CPP)  -o $@ $^ -lsqlite3
 
-jap: $(JAP_OBJS) objs/yuraterm.o objs/yura_pipe.o objs/yura.o 
+jap: $(JAP_OBJS)  
 	$(CPP)  -o $@ $^ -lsqlite3
 
-utjap:	$(UT_OBJS)
+utjap:	$(UT_OBJS) $(filter-out objs/jap_zero.o $(JAP_OBJS))
 	$(CPP)  -o $@ $^ -lsqlite3 -lgtest -lpthread
 
 objs/%.o: src/%.cpp | objs

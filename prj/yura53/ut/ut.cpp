@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-
+#include "ivvi.hpp"
 int main(int argc, char **argv) {
   // GTestフレームワークを初期化し、コマンドライン引数を処理します。
   ::testing::InitGoogleTest(&argc, argv); 
@@ -9,7 +9,6 @@ int main(int argc, char **argv) {
   return RUN_ALL_TESTS();
 }
 
-TEST(aaa, bbb) {
-
-    EXPECT_TRUE(false);
+TEST(ivvi, disp) {
+  ivvi screen;
 }
