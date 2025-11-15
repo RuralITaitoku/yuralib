@@ -35,7 +35,7 @@ try: $(OBJS)
 jap: $(JAP_OBJS)  
 	$(CPP)  -o $@ $^ -lsqlite3
 
-utjap:	$(UT_OBJS) $(filter-out objs/jap_zero.o $(JAP_OBJS))
+utjap:	$(UT_OBJS) $(filter-out objs/jap_zero.o, $(JAP_OBJS))
 	$(CPP)  -o $@ $^ -lsqlite3 -lgtest -lpthread
 
 objs/%.o: src/%.cpp | objs
