@@ -2,6 +2,7 @@
 # CPP=clang++
 CPP=g++
 CPPFLAGS= -g -Wall -DDEBUG  -I./include/ -std=c++20
+LIBS= -lsqlite3
 
 #LIB_SRCS = $(wildcard lib/*.cpp)
 #LIB_OBJS = $(LIB_SRCS:.cpp=.o)
@@ -10,40 +11,51 @@ CPPFLAGS= -g -Wall -DDEBUG  -I./include/ -std=c++20
 #libruralis2.so : $(LIB_OBJS)
 #	ar rcs $@ $^
 
-
-
 SRCS = $(wildcard src/*.cpp)
 OBJS = $(patsubst src/%.cpp, objs/%.o, $(SRCS))
 
 JAP_SRCS = $(wildcard src_jap/*.cpp)
 JAP_OBJS = $(patsubst src_jap/%.cpp, objs/%.o, $(JAP_SRCS))
+JAP_OBJS += objs/yuraterm.o objs/yura_pipe.o objs/yura.o
+JAP0_SRCS = $(wildcard src_jap0/*.cpp)
+JAP0_OBJS = $(patsubst src_jap0/%.cpp, objs/%.o, $(JAP0_SRCS))
+UT_SRCS = $(wildcard ut/*.cpp)
+UT_OBJS = $(patsubst ut/%.cpp, objs/%.o, $(UT_SRCS))
 
 MD_SRCS = $(wildcard md/*.md)
 HTML = $(patsubst md/%.md, html/%.html, $(MD_SRCS))
 
 
-all: try html jap
+all: bin/try bin/jap bin/jap0 bin/utjap html 
 
-html: $(HTML)  
-
-try: $(OBJS)
+bin/try: $(OBJS)
 	$(CPP)  -o $@ $^ -lsqlite3
 
-jap: $(JAP_OBJS) objs/yuraterm.o objs/yura_pipe.o objs/yura.o 
+bin/jap: $(JAP_OBJS)  
 	$(CPP)  -o $@ $^ -lsqlite3
 
+bin/utjap:	$(UT_OBJS) $(filter-out objs/jap_zero.o, $(JAP_OBJS))
+	$(CPP)  -o $@ $^ -lsqlite3 -lgtest -lpthread
+
+bin/jap0:  $(JAP0_OBJS)  
+	$(CPP)  -o $@ $^ $(LIBS)
+	
+html: $(HTML)  bin/try
 
 objs/%.o: src/%.cpp | objs
-	$(CPP) $(CPPFLAGS) -o $@ -c $<  -MMD -MP -MF $@.d
-
+	$(CPP) $(CPPFLAGS) -o $@ -c $<
 objs/%.o: src_jap/%.cpp | objs
-	$(CPP) $(CPPFLAGS) -o $@ -c $<  -MMD -MP -MF $@.d
+	$(CPP) $(CPPFLAGS) -o $@ -c $<
+objs/%.o: ut/%.cpp | objs
+	$(CPP) $(CPPFLAGS) -o $@ -c $<
+objs/%.o: src_jap0/%.cpp | objs
+	$(CPP) $(CPPFLAGS) -o $@ -c $<
 
 html/%.html: md/%.md html/sidemenu.html
-	./try markdown -o $@ -i $< -t html/sidemenu.html
+	bin/try markdown -o $@ -i $< -t html/sidemenu.html
 
 html/sidemenu.html: md/sidemenu.md html/temp.html
-	./try markdown -o $@ -i $< -t html/temp.html -rw '@@@sidemenu@@@'
+	bin/try markdown -o $@ -i $< -t html/temp.html -rw '@@@sidemenu@@@'
 
 
 # $(OBJS): $(SRCS) | build
@@ -52,12 +64,12 @@ objs:
 	mkdir -p objs
 
 install:
-	cp ./try ~/bin/try
-	cp ./jap ~/bin/jap
+	cp bin/try ~/bin/try
+	cp bin/jap ~/bin/jap
 
 clean:
 	rm -r objs/*.o
-	rm ./try ./jap
+	rm bin/try bin/jap bin/utjap
 	find html/*.html -not -name "temp.html"	-delete
 
 
