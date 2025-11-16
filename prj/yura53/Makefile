@@ -25,18 +25,18 @@ MD_SRCS = $(wildcard md/*.md)
 HTML = $(patsubst md/%.md, html/%.html, $(MD_SRCS))
 
 
-all: try html jap utjap
+all: bin/try bin/jap bin/utjap html 
 
-html: $(HTML)  
-
-try: $(OBJS)
+bin/try: $(OBJS)
 	$(CPP)  -o $@ $^ -lsqlite3
 
-jap: $(JAP_OBJS)  
+bin/jap: $(JAP_OBJS)  
 	$(CPP)  -o $@ $^ -lsqlite3
 
-utjap:	$(UT_OBJS) $(filter-out objs/jap_zero.o, $(JAP_OBJS))
+bin/utjap:	$(UT_OBJS) $(filter-out objs/jap_zero.o, $(JAP_OBJS))
 	$(CPP)  -o $@ $^ -lsqlite3 -lgtest -lpthread
+
+html: $(HTML)  bin/try
 
 objs/%.o: src/%.cpp | objs
 	$(CPP) $(CPPFLAGS) -o $@ -c $<
@@ -46,11 +46,12 @@ objs/%.o: ut/%.cpp | objs
 	$(CPP) $(CPPFLAGS) -o $@ -c $<
 
 
+
 html/%.html: md/%.md html/sidemenu.html
-	./try markdown -o $@ -i $< -t html/sidemenu.html
+	bin/try markdown -o $@ -i $< -t html/sidemenu.html
 
 html/sidemenu.html: md/sidemenu.md html/temp.html
-	./try markdown -o $@ -i $< -t html/temp.html -rw '@@@sidemenu@@@'
+	bin/try markdown -o $@ -i $< -t html/temp.html -rw '@@@sidemenu@@@'
 
 
 # $(OBJS): $(SRCS) | build
@@ -59,12 +60,12 @@ objs:
 	mkdir -p objs
 
 install:
-	cp ./try ~/bin/try
-	cp ./jap ~/bin/jap
+	cp bin/try ~/bin/try
+	cp bin/jap ~/bin/jap
 
 clean:
 	rm -r objs/*.o
-	rm ./try ./jap ./utjap
+	rm bin/try bin/jap bin/utjap
 	find html/*.html -not -name "temp.html"	-delete
 
 
