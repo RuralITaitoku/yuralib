@@ -34,10 +34,10 @@ jap: $(JAP_OBJS) objs/yuraterm.o objs/yura_pipe.o objs/yura.o
 
 
 objs/%.o: src/%.cpp | objs
-	$(CPP) $(CPPFLAGS) -o $@ -c $<
+	$(CPP) $(CPPFLAGS) -o $@ -c $<  -MMD -MP -MF $@.d
 
 objs/%.o: src_jap/%.cpp | objs
-	$(CPP) $(CPPFLAGS) -o $@ -c $<
+	$(CPP) $(CPPFLAGS) -o $@ -c $<  -MMD -MP -MF $@.d
 
 html/%.html: md/%.md html/sidemenu.html
 	./try markdown -o $@ -i $< -t html/sidemenu.html
