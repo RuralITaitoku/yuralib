@@ -12,5 +12,5 @@ public:
 
 jap0_mng  {
     std::vector<std::shared_ptr<jap0>> jap_vec;
-    loop(const std::string &cmd, std::vector<std::string> &stack);
+    int loop(const std::string &cmd, std::vector<std::string> &stack);
 }
