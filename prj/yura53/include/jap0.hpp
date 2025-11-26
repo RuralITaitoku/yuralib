@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <vector>
+#include <memory> 
 
 class jap0 {
 public:
@@ -10,7 +11,7 @@ public:
 };
 
 
-jap0_mng  {
+class jap0_mng  {
     std::vector<std::shared_ptr<jap0>> jap_vec;
     int loop(const std::string &cmd, std::vector<std::string> &stack);
-}
+};
