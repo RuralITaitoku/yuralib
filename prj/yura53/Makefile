@@ -29,7 +29,7 @@ HTML = $(patsubst md/%.md, html/%.html, $(MD_SRCS))
 all: bin/try bin/jap bin/jap0 bin/utjap html 
 
 bin/try: $(OBJS)
-	$(CPP) -o $@ $^ -lsqlite3
+	$(CPP) -o $@ $^ -lsqlite3 -v
 
 bin/jap: $(JAP_OBJS)  
 	$(CPP) -o $@ $^ -lsqlite3
