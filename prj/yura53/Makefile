@@ -28,16 +28,16 @@ HTML = $(patsubst md/%.md, html/%.html, $(MD_SRCS))
 
 all: bin/try bin/jap bin/jap0 bin/utjap html 
 
-bin/try: $(OBJS)
-	$(CPP) -o $@ $^ -lsqlite3 -v
-
-bin/jap: $(JAP_OBJS)  
+bin/try: $(OBJS) | bin
 	$(CPP) -o $@ $^ -lsqlite3
 
-bin/utjap:	$(UT_OBJS) $(filter-out objs/jap_zero.o, $(JAP_OBJS))
+bin/jap: $(JAP_OBJS)   | bin
+	$(CPP) -o $@ $^ -lsqlite3
+
+bin/utjap:	$(UT_OBJS) $(filter-out objs/jap_zero.o, $(JAP_OBJS)) | bin
 	$(CPP) -o $@ $^ -lsqlite3 -lgtest -lpthread
 
-bin/jap0:  $(JAP0_OBJS)  
+bin/jap0:  $(JAP0_OBJS)   | bin
 	$(CPP) -o $@ $^ $(LIBS)
 	
 html: $(HTML)  bin/try
@@ -59,6 +59,9 @@ html/sidemenu.html: md/sidemenu.md html/temp.html
 
 
 # $(OBJS): $(SRCS) | build
+
+bin:
+	mkdir -p bin
 
 objs:
 	mkdir -p objs
