@@ -5,7 +5,7 @@
 #include <memory>
 #include <fstream>
 
-std::ofstream debug_log("log.txt");
+std::ofstream debug_log("japlog.txt");
 
 template <typename T>
 class TypeCheck;
