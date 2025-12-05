@@ -1,5 +1,6 @@
-.DS_Store
-.gitignore
-*.o
-*log.txt
 bin
+.DS_Store
+*.o
+build
+html
+*log.txt

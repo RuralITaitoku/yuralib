@@ -311,12 +311,11 @@ std::tm yura::tm(int ymd) {
         auto now = std::chrono::system_clock::now();
         std::time_t now_time_t = std::chrono::system_clock::to_time_t(now);
     
-        // UTC時刻に変換（スレッドセーフなgmtime_rを使用）
         std::tm time_info{};
 #ifdef _WIN32
-        gmtime_s(&time_info, &now_time_t); // Windows
+        localtime_s(&time_info, &now_time_t); // Windows
 #else
-        gmtime_r(&now_time_t, &time_info); // POSIX
+        localtime_r(&now_time_t, &time_info); // POSIX
 #endif
         return time_info;
     }
