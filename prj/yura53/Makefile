@@ -19,6 +19,7 @@ JAP_OBJS = $(patsubst src_jap/%.cpp, objs/%.o, $(JAP_SRCS))
 JAP_OBJS += objs/yuraterm.o objs/yura_pipe.o objs/yura.o
 JAP0_SRCS = $(wildcard src_jap0/*.cpp)
 JAP0_OBJS = $(patsubst src_jap0/%.cpp, objs/%.o, $(JAP0_SRCS))
+JAP0_OBJS += objs/yuraterm.o  
 UT_SRCS = $(wildcard ut/*.cpp)
 UT_OBJS = $(patsubst ut/%.cpp, objs/%.o, $(UT_SRCS))
 

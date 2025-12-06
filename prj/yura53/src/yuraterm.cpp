@@ -26,6 +26,28 @@ unsigned char yuraterm::get_char() {
     return getchar();
 }
 
+std::string yuraterm::getline() {
+    std::string line;
+
+    for (;;) {
+        auto ch = get_char();
+        if (ch == '\n') {
+            line += "[ret]";
+            return line;
+        } else if (ch == '\t') {
+            line += "[tab]";
+        } else if (ch == '\b') {
+            line += "[bs]";
+        } else if (ch < ' ') {
+            line += "[" + std::to_string(static_cast<int>(ch)) + "]";
+        } else {
+            line += ch;
+        }
+        std::cout << std::to_string(static_cast<int>(ch)) << std::endl;
+        std::cout << line << std::endl;
+    }
+}
+
 std::tuple<int, int> yuraterm::get_term_size() {
     struct winsize size_ioctl;
 
@@ -37,16 +59,16 @@ std::tuple<int, int> yuraterm::get_term_size() {
     return std::make_tuple(width, height);
 }
 
-std::string yuraterm::esc_home() {
+std::string yuraterm::home() {
     return "\e[H";
 }
-std::string yuraterm::esc_clean() {
+std::string yuraterm::clean() {
     return "\e[2J";
 }
-std::string yuraterm::esc_end() {
+std::string yuraterm::end() {
     return "\e[0m";
 }
-std::string yuraterm::esc_color(int fg, int bg) {
+std::string yuraterm::color(int fg, int bg) {
     std::string result = "\e[3";
     result += std::to_string(fg);
     result += "m";
@@ -55,19 +77,19 @@ std::string yuraterm::esc_color(int fg, int bg) {
     result += "m";
     return result;
 }
-std::string yuraterm::esc_fg(int color) {
+std::string yuraterm::fg(int color) {
     std::string result = "\e[3";
     result += std::to_string(color);
     result += "m";
     return result;
 }
-std::string yuraterm::esc_bg(int color) {
+std::string yuraterm::bg(int color) {
     std::string result = "\e[4";
     result += std::to_string(color);
     result += "m";
     return result;
 }
-std::string yuraterm::esc_cursor(int row, int col){
+std::string yuraterm::cursor(int row, int col){
     std::string result = "\e[";
     result += std::to_string(row);
     result += ";";

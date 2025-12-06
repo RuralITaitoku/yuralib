@@ -22,7 +22,7 @@ bool jap_zero::run(std::string &cmd, std::vector<std::string> &stack)
 void jap_zero::system(std::string &cmd)
 {
     std::cout << "-----------------------" << std::endl;
-    std::cout << yuraterm::esc_fg(2) << cmd << yuraterm::esc_end() << std::endl;
+    std::cout << yuraterm::fg(2) << cmd << yuraterm::end() << std::endl;
     auto result = std::system(cmd.c_str());
     if (result == 0)
     {

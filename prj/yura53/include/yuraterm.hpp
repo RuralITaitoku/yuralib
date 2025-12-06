@@ -10,11 +10,16 @@
 #include <iostream>
 #include <vector>
 
+
+
+
+
 class yuraterm {
     struct termios old_termios;
     int width;
     int height;
     std::vector<int64_t> screen;
+
 
 public:
 
@@ -22,6 +27,7 @@ public:
     ~yuraterm();
 
     unsigned char get_char();
+    std::string getline();
     std::tuple<int, int> get_term_size();
 
     void to_cursor(int row, int col);
@@ -30,13 +36,14 @@ public:
     void setup_screen();
     void print();
 
-    static std::string esc_home();
-    static std::string esc_clean();
-    static std::string esc_end();
-    static std::string esc_color(int fg, int bg);
-    static std::string esc_fg(int color);
-    static std::string esc_bg(int color);
-    static std::string esc_cursor(int row, int col);
+    static std::string home();
+    static std::string clean();
+    static std::string end();
+    static std::string color(int fg, int bg);
+    static std::string fg(int color);
+    static std::string bg(int color);
+    static std::string cursor(int row, int col);
+
 
 };
 
