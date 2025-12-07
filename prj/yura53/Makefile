@@ -31,15 +31,18 @@ all: bin/try bin/jap bin/jap0 bin/utjap html
 
 bin/try: $(OBJS) | bin
 	$(CPP) -o $@ $^ -lsqlite3
+	cp bin/try ~/bin/try
 
 bin/jap: $(JAP_OBJS)   | bin
 	$(CPP) -o $@ $^ -lsqlite3
+	cp bin/jap ~/bin/jap
 
 bin/utjap:	$(UT_OBJS) $(filter-out objs/jap_zero.o, $(JAP_OBJS)) | bin
 	$(CPP) -o $@ $^ -lsqlite3 -lgtest -lpthread
 
 bin/jap0:  $(JAP0_OBJS)   | bin
 	$(CPP) -o $@ $^ $(LIBS)
+	cp bin/jap0 ~/bin/jap0
 	
 html: $(HTML)  bin/try
 	@echo test $(HTML)
