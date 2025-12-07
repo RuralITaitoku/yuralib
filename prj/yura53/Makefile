@@ -42,6 +42,8 @@ bin/jap0:  $(JAP0_OBJS)   | bin
 	$(CPP) -o $@ $^ $(LIBS)
 	
 html: $(HTML)  bin/try
+	@echo test $(HTML)
+
 
 objs/%.o: src/%.cpp | objs
 	$(CPP) $(CPPFLAGS) -o $@ -c $<
