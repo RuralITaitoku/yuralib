@@ -1,17 +1,12 @@
 #pragma once
-#include <iostream>
-#include <vector>
-#include <memory> 
 
-class jap0 {
+#include "jap.hpp"
+
+class jap0 : public jap {
 public:
-    virtual ~jap0();
-    virtual std::string help() = 0;
-    virtual int loop(const std::string &cmd, std::vector<std::string>& stack) = 0;
+    virtual std::string help() override;
+    virtual bool run(const std::string &cmd, std::vector<std::string>& stack) override;
+
 };
 
 
-class jap0_mng  {
-    std::vector<std::shared_ptr<jap0>> jap_vec;
-    int loop(const std::string &cmd, std::vector<std::string> &stack);
-};

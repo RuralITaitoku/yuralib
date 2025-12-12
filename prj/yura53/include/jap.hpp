@@ -1,11 +1,16 @@
 #pragma once
+#include <chrono>
 #include <iostream>
 #include <vector>
+#include <memory>
 
 class jap {
 public:
+    virtual ~jap() {};
     virtual std::string help() = 0;
-    virtual bool run(std::string &cmd, std::vector<std::string>& stack) = 0;
+    virtual bool run(const std::string &cmd, std::vector<std::string>& stack) = 0;
+
+    int next_millis;
 
     int millis() {
         static uint64_t jap_epoch = 0;
@@ -18,6 +23,14 @@ public:
             jap_epoch = milliseconds;
         }
         return static_cast<int>(milliseconds - jap_epoch);
+    }
+
+    int next() {
+        return next_millis;
+    }
+
+    void set_next(int n) {
+        next_millis = millis() + n;
     }
 
 
