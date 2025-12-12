@@ -8,16 +8,8 @@ int main(int argc, char** argv) {
     std::cout << "jap0" << std::endl;
     std::cout << "ssss " << static_cast<int>('\n') << std::endl;
     for (;;) {
-        std::getline(std::cin, cmd);
-
-
-        std::cout << "jap0 cmd=" << cmd << std::endl;
-        if (cmd == "test") {
-            std::cout << "test" << std::endl;
-            yuraterm term;
-            auto test = term.getline();
-        }
-        break;
+        yuraterm term;
+        auto result = term.getline();
+        std::cout << "結果：" << result << std::endl;
     }
-
 }
