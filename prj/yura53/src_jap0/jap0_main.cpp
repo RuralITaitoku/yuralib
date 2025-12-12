@@ -27,7 +27,8 @@ int main(int argc, char** argv) {
         } else {
             bool run_flag = false;
             for (auto jap : japs) {
-                run_flag |= jap->run(cmd, stack);
+                run_flag = jap->run(cmd, stack);
+                if (run_flag) break;
             }
             if (!run_flag) {
                 stack.push_back(cmd);
