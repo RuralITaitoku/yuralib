@@ -5,11 +5,34 @@
 
 int main(int argc, char** argv) {
     std::string cmd;
-    std::cout << "jap0" << std::endl;
-    std::cout << "ssss " << static_cast<int>('\n') << std::endl;
+
+    std::vector<std::string> stack;
+    std::vector< std::shared_ptr<jap> > japs;
+    japs.push_back(std::make_shared<jap0>());
     for (;;) {
-        yuraterm term;
-        auto result = term.getline();
-        std::cout << "結果：" << result << std::endl;
+        std::getline(std::cin, cmd);
+        if (cmd == "q") {
+            break;
+        } else if (cmd == "..") {
+            for (size_t i = 0; i < stack.size(); i++) {
+                std::cout << i << ". " << stack[i] << std::endl;
+            }
+            std::cout << "--- " << stack.size() << std::endl;
+        } else if (cmd == "clear") {
+            stack.clear();
+        } else if (cmd == "help") {
+            for (auto jap : japs) {
+                std::cout << jap->help() << std::endl;
+            }
+        } else {
+            bool run_flag = false;
+            for (auto jap : japs) {
+                run_flag = jap->run(cmd, stack);
+                if (run_flag) break;
+            }
+            if (!run_flag) {
+                stack.push_back(cmd);
+            }
+        }
     }
 }

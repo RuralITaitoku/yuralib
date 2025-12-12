@@ -27,7 +27,7 @@ public:
     ~yuraterm();
 
     unsigned char get_char();
-    std::string getline();
+    std::string getline(bool debug = false);
     std::tuple<int, int> get_term_size();
 
     void to_cursor(int row, int col);

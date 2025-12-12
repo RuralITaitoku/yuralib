@@ -26,7 +26,7 @@ unsigned char yuraterm::get_char() {
     return getchar();
 }
 
-std::string yuraterm::getline() {
+std::string yuraterm::getline(bool debug) {
     std::string line;
 
     for (;;) {
