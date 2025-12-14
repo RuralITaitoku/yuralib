@@ -68,7 +68,7 @@ std::string getWeek(int i)
 class save_csv_tsv : public jap {
 public:
     virtual ~save_csv_tsv() {}
-    std::string help() {
+    std::string help() override {
         std::string help;
         help += "-\n";
         help += "ファイル名\n";
@@ -80,7 +80,7 @@ public:
         return help;
     }
 
-    bool run(const std::string &cmd, std::vector<std::string> &stack) {
+    bool run(const std::string &cmd, std::vector<std::string> &stack) override{
         if (cmd == "save") {
             auto filename = stack.back();
             stack.pop_back();

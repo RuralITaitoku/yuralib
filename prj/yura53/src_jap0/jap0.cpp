@@ -1,6 +1,5 @@
 #include "jap0.hpp"
 
-#include<regex>
 
 bool jap0::check_line(const std::string& text, std::string& prefix, int& no, std::string& line) {
     std::string src;
@@ -19,9 +18,8 @@ bool jap0::check_line(const std::string& text, std::string& prefix, int& no, std
     } else {
         src = text;
     }
-    std::regex line_pattern(R"(^([0-9]*)\. (.*)$)");
     std::smatch matches;
-    if (std::regex_search(src, matches, line_pattern)) {
+    if (std::regex_search(src, matches, line_pattern_)) {
         auto str_no = matches[1].str();
         if (!str_no.empty()) {
             no = std::stoi(str_no);
@@ -42,11 +40,15 @@ std::string jap0::help() {
     return result;
 }
 bool jap0::run(const std::string& cmd, std::vector<std::string>& stack) {
-    if (cmd == "jap0") {
+    int row_no;
+    std::string row_cmd;
+    std::string row_line;
+    if(check_line(cmd, row_cmd, row_no, row_line)) {
+        std::cout << row_cmd << " " << row_no << ". " << row_line << std::endl;
+        return true;
+    } else if (cmd == "jap0") {
         std::cout << "jap0 test" << std::endl;
         return true;
     }
     return false;
 }
-
-

@@ -13,7 +13,7 @@ class jap_zero : public jap {
         };
 
         virtual ~jap_zero(){}
-        std::string help() {
+        std::string help() override {
             std::string help;
             help += "-\n";
             help += "jap_forth コマンド\n";
@@ -21,7 +21,7 @@ class jap_zero : public jap {
             help += "-\n";
             return help;
         }
-        bool run(const std::string &cmd, std::vector<std::string> &stack);
+        bool run(const std::string &cmd, std::vector<std::string> &stack) override ;
         void system(std::string &cmd);
         std::string escape(std::string &str);
         void main();
