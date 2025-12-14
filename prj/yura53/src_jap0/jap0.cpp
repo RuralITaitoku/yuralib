@@ -34,10 +34,8 @@ bool jap0::check_line(const std::string& text, std::string& prefix, int& no, std
 }
 
 
-std::string jap0::help() {
-    std::string result;
-    result += "jap0::help!!!!!!!!!!!!!!!!";
-    return result;
+void jap0::help() {
+    std::cout << "jap0" << std::endl;
 }
 bool jap0::run(const std::string& cmd, std::vector<std::string>& stack) {
     int row_no;

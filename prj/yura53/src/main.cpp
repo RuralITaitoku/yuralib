@@ -9,16 +9,14 @@ std::vector<std::shared_ptr<jap>> jap_vec;
 
 class save_csv_tsv : public jap {
 public:
-    std::string help() {
-        std::string help;
-        help += "-\n";
-        help += "ファイル名\n";
-        help += "save : スタックの先頭からをファイル名で保存\n";
-        help += "-\n";
-        help += "save_csv_to_tsv:\n";
-        help += "-\n";
-        help += "csv_to_tsv:\n";
-        return help;
+    void help() {
+        std::cout << "-\n";
+        std::cout << "ファイル名\n";
+        std::cout << "save : スタックの先頭からをファイル名で保存\n";
+        std::cout << "-\n";
+        std::cout << "save_csv_to_tsv:\n";
+        std::cout << "-\n";
+        std::cout << "csv_to_tsv:\n";
     }
 
     bool run(const std::string &cmd, std::vector<std::string> &stack) {
@@ -55,15 +53,13 @@ public:
 
 class dialy_jap : public jap {
 public:
-    std::string help() {
-        std::string help;
-        help += "-\n";
-        help += "today : 今日の日付を整数でスタック。\n";
-        help += "-\n";
-        help += "開始日(整数)から\n";
-        help += "終了日(整数)まで\n";
-        help += "make ymd link : 日付リンクのソースを作る❓\n";
-        return help;
+    void help() {
+        std::cout << "-\n";
+        std::cout << "today : 今日の日付を整数でスタック。\n";
+        std::cout << "-\n";
+        std::cout << "開始日(整数)から\n";
+        std::cout << "終了日(整数)まで\n";
+        std::cout << "make ymd link : 日付リンクのソースを作る❓\n";
     }
 
     bool run(const std::string &cmd, std::vector<std::string> &stack) {
@@ -78,12 +74,10 @@ public:
 
 class shell_jap : public jap {
 public:
-    std::string help() {
-        std::string help;
-        help += "-\n";
-        help += "シェルコマンド\n";
-        help += "sh : シェルコマンド実行❓\n";
-        return help;
+    void help() {
+        std::cout << "-\n";
+        std::cout << "シェルコマンド\n";
+        std::cout << "sh : シェルコマンド実行❓\n";
     }
 
     bool run(const std::string &cmd, std::vector<std::string> &stack) {
@@ -115,7 +109,7 @@ void jap_notation() {
             std::cout << "ps : print stack" << std::endl;
             std::cout << "cs : clear stack" << std::endl;
             for (auto jap : jap_vec) {
-                std::cout << jap->help();
+                jap->help();
             }
 
         } else if (line == "ps") {

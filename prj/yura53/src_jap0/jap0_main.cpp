@@ -24,7 +24,7 @@ int main(int argc, char** argv) {
             stack.clear();
         } else if (cmd == "help") {
             for (auto jap : japs) {
-                std::cout << jap->help() << std::endl;
+                jap->help();
             }
         } else {
             bool run_flag = false;

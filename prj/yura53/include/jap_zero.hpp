@@ -13,13 +13,11 @@ class jap_zero : public jap {
         };
 
         virtual ~jap_zero(){}
-        std::string help() override {
-            std::string help;
-            help += "-\n";
-            help += "jap_forth コマンド\n";
-            help += "jap_forth ( jf ) : トップスタックをjap_forchとして処理\n";
-            help += "-\n";
-            return help;
+        void help() override {
+            std::cout << "-\n";
+            std::cout << "jap_forth コマンド\n";
+            std::cout << "jap_forth ( jf ) : トップスタックをjap_forchとして処理\n";
+            std::cout << "-\n";
         }
         bool run(const std::string &cmd, std::vector<std::string> &stack) override ;
         void system(std::string &cmd);

@@ -68,16 +68,14 @@ std::string getWeek(int i)
 class save_csv_tsv : public jap {
 public:
     virtual ~save_csv_tsv() {}
-    std::string help() override {
-        std::string help;
-        help += "-\n";
-        help += "ファイル名\n";
-        help += "save : スタックの先頭からをファイル名で保存\n";
-        help += "-\n";
-        help += "save_csv_to_tsv:\n";
-        help += "-\n";
-        help += "csv_to_tsv:\n";
-        return help;
+    void help() override {
+        std::cout << "-\n";
+        std::cout <<  "ファイル名\n";
+        std::cout <<  "save : スタックの先頭からをファイル名で保存\n";
+        std::cout <<  "-\n";
+        std::cout <<  "save_csv_to_tsv:\n";
+        std::cout <<  "-\n";
+        std::cout <<  "csv_to_tsv:\n";
     }
 
     bool run(const std::string &cmd, std::vector<std::string> &stack) override{
