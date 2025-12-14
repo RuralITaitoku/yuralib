@@ -6,16 +6,24 @@
 
 bool check_line(const std::string& text, std::string& prefix, int& no, std::string& line) {
     std::string src;
-    if ((text.size() > 0) && text[0] == 'a') {
+    if (text.empty()) {
+        return false;
+    }
+    if (text[0] == 'a') {
         prefix = "a";
         src = text.substr(1);
     } else {
         src = text;
     }
-    std::regex line_pattern(R"(([0-9]*)\. (.*))");
+    std::regex line_pattern(R"(^([0-9]*)\. (.*)$)");
     std::smatch matches;
     if (std::regex_search(src, matches, line_pattern)) {
-        no = std::stoi(matches[1].str());
+        auto str_no = matches[1].str();
+        if (!str_no.empty()) {
+            no = std::stoi(str_no);
+        } else {
+            no = INT_MAX;
+        }
         line = matches[2].str();
         return true;
     } else {
