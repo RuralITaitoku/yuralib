@@ -12,6 +12,12 @@ bool check_line(const std::string& text, std::string& prefix, int& no, std::stri
     if (text[0] == 'a') {
         prefix = "a";
         src = text.substr(1);
+    } else if (text[0] == 'i') {
+        prefix = "i";
+        src = text.substr(1);
+    } else if (text[0] == 'c') {
+        prefix = "c";
+        src = text.substr(1);
     } else {
         src = text;
     }
