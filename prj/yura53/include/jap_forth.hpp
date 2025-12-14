@@ -19,7 +19,7 @@ class jap_forth : public jap {
             help += "-\n";
             return help;
         }
-        bool run(std::string &cmd, std::vector<std::string> &stack);
+        bool run(const std::string &cmd, std::vector<std::string> &stack);
         std::string pop(std::vector<std::string>& stack, int index = 0);
         // スタックのトップから2番目の値を複製し、スタックのトップに移動
         void over(std::vector<std::string>& stack);

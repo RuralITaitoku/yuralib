@@ -21,7 +21,7 @@ class jap_zero : public jap {
             help += "-\n";
             return help;
         }
-        bool run(std::string &cmd, std::vector<std::string> &stack);
+        bool run(const std::string &cmd, std::vector<std::string> &stack);
         void system(std::string &cmd);
         std::string escape(std::string &str);
         void main();

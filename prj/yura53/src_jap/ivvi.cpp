@@ -18,7 +18,7 @@ std::string ivvi::help() {
     return result;
 }
 
-bool ivvi::run(std::string &cmd, std::vector<std::string>& stack) {
+bool ivvi::run(const std::string &cmd, std::vector<std::string>& stack) {
     if (cmd != "iv") {
         return false;
     }

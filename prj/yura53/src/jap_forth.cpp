@@ -4,7 +4,7 @@
 template<typename T> class TypeCheck;
 #define DP(x) std::cout << __FILE__ << ":" << __LINE__ << " " << x << std::endl;
 
-bool jap_forth::run(std::string &cmd, std::vector<std::string> &stack) {
+bool jap_forth::run(const std::string &cmd, std::vector<std::string> &stack) {
     if (cmd == "jap_forth" || cmd == "jf") {
         forth1(stack);
         loop();

@@ -11,7 +11,7 @@ template <typename T>
 class TypeCheck;
 #define DP(x) std::cout << __FILE__ << ":" << __LINE__ << " " << x << std::endl;
 
-bool jap_zero::run(std::string &cmd, std::vector<std::string> &stack)
+bool jap_zero::run(const std::string &cmd, std::vector<std::string> &stack)
 {
     if (cmd == "jap0" || cmd == "jf")
     {
@@ -80,7 +80,7 @@ public:
         return help;
     }
 
-    bool run(std::string &cmd, std::vector<std::string> &stack) {
+    bool run(const std::string &cmd, std::vector<std::string> &stack) {
         if (cmd == "save") {
             auto filename = stack.back();
             stack.pop_back();

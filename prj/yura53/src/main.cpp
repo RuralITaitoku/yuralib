@@ -9,7 +9,6 @@ std::vector<std::shared_ptr<jap>> jap_vec;
 
 class save_csv_tsv : public jap {
 public:
-    virtual ~save_csv_tsv() {}
     std::string help() {
         std::string help;
         help += "-\n";
@@ -22,7 +21,7 @@ public:
         return help;
     }
 
-    bool run(std::string &cmd, std::vector<std::string> &stack) {
+    bool run(const std::string &cmd, std::vector<std::string> &stack) {
         if (cmd == "save") {
             auto filename = stack.back();
             stack.pop_back();
@@ -56,7 +55,6 @@ public:
 
 class dialy_jap : public jap {
 public:
-    virtual ~dialy_jap() {}
     std::string help() {
         std::string help;
         help += "-\n";
@@ -68,7 +66,7 @@ public:
         return help;
     }
 
-    bool run(std::string &cmd, std::vector<std::string> &stack) {
+    bool run(const std::string &cmd, std::vector<std::string> &stack) {
         if (cmd == "today") {
             int ymd = yura::today();
             stack.push_back(std::to_string(ymd));
@@ -80,7 +78,6 @@ public:
 
 class shell_jap : public jap {
 public:
-    virtual ~shell_jap() {}
     std::string help() {
         std::string help;
         help += "-\n";
@@ -89,7 +86,7 @@ public:
         return help;
     }
 
-    bool run(std::string &cmd, std::vector<std::string> &stack) {
+    bool run(const std::string &cmd, std::vector<std::string> &stack) {
         if (cmd == "sh") {
             auto cmd = stack.back();
             stack.pop_back();

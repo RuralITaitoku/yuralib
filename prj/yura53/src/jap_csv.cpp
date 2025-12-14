@@ -17,7 +17,7 @@ public:
         return help;
     }
 
-    bool run(std::string &cmd, std::vector<std::string> &stack) {
+    bool run(const std::string &cmd, std::vector<std::string> &stack) {
         if (cmd == "save") {
             auto filename = stack.back();
             stack.pop_back();

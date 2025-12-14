@@ -12,7 +12,7 @@ class jap_csv : public jap {
         };
 
         virtual ~jap_csv(){}
-        std::string help() {
+        std::string help() override {
             std::string help;
             help += "-\n";
             help += "jap_forth コマンド\n";
@@ -20,7 +20,7 @@ class jap_csv : public jap {
             help += "-\n";
             return help;
         }
-        bool run(std::string &cmd, std::vector<std::string> &stack);
+        bool run(const std::string &cmd, std::vector<std::string> &stack) override;
         std::string pop(std::vector<std::string>& stack, int index = 0);
         // スタックのトップから2番目の値を複製し、スタックのトップに移動
         void over(std::vector<std::string>& stack);
