@@ -12,7 +12,6 @@ public:
 private:
     std::string row_cmd;
     std::string row_line;
-
 };
 
 
