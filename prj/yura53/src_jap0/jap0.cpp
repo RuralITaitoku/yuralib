@@ -33,6 +33,9 @@ bool jap0::check_line(const std::string& text, std::string& prefix, int& no, std
     }
 }
 
+bool jap0::check_pattern(const std::string& text, const std::regex& pattern, std::vector<std::string>& result) {
+    return false;
+}
 
 void jap0::help() {
     std::cout << "jap0" << std::endl;

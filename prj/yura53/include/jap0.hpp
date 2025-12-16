@@ -9,6 +9,7 @@ public:
     virtual bool run(const std::string &cmd, std::vector<std::string>& stack) override;
 
     bool check_line(const std::string& text, std::string& prefix, int& no, std::string& line);
+    bool check_pattern(const std::string& text, const std::regex& pattern, std::vector<std::string>& result);
 
 private:
     std::regex line_pattern_ = std::regex(R"(^([0-9]*)\. (.*)$)");
