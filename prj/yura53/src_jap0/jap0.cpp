@@ -53,3 +53,16 @@ bool jap0::run(const std::string& cmd, std::vector<std::string>& stack) {
     }
     return false;
 }
+
+
+
+jap0_term::jap0_term() {
+
+}
+
+jap0_term::~jap0_term() {
+
+}
+
+void jap0_term::get_line(std::string& line) {
+}

@@ -15,4 +15,10 @@ private:
     std::regex line_pattern_ = std::regex(R"(^([0-9]*)\. (.*)$)");
 };
 
+class jap0_term {
+public:
+    jap0_term();
+    ~jap0_term();
 
+    void get_line(std::string& line);
+};
