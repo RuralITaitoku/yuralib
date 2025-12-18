@@ -1,7 +1,8 @@
 #pragma once
 
 #include "jap.hpp"
-#include<regex>
+#include <regex>
+#include "termios.h"
 
 class jap0 : public jap {
 public:
@@ -16,6 +17,7 @@ private:
 };
 
 class jap0_term {
+    struct termios old_termios;
 public:
     jap0_term();
     ~jap0_term();

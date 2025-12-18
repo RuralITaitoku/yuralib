@@ -7,6 +7,7 @@
 
 int main(int argc, char** argv) {
     std::string cmd;
+    jap0_term term;
 
     std::vector<std::string> stack;
     std::vector< std::shared_ptr<jap> > japs;

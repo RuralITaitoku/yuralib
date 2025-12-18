@@ -1,6 +1,5 @@
 #include "jap0.hpp"
 
-
 bool jap0::check_line(const std::string& text, std::string& prefix, int& no, std::string& line) {
     std::string src;
     if (text.empty()) {
@@ -57,11 +56,20 @@ bool jap0::run(const std::string& cmd, std::vector<std::string>& stack) {
 
 
 jap0_term::jap0_term() {
-
+    std::cout << "jap0_term" << std::endl;
+    struct termios new_termios;
+    tcgetattr(STDIN_FILENO, &old_termios);
+    new_termios = old_termios;
+    new_termios.c_lflag &= ~ICANON;
+    new_termios.c_lflag &= ~ECHO;
+    new_termios.c_cc[VMIN] = 1;
+    new_termios.c_cc[VTIME] = 0;
+    tcsetattr(STDIN_FILENO, TCSANOW, &new_termios);
 }
 
 jap0_term::~jap0_term() {
-
+    tcsetattr(STDIN_FILENO, TCSANOW, &old_termios);
+    std::cout << "~jap0_term" << std::endl;
 }
 
 void jap0_term::get_line(std::string& line) {
