@@ -73,4 +73,13 @@ jap0_term::~jap0_term() {
 }
 
 void jap0_term::get_line(std::string& line) {
+    std::string mode;
+    for (;;) {
+        auto ch = getchar();
+        if (ch == 'q') {
+            break;
+        } else {
+            line += ch;
+        }
+    }
 }

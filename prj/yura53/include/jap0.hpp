@@ -2,6 +2,7 @@
 
 #include "jap.hpp"
 #include <regex>
+#include <cstdio>
 #include "termios.h"
 
 class jap0 : public jap {
