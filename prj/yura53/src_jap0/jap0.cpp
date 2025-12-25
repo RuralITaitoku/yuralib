@@ -53,8 +53,6 @@ bool jap0::run(const std::string& cmd, std::vector<std::string>& stack) {
     return false;
 }
 
-
-
 jap0_term::jap0_term() {
     std::cout << "jap0_term" << std::endl;
     struct termios new_termios;
@@ -73,4 +71,13 @@ jap0_term::~jap0_term() {
 }
 
 void jap0_term::get_line(std::string& line) {
+    std::string mode;
+    for (;;) {
+        auto ch = getchar();
+        if (ch == 'q') {
+            break;
+        } else {
+            line += ch;
+        }
+    }
 }
