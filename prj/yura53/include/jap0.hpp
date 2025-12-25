@@ -3,7 +3,7 @@
 #include "jap.hpp"
 #include <regex>
 #include "termios.h"
-
+#include <unistd.h>
 class jap0 : public jap {
 public:
     virtual void help() override;
