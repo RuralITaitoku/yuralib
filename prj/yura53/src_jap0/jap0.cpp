@@ -1,6 +1,5 @@
 #include "jap0.hpp"
 
-
 bool jap0::check_line(const std::string& text, std::string& prefix, int& no, std::string& line) {
     std::string src;
     if (text.empty()) {
@@ -33,11 +32,12 @@ bool jap0::check_line(const std::string& text, std::string& prefix, int& no, std
     }
 }
 
+bool jap0::check_pattern(const std::string& text, const std::regex& pattern, std::vector<std::string>& result) {
+    return false;
+}
 
-std::string jap0::help() {
-    std::string result;
-    result += "jap0::help!!!!!!!!!!!!!!!!";
-    return result;
+void jap0::help() {
+    std::cout << "jap0" << std::endl;
 }
 bool jap0::run(const std::string& cmd, std::vector<std::string>& stack) {
     int row_no;
@@ -51,4 +51,33 @@ bool jap0::run(const std::string& cmd, std::vector<std::string>& stack) {
         return true;
     }
     return false;
+}
+
+jap0_term::jap0_term() {
+    std::cout << "jap0_term" << std::endl;
+    struct termios new_termios;
+    tcgetattr(STDIN_FILENO, &old_termios);
+    new_termios = old_termios;
+    new_termios.c_lflag &= ~ICANON;
+    new_termios.c_lflag &= ~ECHO;
+    new_termios.c_cc[VMIN] = 1;
+    new_termios.c_cc[VTIME] = 0;
+    tcsetattr(STDIN_FILENO, TCSANOW, &new_termios);
+}
+
+jap0_term::~jap0_term() {
+    tcsetattr(STDIN_FILENO, TCSANOW, &old_termios);
+    std::cout << "~jap0_term" << std::endl;
+}
+
+void jap0_term::get_line(std::string& line) {
+    std::string mode;
+    for (;;) {
+        auto ch = getchar();
+        if (ch == 'q') {
+            break;
+        } else {
+            line += ch;
+        }
+    }
 }

@@ -22,7 +22,7 @@ private:
 public:
     ivvi();
     ~ivvi();
-    virtual std::string help() override;
+    virtual void help() override;
     virtual bool run(const std::string &cmd, std::vector<std::string>& stack) override;
 
     int height();

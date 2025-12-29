@@ -12,13 +12,11 @@ class jap_csv : public jap {
         };
 
         virtual ~jap_csv(){}
-        std::string help() override {
-            std::string help;
-            help += "-\n";
-            help += "jap_forth コマンド\n";
-            help += "jap_forth ( jf ) : トップスタックをjap_forchとして処理\n";
-            help += "-\n";
-            return help;
+        void help() override {
+            std::cout << "-\n";
+            std::cout << "jap_forth コマンド\n";
+            std::cout << "jap_forth ( jf ) : トップスタックをjap_forchとして処理\n";
+            std::cout << "-\n";
         }
         bool run(const std::string &cmd, std::vector<std::string> &stack) override;
         std::string pop(std::vector<std::string>& stack, int index = 0);

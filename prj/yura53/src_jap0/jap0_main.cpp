@@ -7,6 +7,7 @@
 
 int main(int argc, char** argv) {
     std::string cmd;
+    jap0_term term;
 
     std::vector<std::string> stack;
     std::vector< std::shared_ptr<jap> > japs;
@@ -24,7 +25,7 @@ int main(int argc, char** argv) {
             stack.clear();
         } else if (cmd == "help") {
             for (auto jap : japs) {
-                std::cout << jap->help() << std::endl;
+                jap->help();
             }
         } else {
             bool run_flag = false;

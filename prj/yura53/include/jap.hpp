@@ -7,7 +7,7 @@
 class jap {
 public:
     virtual ~jap() {};
-    virtual std::string help() = 0;
+    virtual void help() = 0;
     virtual bool run(const std::string &cmd, std::vector<std::string>& stack) = 0;
 
     int next_millis;

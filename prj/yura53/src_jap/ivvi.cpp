@@ -13,9 +13,8 @@ ivvi::~ivvi() {
     std::cout << "ivvi distructor" << std::endl;
 }
 
-std::string ivvi::help() {
-    std::string result = "iv";
-    return result;
+void ivvi::help() {
+    std::cout << "iv";
 }
 
 bool ivvi::run(const std::string &cmd, std::vector<std::string>& stack) {
