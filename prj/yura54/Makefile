@@ -14,28 +14,11 @@ LIBS= -lsqlite3
 SRCS = $(wildcard src/*.cpp)
 OBJS = $(patsubst src/%.cpp, objs/%.o, $(SRCS))
 
-JAP_SRCS = $(wildcard src_jap/*.cpp)
-JAP_OBJS = $(patsubst src_jap/%.cpp, objs/%.o, $(JAP_SRCS))
-JAP_OBJS += objs/yuraterm.o objs/yura_pipe.o objs/yura.o
+
 JAP0_SRCS = $(wildcard src_jap0/*.cpp)
 JAP0_OBJS = $(patsubst src_jap0/%.cpp, objs/%.o, $(JAP0_SRCS))
-JAP0_OBJS += objs/yuraterm.o  
-UT_SRCS = $(wildcard ut/*.cpp)
-UT_OBJS = $(patsubst ut/%.cpp, objs/%.o, $(UT_SRCS))
 
-MD_SRCS = $(wildcard md/*.md)
-HTML = $(patsubst md/%.md, html/%.html, $(MD_SRCS))
-
-
-all: bin/try bin/jap bin/jap0 bin/utjap html 
-
-bin/try: $(OBJS) | bin
-	$(CPP) -o $@ $^ -lsqlite3
-	cp bin/try ~/bin/try
-
-bin/jap: $(JAP_OBJS)   | bin
-	$(CPP) -o $@ $^ -lsqlite3
-	cp bin/jap ~/bin/jap
+all: bin/jap0 bin/utjap html 
 
 bin/utjap:	$(UT_OBJS) $(filter-out objs/jap_zero.o, $(JAP_OBJS)) | bin
 	$(CPP) -o $@ $^ -lsqlite3 -lgtest -lpthread
