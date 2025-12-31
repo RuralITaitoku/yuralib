@@ -87,7 +87,7 @@ void jap0_term::get_line(std::string& line) {
         }
         snprintf(buf, sizeof(buf), "%02x %s", ch, line.c_str());
         std::string p_str(buf);
-        println(p_str, -1);
+        println(p_str, -2);
     }
 }
 void jap0_term::println(std::string& line, int row, int col) {
@@ -100,6 +100,7 @@ void jap0_term::println(std::string& line, int row, int col) {
     } else {
         std::cout << es_cursor(row, col) << line << ERASE_TO_END_OF_LINE;
     }
+
 }
 
 std::tuple<int, int> jap0_term::get_term_size() {
