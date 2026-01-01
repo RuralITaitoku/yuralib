@@ -32,7 +32,4 @@ public:
     void set_next(int n) {
         next_millis = millis() + n;
     }
-
-
-
 };

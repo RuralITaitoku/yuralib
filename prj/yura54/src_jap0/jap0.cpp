@@ -115,7 +115,7 @@ std::tuple<int, int> jap0_term::get_term_size() {
 }
 
 std::string jap0_term::es_cursor(int row, int col){
-    std::string result = "\e[";
+        std::string result = "\e[5 q\e[";
     result += std::to_string(row);
     result += ";";
     result += std::to_string(col);
