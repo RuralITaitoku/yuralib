@@ -1,7 +1,6 @@
 #include <iostream>
 
 #include "jap0.hpp"
-#include "yuraterm.hpp"
 #include <regex>
 
 
