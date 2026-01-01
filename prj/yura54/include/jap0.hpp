@@ -1,0 +1,37 @@
+#pragma once
+
+#include "jap.hpp"
+#include <regex>
+#include <cstdio>
+#include <sys/ioctl.h>
+#include <termios.h>
+#include <unistd.h>
+
+class jap0 : public jap {
+public:
+    virtual void help() override;
+    virtual bool run(const std::string &cmd, std::vector<std::string>& stack) override;
+
+    bool check_line(const std::string& text, std::string& prefix, int& no, std::string& line);
+    bool check_pattern(const std::string& text, const std::regex& pattern, std::vector<std::string>& result);
+
+private:
+    std::regex line_pattern_ = std::regex(R"(^([0-9]*)\. (.*)$)");
+};
+
+#define ERASE_TO_END_OF_LINE "\x1b[K";
+
+class jap0_term {
+    struct termios old_termios;
+    int rows_;
+    int cols_;
+public:
+    jap0_term();
+    ~jap0_term();
+
+    void get_line(std::string& line);
+    void println(std::string& line, int row=0, int col=0);
+    std::tuple<int, int> get_term_size();
+    std::string es_cursor(int row, int col);
+    std::string es_end();
+};
