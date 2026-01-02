@@ -24,6 +24,11 @@ int main(int argc, char** argv) {
             std::cout << "--- " << stack.size() << std::endl;
         } else if (cmd == "clear") {
             stack.clear();
+        } else if (cmd == "test") {
+            jap0_screen screen;
+            screen.init(10, 10);
+            screen.flush();
+            std::cout << "screen test" << std::endl;
         } else if (cmd == "help") {
             for (auto jap : japs) {
                 jap->help();

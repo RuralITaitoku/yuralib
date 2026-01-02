@@ -54,22 +54,91 @@ bool jap0::run(const std::string& cmd, std::vector<std::string>& stack) {
 }
 
 
-void jap0_screen::init(int rows, int cols) {
-    rows_ = rows;
-    cols_ = cols;
-    screen_.resize(rows * cols, 0x20);
-    off_screen_.resize(rows * cols, 0x20);
+void jap0_screen::init(int width, int height) {
+    height_ = height;
+    width_ = width;
+    screen_.resize(height * width, 0x20);
+    off_screen_.resize(height * width, 0x20);
 }
-void jap0_screen::put(int row, int col, char ch) {
-    if (row < 0 || rows_ < row) {
+void jap0_screen::put(int x, int y, char ch) {
+    if (y < 0 || height_ < y) {
         return;
     }
-    if (col < 0 || cols_ < col) {
+    if (x < 0 || width_ < x) {
         return;
     }
-    off_screen_[cols_ * row + col] = ch;
+    off_screen_[width_ * y + x] = ch;
 }
 
+/**
+ * @brief ブレゼンハムのアルゴリズムを使用して (x0, y0) から (x1, y1) へ線を描画します。
+ * @param x0 始点のx座標
+ * @param y0 始点のy座標
+ * @param x1 終点のx座標
+ * @param y1 終点のy座標
+ */
+void jap0_screen::drawLine(int x0, int y0, int x1, int y1, char ch) {
+    // xとyの変位を計算
+    int dx = abs(x1 - x0);
+    int dy = abs(y1 - y0);
+
+    // xとyの増加方向を決定
+    int sx = (x0 < x1) ? 1 : -1;
+    int sy = (y0 < y1) ? 1 : -1;
+
+    // 誤差パラメータ
+    int err;
+
+    // 傾きによって処理を分岐 (dx >= dy の場合、xを主軸とする)
+    if (dx >= dy) {
+        // 主軸がxの場合 (傾きが 0 から 1 の間)
+
+        // 最初の誤差パラメータを計算
+        err = 2 * dy - dx;
+        
+        int x = x0;
+        int y = y0;
+
+        for (int i = 0; i <= dx; i++) {
+            put(x, y, ch); // 現在の点を描画
+
+            // 誤差が0以上の場合、y座標をインクリメント/デクリメントし、誤差を更新
+            if (err >= 0) {
+                y += sy;
+                err -= 2 * dx; // 誤差を dx 分減らす
+            }
+            // 誤差を dy 分増やす (常に実行される)
+            err += 2 * dy;
+            
+            x += sx; // x座標をインクリメント/デクリメント
+        }
+    } else {
+        // 主軸がyの場合 (傾きが 1 より大きい、または -1 より小さい)
+        
+        // 最初の誤差パラメータを計算
+        err = 2 * dx - dy;
+
+        int x = x0;
+        int y = y0;
+
+        for (int i = 0; i <= dy; i++) {
+            put(x, y, ch); // 現在の点を描画
+
+            // 誤差が0以上の場合、x座標をインクリメント/デクリメントし、誤差を更新
+            if (err >= 0) {
+                x += sx;
+                err -= 2 * dy; // 誤差を dy 分減らす
+            }
+            // 誤差を dx 分増やす (常に実行される)
+            err += 2 * dx;
+            
+            y += sy; // y座標をインクリメント/デクリメント
+        }
+    }
+}
+void jap0_screen::flush() {
+    
+}
 jap0_term::jap0_term() {
     std::cout << "jap0_term" << std::endl;
     struct termios new_termios;
