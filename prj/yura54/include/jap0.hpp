@@ -32,9 +32,9 @@ public:
     ~jap0_screen() {};
 
     void put(int row, int col);
-    void println(const std::string& line, int row = 0; int col = 0);
+    void println(const std::string& line, int row = 0, int col = 0);
     void flush();
-}
+};
 
 class jap0_term {
     struct termios old_termios;
