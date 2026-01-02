@@ -26,17 +26,19 @@ class jap0_screen {
     std::vector<uint64_t> off_screen_;
     int rows_;
     int cols_;
-    
+
 public:
     jap0_screen() {};
     ~jap0_screen() {};
 
-    void put(int row, int col);
-    void println(const std::string& line, int row = 0; int col = 0);
+    void init(int rows, int cols);
+    void put(int row, int col, char ch);
+    void println(const std::string& line, int row = 0, int col = 0);
     void flush();
-}
+};
 
 class jap0_term {
+    jap0_screen screen_;
     struct termios old_termios;
     int rows_;
     int cols_;
