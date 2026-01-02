@@ -15,7 +15,8 @@ int main(int argc, char** argv) {
         // std::getline(std::cin, cmd);
         cmd = "";
         term.get_line(cmd);
-        if (cmd == "q") {
+        if (cmd == "") {
+        } else if (cmd == "q") {
             break;
         } else if (cmd == "..") {
             for (size_t i = 0; i < stack.size(); i++) {
@@ -27,6 +28,7 @@ int main(int argc, char** argv) {
         } else if (cmd == "test") {
             jap0_screen screen;
             screen.init(10, 10);
+            screen.put(2, 2, '@');
             screen.flush();
             std::cout << "screen test" << std::endl;
         } else if (cmd == "help") {
