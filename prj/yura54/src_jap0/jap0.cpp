@@ -53,6 +53,23 @@ bool jap0::run(const std::string& cmd, std::vector<std::string>& stack) {
     return false;
 }
 
+
+void jap0_screen::init(int rows, int cols) {
+    rows_ = rows;
+    cols_ = cols;
+    screen_.resize(rows * cols, 0x20);
+    off_screen_.resize(rows * cols, 0x20);
+}
+void jap0_screen::put(int row, int col, char ch) {
+    if (row < 0 || rows_ < row) {
+        return;
+    }
+    if (col < 0 || cols_ < col) {
+        return;
+    }
+    off_screen_[cols_ * row + col] = ch;
+}
+
 jap0_term::jap0_term() {
     std::cout << "jap0_term" << std::endl;
     struct termios new_termios;
@@ -115,7 +132,7 @@ std::tuple<int, int> jap0_term::get_term_size() {
 }
 
 std::string jap0_term::es_cursor(int row, int col){
-    std::string result = "\e[";
+        std::string result = "\e[5 q\e[";
     result += std::to_string(row);
     result += ";";
     result += std::to_string(col);

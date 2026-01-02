@@ -21,7 +21,24 @@ private:
 
 #define ERASE_TO_END_OF_LINE "\x1b[K";
 
+class jap0_screen {
+    std::vector<uint64_t> screen_;
+    std::vector<uint64_t> off_screen_;
+    int rows_;
+    int cols_;
+
+public:
+    jap0_screen() {};
+    ~jap0_screen() {};
+
+    void init(int rows, int cols);
+    void put(int row, int col, char ch);
+    void println(const std::string& line, int row = 0, int col = 0);
+    void flush();
+};
+
 class jap0_term {
+    jap0_screen screen_;
     struct termios old_termios;
     int rows_;
     int cols_;
@@ -35,3 +52,5 @@ public:
     std::string es_cursor(int row, int col);
     std::string es_end();
 };
+
+
