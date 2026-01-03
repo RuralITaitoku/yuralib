@@ -136,11 +136,13 @@ void jap0_screen::drawLine(int x0, int y0, int x1, int y1, char ch) {
         }
     }
 }
-void jap0_screen::flush() {
-    printf("\e[%d;%dH", 0, 0);
+void jap0_screen::flush(int x, int y) {
+    cur_x_ = x;
+    cur_y_ = y;
     for (int i = 0; i < height_; i++) {
+        printf("\e[%d;%dH", 1 + i, 1 + 2);
         for (int j = 0; j < width_; j++) {
-            std::cout << static_cast<char>(off_screen_[i * width_ + j]);
+            printf("%c", static_cast<char>(off_screen_[i * width_ + j]));
         }
         std::cout << std::endl;
     }

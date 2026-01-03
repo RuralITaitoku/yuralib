@@ -29,7 +29,7 @@ int main(int argc, char** argv) {
             jap0_screen screen;
             screen.init(10, 10);
             screen.put(2, 2, '@');
-            screen.flush();
+            screen.flush(6, 6);
             std::cout << "screen test" << std::endl;
         } else if (cmd == "help") {
             for (auto jap : japs) {

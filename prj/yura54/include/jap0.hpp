@@ -26,7 +26,15 @@ class jap0_screen {
     std::vector<uint64_t> off_screen_;
     int width_;
     int height_;
-
+    int cur_x_;
+    int cur_y_;
+    void int64_to_char_big_endian(int64_t value, char buffer[8]) {
+        for (int i = 0; i < 8; ++i) {
+            // (7 - i) は 7, 6, 5, ..., 0 の順でシフト量を計算
+            // value を右にシフトし、最下位バイト (0xFF) とのビットANDを取る
+            buffer[i] = (char)((value >> ((7 - i) * 8)) & 0xFF);
+        }
+    }
 public:
     jap0_screen() {};
     ~jap0_screen() {};
@@ -35,7 +43,7 @@ public:
     void put(int x, int y, char ch);
     void drawLine(int x0, int y0, int x1, int y1, char ch);
     void println(const std::string& line, int row = 0, int col = 0);
-    void flush();
+    void flush(int x, int y);
 };
 
 class jap0_term {
