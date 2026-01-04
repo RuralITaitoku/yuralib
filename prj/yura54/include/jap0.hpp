@@ -42,7 +42,8 @@ public:
     void init(int width, int heigth);
     void put(int x, int y, char ch);
     void drawLine(int x0, int y0, int x1, int y1, char ch);
-    void println(const std::string& line, int row = 0, int col = 0);
+    void println(const std::string& line, int x = 0, int y = 0);
+    void input(std::string& line);
     void flush(int x, int y);
 };
 

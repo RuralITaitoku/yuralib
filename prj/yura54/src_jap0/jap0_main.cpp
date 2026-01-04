@@ -26,11 +26,12 @@ int main(int argc, char** argv) {
         } else if (cmd == "clear") {
             stack.clear();
         } else if (cmd == "test") {
+            std::string input = "input test";
             jap0_screen screen;
-            screen.init(10, 10);
+            screen.init(80, 20);
             screen.put(2, 2, '@');
+            screen.println("test hisadomi", 1, 3);
             screen.flush(6, 6);
-            std::cout << "screen test" << std::endl;
         } else if (cmd == "help") {
             for (auto jap : japs) {
                 jap->help();
