@@ -47,7 +47,8 @@ public:
 };
 
 class jap0_term {
-    jap0_screen screen_;
+    jap0_screen lscreen_;
+    jap0_screen rscreen_;
     struct termios old_termios;
     int rows_;
     int cols_;
