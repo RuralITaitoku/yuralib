@@ -145,7 +145,7 @@ void jap0_screen::println(const std::string& line, int x, int y) {
     int64_t ch64;
     for(int i = 0; i < static_cast<int>(line.size()); i++) {
         char ch = line[i];
-        if (ch < 0x80) {
+        if (static_cast<unsigned char>(ch) < 0x80) {
             cur_x_ += 1;
             ch64 = static_cast<int64_t>(ch);
         }
