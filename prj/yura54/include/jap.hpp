@@ -24,7 +24,9 @@ public:
         }
         return static_cast<int>(milliseconds - jap_epoch);
     }
-
+    int sleepMillis(int milliseconds) {
+        std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
+    }
     int next() {
         return next_millis;
     }
