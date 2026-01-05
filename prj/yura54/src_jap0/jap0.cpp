@@ -136,9 +136,30 @@ void jap0_screen::drawLine(int x0, int y0, int x1, int y1, char ch) {
         }
     }
 }
+void jap0_screen::println(const std::string& line, int x, int y) {
+    cur_x_ = x + 1;
+    cur_y_ = y + 1;
+    if (y < 0 || height_ < y) {
+        return;
+    }
+    int64_t ch64;
+    for(int i = 0; i < static_cast<int>(line.size()); i++) {
+        char ch = line[i];
+        if (static_cast<unsigned char>(ch) < 0x80) {
+            cur_x_ += 1;
+            ch64 = static_cast<int64_t>(ch);
+        }
+        if ((x + i) < width_) { 
+            off_screen_[(y * width_) + x + i] = ch64;
+        }
+    }
+}
+void jap0_screen::input(std::string& line) {
+
+}
+
+
 void jap0_screen::flush(int x, int y) {
-    cur_x_ = x;
-    cur_y_ = y;
     for (int i = 0; i < height_; i++) {
         printf("\e[%d;%dH", 1 + i, 1 + 2);
         for (int j = 0; j < width_; j++) {
@@ -146,7 +167,8 @@ void jap0_screen::flush(int x, int y) {
         }
         std::cout << std::endl;
     }
-
+    printf("\e[%d;%dH", cur_x_, cur_y_);
+    fflush(stdout);
 }
 jap0_term::jap0_term() {
     std::cout << "jap0_term" << std::endl;
