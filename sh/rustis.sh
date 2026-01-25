@@ -11,7 +11,7 @@ cd $YURA_HOME/prj/$PRJ
 if which cargo ; then
     cargo build
 else
-    echo carugoなし
+    echo cargoなし
 fi
 
 
