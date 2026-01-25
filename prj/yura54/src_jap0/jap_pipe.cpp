@@ -2,14 +2,14 @@
 
 #include <memory>
 
-int yura_pipe::exec(const std::string& cmd) {
+int jap_pipe::exec(const std::string& cmd) {
 
     std::cout << "コマンド：" << cmd << std::endl;
     std::system(cmd.c_str());
     return 1;
 }
 
-std::string yura_pipe::pexec(const std::string& cmd) {
+std::string jap_pipe::pexec(const std::string& cmd) {
     char buffer[128];     // コマンドの出力を格納するバッファ
     std::string result;
 
