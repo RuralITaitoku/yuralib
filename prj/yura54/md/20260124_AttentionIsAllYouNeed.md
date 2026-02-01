@@ -462,9 +462,6 @@ The code we used to train and evaluate our models is available at https://github
 tensorflow/tensor2tensor.
 Acknowledgements We are grateful to Nal Kalchbrenner and Stephan Gouws for their fruitful
 comments, corrections and inspiration.
-
 # References
 1. Layer normalization. arXiv preprint arXiv
 2. Neural machine translation by jointly learning to align and translate. 
-
-NeuralMachineTranslationByJointlyLearningToAlignAndTranslate. 
