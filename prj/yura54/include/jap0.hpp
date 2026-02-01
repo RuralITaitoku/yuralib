@@ -64,4 +64,14 @@ public:
     std::string es_end();
 };
 
+class jap0_sqlite {
+    public:
+        jap0_sqlite();
+        ~jap0_sqlite();
 
+        virtual void help() override ;
+        virtual bool run(const std::string& cmd, std::vector<std::string>& stack) override;
+
+        int bit_reverse4(int s);
+
+};
