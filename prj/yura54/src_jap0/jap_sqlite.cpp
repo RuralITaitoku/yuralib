@@ -7,7 +7,7 @@ jap0_sqlite::~jap0_sqlite() {}
 
 
 void jap0_sqlite::help() {
-    std::cout << "jap0_help" << std::endl;
+    std::cout << "jap0_sqlite_help" << std::endl;
 }
 
 bool jap0_sqlite::run(const std::string& cmd, std::vector<std::string>& stack) {
@@ -15,7 +15,7 @@ bool jap0_sqlite::run(const std::string& cmd, std::vector<std::string>& stack) {
         std::cout << "bit reverse test" << std::endl;
         return true;
     }
-    return false
+    return false;
 
 }
 

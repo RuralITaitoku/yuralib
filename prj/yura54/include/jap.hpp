@@ -1,5 +1,6 @@
 #pragma once
 #include <chrono>
+#include <thread>
 #include <iostream>
 #include <vector>
 #include <memory>
@@ -24,7 +25,7 @@ public:
         }
         return static_cast<int>(milliseconds - jap_epoch);
     }
-    int sleepMillis(int milliseconds) {
+    void sleepMillis(int milliseconds) {
         std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
     }
     int next() {

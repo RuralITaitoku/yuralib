@@ -64,7 +64,7 @@ public:
     std::string es_end();
 };
 
-class jap0_sqlite {
+class jap0_sqlite : public jap {
     public:
         jap0_sqlite();
         ~jap0_sqlite();

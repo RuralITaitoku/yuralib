@@ -11,6 +11,7 @@ int main(int argc, char** argv) {
     std::vector<std::string> stack;
     std::vector< std::shared_ptr<jap> > japs;
     japs.push_back(std::make_shared<jap0>());
+    japs.push_back(std::make_shared<jap0_sqlite>());
     for (;;) {
         // std::getline(std::cin, cmd);
         cmd = "";
