@@ -95,7 +95,7 @@ void jap0_screen::drawLine(int x0, int y0, int x1, int y1, char ch) {
 
         // 最初の誤差パラメータを計算
         err = 2 * dy - dx;
-        
+
         int x = x0;
         int y = y0;
 
@@ -109,12 +109,12 @@ void jap0_screen::drawLine(int x0, int y0, int x1, int y1, char ch) {
             }
             // 誤差を dy 分増やす (常に実行される)
             err += 2 * dy;
-            
+
             x += sx; // x座標をインクリメント/デクリメント
         }
     } else {
         // 主軸がyの場合 (傾きが 1 より大きい、または -1 より小さい)
-        
+
         // 最初の誤差パラメータを計算
         err = 2 * dx - dy;
 
@@ -131,7 +131,7 @@ void jap0_screen::drawLine(int x0, int y0, int x1, int y1, char ch) {
             }
             // 誤差を dx 分増やす (常に実行される)
             err += 2 * dx;
-            
+
             y += sy; // y座標をインクリメント/デクリメント
         }
     }
@@ -149,7 +149,7 @@ void jap0_screen::println(const std::string& line, int x, int y) {
             cur_x_ += 1;
             ch64 = static_cast<int64_t>(ch);
         }
-        if ((x + i) < width_) { 
+        if ((x + i) < width_) {
             off_screen_[(y * width_) + x + i] = ch64;
         }
     }
@@ -193,7 +193,7 @@ void jap0_term::get_line(std::string& line) {
     for (;;) {
         auto ch = getchar();
         if (ch == 0x0a) {
-            println(line);
+            std::cout << std::endl;
             break;
         } else if (ch == 0x7f) {
             if (line.size() > 0) {
@@ -202,7 +202,7 @@ void jap0_term::get_line(std::string& line) {
         } else {
             line += ch;
         }
-        snprintf(buf, sizeof(buf), "%02x %s", ch, line.c_str());
+        snprintf(buf, sizeof(buf), "%02x%02x%02x%02x %s", (char)line[line.size() - 4], (char)line[line.size() - 3], (char)line[line.size() - 2], (char)line[line.size() - 1], line.c_str());
         std::string p_str(buf);
         println(p_str, -2);
     }
@@ -213,11 +213,10 @@ void jap0_term::println(std::string& line, int row, int col) {
     if (row == 0 && col == 0) {
         std::cout << line << std::endl;
     } else if (row < 0) {
-        std::cout << es_cursor(heigth + 1 + row, col) << line << ERASE_TO_END_OF_LINE;
+        std::cout << esc_cursor(heigth + 1 + row, col) << line << ERASE_TO_END_OF_LINE;
     } else {
-        std::cout << es_cursor(row, col) << line << ERASE_TO_END_OF_LINE;
+        std::cout << esc_cursor(row, col) << line << ERASE_TO_END_OF_LINE;
     }
-
 }
 
 std::tuple<int, int> jap0_term::get_term_size() {
@@ -231,7 +230,7 @@ std::tuple<int, int> jap0_term::get_term_size() {
     return std::make_tuple(rows_, cols_);
 }
 
-std::string jap0_term::es_cursor(int row, int col){
+std::string jap0_term::esc_cursor(int row, int col){
         std::string result = "\e[5 q\e[";
     result += std::to_string(row);
     result += ";";
@@ -240,6 +239,6 @@ std::string jap0_term::es_cursor(int row, int col){
     return result;
 }
 
-std::string jap0_term::es_end() {
+std::string jap0_term::esc_end() {
     return "\e[0m";
 }

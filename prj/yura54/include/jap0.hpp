@@ -60,8 +60,8 @@ public:
     void get_line(std::string& line);
     void println(std::string& line, int row=0, int col=0);
     std::tuple<int, int> get_term_size();
-    std::string es_cursor(int row, int col);
-    std::string es_end();
+    std::string esc_cursor(int row, int col);
+    std::string esc_end();
 };
 
 class jap0_sqlite : public jap {
