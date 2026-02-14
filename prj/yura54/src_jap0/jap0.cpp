@@ -202,7 +202,7 @@ void jap0_term::get_line(std::string& line) {
         } else {
             line += ch;
         }
-        snprintf(buf, sizeof(buf), "%02x%02x%02x%02x %s", (char)line[line.size() - 4], (char)line[line.size() - 3], (char)line[line.size() - 2], (char)line[line.size() - 1], line.c_str());
+        snprintf(buf, sizeof(buf), "%02x%02x%02x%02x%02x %s", (char)line[line.size() - 5], (char)line[line.size() - 4], (char)line[line.size() - 3], (char)line[line.size() - 2], (char)line[line.size() - 1], line.c_str());
         std::string p_str(buf);
         println(p_str, -2);
     }
