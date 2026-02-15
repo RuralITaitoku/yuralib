@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>マイTODOリスト</title>
+        <style>
+            body {
+                font-family: sans-serif;
+                background: #f4f4f9;
+                display: flex;
+                justify-content: center;
+                padding: 20px;
+            }
+            .container {
+                background: white;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                width: 100%;
+                max-width: 400px;
+            }
+            h2 {
+                text-align: center;
+                color: #333;
+            }
+            .input-group {
+                display: flex;
+                gap: 10px;
+                margin-bottom: 20px;
+            }
+            input[type="text"] {
+                flex: 1;
+                padding: 10px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+            }
+            button#add-btn {
+                padding: 10px;
+                background: #28a745;
+                color: white;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+            ul {
+                list-style: none;
+                padding: 0;
+            }
+            li {
+                background: #fff;
+                border-bottom: 1px solid #eee;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 10px 0;
+            }
+            li:last-child {
+                border-bottom: none;
+            }
+            .delete-btn {
+                background: #dc3545;
+                color: white;
+                border: none;
+                border-radius: 4px;
+                padding: 5px 10px;
+                cursor: pointer;
+                font-size: 12px;
+            }
+            .todo-text {
+                cursor: pointer;
+                flex: 1;
+            }
+            .completed {
+                text-decoration: line-through;
+                color: #888;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h2>TODO List</h2>
+            <div class="input-group">
+                <input
+                    type="text"
+                    id="todo-input"
+                    placeholder="タスクを入力..."
+                />
+                <button id="add-btn">追加</button>
+            </div>
+            <ul id="todo-list"></ul>
+        </div>
+
+        <script>
+            const input = document.getElementById("todo-input");
+            const addBtn = document.getElementById("add-btn");
+            const todoList = document.getElementById("todo-list");
+
+            // タスク追加機能
+            function addTask() {
+                if (input.value.trim() === "") return;
+
+                const li = document.createElement("li");
+                li.innerHTML = `
+            <span class="todo-text">${input.value}</span>
+            <button class="delete-btn">削除</button>
+        `;
+
+                // 完了時の打ち消し線切り替え
+                li.querySelector(".todo-text").addEventListener(
+                    "click",
+                    function () {
+                        this.classList.toggle("completed");
+                    },
+                );
+
+                // 削除機能
+                li.querySelector(".delete-btn").addEventListener(
+                    "click",
+                    function () {
+                        li.remove();
+                    },
+                );
+
+                todoList.appendChild(li);
+                input.value = ""; // 入力欄を空にする
+            }
+
+            addBtn.addEventListener("click", addTask);
+            input.addEventListener("keypress", (e) => {
+                if (e.key === "Enter") addTask();
+            });
+        </script>
+    </body>
+</html>
