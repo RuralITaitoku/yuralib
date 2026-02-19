@@ -27,7 +27,7 @@ void copyToClipboard(const std::string& text) {
     pclose(pipe);
 }
 
-int main() {
+int testClipboard() {
     std::string message = "OSを自動判別してコピーしました！";
     copyToClipboard(message);
 
