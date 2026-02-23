@@ -171,7 +171,8 @@ void jap0_screen::flush(int x, int y) {
     fflush(stdout);
 }
 jap0_term::jap0_term() {
-    std::cout << "jap0_term" << std::endl;
+    auto [rows, cols] = get_term_size();
+    std::cout << "jap0_term " << rows << "x" << cols << std::endl;
     struct termios new_termios;
     tcgetattr(STDIN_FILENO, &old_termios);
     new_termios = old_termios;
@@ -186,6 +187,7 @@ jap0_term::~jap0_term() {
     tcsetattr(STDIN_FILENO, TCSANOW, &old_termios);
     std::cout << "~jap0_term" << std::endl;
 }
+
 
 void jap0_term::get_line(std::string& line) {
     char buf[256];
@@ -202,7 +204,22 @@ void jap0_term::get_line(std::string& line) {
         } else {
             line += ch;
         }
-        snprintf(buf, sizeof(buf), "%02x%02x%02x%02x%02x %s", (char)line[line.size() - 5], (char)line[line.size() - 4], (char)line[line.size() - 3], (char)line[line.size() - 2], (char)line[line.size() - 1], line.c_str());
+        std::string cursor;
+        if (line.ends_with("\e[A")) {
+            cursor = "up";
+            line.erase(line.size() - 3);
+        } else if (line.ends_with("\e[B")) {
+            cursor = "down";
+            line.erase(line.size() - 3);
+        } else if (line.ends_with("\e[C")) {
+            cursor = "right";
+            line.erase(line.size() - 3);
+        } else if (line.ends_with("\e[D")) {
+            cursor = "left";
+            line.erase(line.size() - 3);
+        }
+        snprintf(buf, sizeof(buf), "%02x%02x%02x%02x%02x %s %s", (char)line[line.size() - 5], (char)line[line.size() - 4], (char)line[line.size() - 3], (char)line[line.size() - 2], (char)line[line.size() - 1]
+            , line.c_str(), cursor.c_str());
         std::string p_str(buf);
         println(p_str, -2);
     }
@@ -228,6 +245,14 @@ std::tuple<int, int> jap0_term::get_term_size() {
     cols_ = size_ioctl.ws_col;
     rows_ = size_ioctl.ws_row;
     return std::make_tuple(rows_, cols_);
+}
+void jap0_term::cursor(int row, int col) {
+    int r = row;
+    int c = col;
+    if (r < 0) {
+        r = rows_ + row + 1;
+    }
+    printf("\e[%i;%iH", r, c);
 }
 
 std::string jap0_term::esc_cursor(int row, int col){

@@ -59,6 +59,7 @@ public:
 
     void get_line(std::string& line);
     void println(std::string& line, int row=0, int col=0);
+    void cursor(int row=-1, int col=0);
     std::tuple<int, int> get_term_size();
     std::string esc_cursor(int row, int col);
     std::string esc_end();
