@@ -3,6 +3,5 @@ bin
 *.o
 *.aac
 build
-html
 *log.txt
 *.log
