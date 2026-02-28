@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Voice Analog Clock</title>
+        <style>
+            body {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                margin: 0;
+                background-color: #1a1a1a; /* ダークモード風 */
+                color: white;
+                font-family: "Helvetica Neue", Arial, sans-serif;
+            }
+
+            .clock {
+                width: 320px;
+                height: 320px;
+                background: radial-gradient(circle, #333, #000);
+                border: 12px solid #444;
+                border-radius: 50%;
+                position: relative;
+                box-shadow:
+                    0 0 50px rgba(0, 0, 0, 0.5),
+                    inset 0 0 20px rgba(0, 0, 0, 0.5);
+            }
+
+            /* メモリ */
+            .marker {
+                position: absolute;
+                width: 4px;
+                height: 15px;
+                background-color: #888;
+                left: 50%;
+                transform-origin: 50% 160px;
+                margin-left: -2px;
+            }
+            .marker.bold {
+                width: 6px;
+                height: 25px;
+                background-color: #fff;
+                margin-left: -3px;
+            }
+
+            /* 針 */
+            .hand {
+                position: absolute;
+                bottom: 50%;
+                left: 50%;
+                transform-origin: bottom;
+                transform: translateX(-50%) rotate(0deg);
+                border-radius: 10px;
+            }
+            .hour {
+                width: 10px;
+                height: 25%;
+                background-color: #fff;
+                z-index: 3;
+            }
+            .minute {
+                width: 6px;
+                height: 38%;
+                background-color: #bbb;
+                z-index: 2;
+            }
+            .second {
+                width: 2px;
+                height: 42%;
+                background-color: #ff3b30;
+                z-index: 1;
+            }
+
+            .center-dot {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 16px;
+                height: 16px;
+                background-color: #ff3b30;
+                border-radius: 50%;
+                transform: translate(-50%, -50%);
+                z-index: 10;
+            }
+
+            .status {
+                margin-top: 20px;
+                font-size: 0.9rem;
+                color: #888;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="clock" id="clock">
+            <div class="hand hour" id="hour"></div>
+            <div class="hand minute" id="minute"></div>
+            <div class="hand second" id="second"></div>
+            <div class="center-dot"></div>
+        </div>
+        <p class="status">
+            ※ブラウザの仕様により、一度画面をクリックすると音声が有効になります。
+        </p>
+
+        <script>
+            const clock = document.getElementById("clock");
+            let lastSpokenMinute = -1;
+
+            // 1. メモリ生成
+            function createMarkers() {
+                for (let i = 0; i < 12; i++) {
+                    const marker = document.createElement("div");
+                    marker.classList.add("marker");
+                    if (i % 3 === 0) marker.classList.add("bold");
+                    marker.style.transform = `rotate(${i * 30}deg)`;
+                    clock.appendChild(marker);
+                }
+            }
+
+            // 2. 音声読み上げ関数
+            function speakTime(h, m) {
+                const text = `${h}時${m === 0 ? "ちょうど" : m + "分"}です。`;
+                const uttr = new SpeechSynthesisUtterance(text);
+                uttr.lang = "ja-JP";
+                uttr.rate = 1.0; // 速度
+                window.speechSynthesis.speak(uttr);
+            }
+
+            // 3. 更新とチェック
+            function update() {
+                const now = new Date();
+                const s = now.getSeconds();
+                const m = now.getMinutes();
+                const h = now.getHours();
+
+                // 針の回転
+                document.getElementById("second").style.transform =
+                    `translateX(-50%) rotate(${s * 6}deg)`;
+                document.getElementById("minute").style.transform =
+                    `translateX(-50%) rotate(${m * 6 + s * 0.1}deg)`;
+                document.getElementById("hour").style.transform =
+                    `translateX(-50%) rotate(${(h % 12) * 30 + m * 0.5}deg)`;
+
+                // 1分ごとに読み上げ（秒が0のとき、かつ前回の分と異なるとき）
+                if (s === 0 && m !== lastSpokenMinute) {
+                    speakTime(h, m);
+                    lastSpokenMinute = m;
+                }
+            }
+
+            createMarkers();
+            setInterval(update, 1000);
+            update();
+        </script>
+    </body>
+</html>

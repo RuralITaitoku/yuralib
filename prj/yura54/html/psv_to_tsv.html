@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PSV to TSV 変換ツール</title>
+    <style>
+        body { font-family: sans-serif; max-width: 800px; margin: 20px auto; padding: 0 10px; line-height: 1.6; }
+        textarea { width: 100%; height: 200px; margin-bottom: 10px; font-family: monospace; }
+        .controls { margin-bottom: 20px; display: flex; gap: 10px; }
+        button { padding: 10px 20px; cursor: pointer; background-color: #007bff; color: white; border: none; border-radius: 4px; font-weight: bold; }
+        button:hover { background-color: #0056b3; }
+        button.secondary { background-color: #6c757d; }
+        .status { color: #28a745; font-weight: bold; margin-top: 10px; display: none; }
+    </style>
+</head>
+<body>
+
+    <h1>PSV to TSV 変換ツール</h1>
+    <p>パイプ区切り（|）のデータを入力してください。タブ区切りに変換してクリップボードにコピーします。</p>
+
+    <textarea id="input" placeholder="例: 名前|年齢|住所"></textarea>
+
+    <div class="controls">
+        <button onclick="convertAndCopy()">変換してコピー</button>
+        <button class="secondary" onclick="clearText()">クリア</button>
+    </div>
+
+    <div id="status" class="status">クリップボードにコピーしました！</div>
+
+    <script>
+        function convertAndCopy() {
+            const inputArea = document.getElementById('input');
+            const status = document.getElementById('status');
+            
+            // 1. 入力値を取得
+            const psvText = inputArea.value;
+            
+            if (!psvText.trim()) {
+                alert('データを入力してください。');
+                return;
+            }
+
+            // 2. PSVをTSVに変換 (| を \t に置換)
+            // 文字列内のすべての | を正規表現でタブに置換
+            const tsvText = psvText.replace(/\|/g, '\t');
+
+            // 3. クリップボードにコピー
+            navigator.clipboard.writeText(tsvText).then(() => {
+                // 成功時の表示
+                status.style.display = 'block';
+                setTimeout(() => {
+                    status.style.display = 'none';
+                }, 3000);
+            }).catch(err => {
+                console.error('コピー失敗:', err);
+                alert('クリップボードへのコピーに失敗しました。');
+            });
+        }
+
+        function clearText() {
+            document.getElementById('input').value = '';
+            document.getElementById('status').style.display = 'none';
+        }
+    </script>
+
+</body>
+</html>
