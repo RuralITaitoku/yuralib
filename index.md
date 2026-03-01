@@ -24,4 +24,6 @@
 2. ブラウザでPSV形式の一覧をTSV形式に変換してクリップボードにコピーするツール。
    1. [PVS⇒TVS](./prj/yura54/html/psv_to_tsv.html)
 3. ブラウザでPSV形式の一覧から、数値列の合計を計算してPSV形式で結果の行を出すツール。
-  4. [PSV合計](./prj/yura54/html/psv_sum.html)
+   - 結果は、合計行だけ。
+   - 結果をそのままクリップボードにコピーして。
+   1. [PSV合計](./prj/yura54/html/psv_sum.html)
