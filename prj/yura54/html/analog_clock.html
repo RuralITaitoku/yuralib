@@ -142,8 +142,8 @@
                 document.getElementById("hour").style.transform =
                     `translateX(-50%) rotate(${(h % 12) * 30 + m * 0.5}deg)`;
 
-                // 1分ごとに読み上げ（秒が0のとき、かつ前回の分と異なるとき）
-                if (s === 0 && m !== lastSpokenMinute) {
+                // 5分ごとに読み上げ（秒が0のとき、かつ前回の分と異なるとき）
+                if (s === 0 && ((m % 5) == 0) && m !== lastSpokenMinute) {
                     speakTime(h, m);
                     lastSpokenMinute = m;
                 }

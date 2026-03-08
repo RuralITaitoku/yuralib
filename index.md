@@ -1,6 +1,7 @@
 - [記録](#記録)
 - [ブックマーク](#ブックマーク)
   - [開発](#開発)
+  - [仕事](#仕事)
   - [生活](#生活)
 - [ツール](#ツール)
   - [yura54](#yura54)
@@ -13,6 +14,8 @@
 ## 開発
 1. [UTF-8文字コード](https://orange-factory.com/dnf/utf-8.html)
 
+## 仕事
+1. [Teams](https://teams.microsoft.com/v2/)
 ## 生活
 1. [柳川市の天気](https://tenki.jp/forecast/9/43/8240/40207/10days.html)
 2. [夢展望](https://dreamvs.jp/pages/brand_dearmylove_)
@@ -27,3 +30,9 @@
    - 結果は、合計行だけ。
    - 結果をそのままクリップボードにコピーして。
    1. [PSV合計](./prj/yura54/html/psv_sum.html)
+4. ブラウザでアナログ時計を表示するアプリ。
+   - 5分おきに読み上げを開始するボタン。
+   - ダークモード
+   - 時計盤には、時刻の刻印をする。
+   1. [アナログ時計0](./prj/yura54/html/analog_clock.html) 
+   2. [アナログ時計1](./prj/yura54/html/analog_clock1.html)

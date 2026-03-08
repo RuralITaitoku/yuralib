@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>ダークモード時計</title>
+    <style>
+        body { background-color: #121212; color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; font-family: sans-serif; }
+        
+        /* 時計盤 */
+        .clock { width: 300px; height: 300px; border: 10px solid #333; border-radius: 50%; position: relative; background: #1e1e1e; }
+        .hand { position: absolute; bottom: 50%; left: 50%; transform-origin: bottom; border-radius: 5px; }
+        .hour { width: 6px; height: 70px; background: #fff; margin-left: -3px; }
+        .minute { width: 4px; height: 110px; background: #aaa; margin-left: -2px; }
+        .second { width: 2px; height: 120px; background: #ff5252; margin-left: -1px; }
+        .tick { position: absolute; width: 2px; height: 10px; background: #555; left: 50%; transform-origin: bottom; }
+        
+        /* UI */
+        .controls { margin-top: 30px; }
+        button { padding: 10px 20px; font-size: 16px; cursor: pointer; background: #444; color: white; border: none; border-radius: 5px; }
+        button.active { background: #ff5252; }
+    </style>
+</head>
+<body>
+
+    <div class="clock" id="clock">
+        <script>
+            for(let i=0; i<12; i++) {
+                const tick = document.createElement('div');
+                tick.className = 'tick';
+                tick.style.transform = `rotate(${i*30}deg) translateY(-140px)`;
+                document.getElementById('clock').appendChild(tick);
+            }
+        </script>
+        <div class="hand hour" id="hour"></div>
+        <div class="hand minute" id="minute"></div>
+        <div class="hand second" id="second"></div>
+    </div>
+
+    <div class="controls">
+        <button id="toggleBtn">5分おき読み上げ: OFF</button>
+    </div>
+
+    <script>
+        let isSpeakingEnabled = false;
+        let lastSpokenMinute = -1;
+
+        function updateClock() {
+            const now = new Date();
+            const h = now.getHours();
+            const m = now.getMinutes();
+            const s = now.getSeconds();
+
+            document.getElementById('hour').style.transform = `rotate(${(h%12)*30 + m/2}deg)`;
+            document.getElementById('minute').style.transform = `rotate(${m*6}deg)`;
+            document.getElementById('second').style.transform = `rotate(${s*6}deg)`;
+
+            // 読み上げロジック
+            if (isSpeakingEnabled && m % 5 === 0 && s === 0 && lastSpokenMinute !== m) {
+                const msg = new SpeechSynthesisUtterance(`現在、${h}時${m}分です。`);
+                window.speechSynthesis.speak(msg);
+                lastSpokenMinute = m;
+            }
+        }
+
+        document.getElementById('toggleBtn').addEventListener('click', function() {
+            isSpeakingEnabled = !isSpeakingEnabled;
+            this.textContent = isSpeakingEnabled ? "5分おき読み上げ: ON" : "5分おき読み上げ: OFF";
+            this.className = isSpeakingEnabled ? "active" : "";
+        });
+
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body>
+</html>
