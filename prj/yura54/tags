@@ -1,0 +1,93 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+CLIP_COMMAND	src_jap0/jap0_bord.cpp	/^    #define CLIP_COMMAND /;"	d	file:
+CPP	Makefile	/^CPP=g++$/;"	m
+CPP	try/Makefile	/^CPP=g++$/;"	m
+CPPFLAGS	Makefile	/^CPPFLAGS= -g -Wall -DDEBUG  -I.\/include\/ -std=c++20$/;"	m
+CPPFLAGS	try/Makefile	/^CPPFLAGS= -g -Wall -DDEBUG  -I.\/include\/ -std=c++20$/;"	m
+ERASE_TO_END_OF_LINE	include/jap0.hpp	/^#define ERASE_TO_END_OF_LINE /;"	d
+JAP0_OBJS	Makefile	/^JAP0_OBJS = $(patsubst src_jap0\/%.cpp, objs\/%.o, $(JAP0_SRCS))$/;"	m
+JAP0_SRCS	Makefile	/^JAP0_SRCS = $(wildcard src_jap0\/*.cpp)$/;"	m
+LIBS	Makefile	/^LIBS= -lsqlite3$/;"	m
+LIBS	try/Makefile	/^LIBS= -lsqlite3$/;"	m
+OBJS	Makefile	/^OBJS = $(patsubst src\/%.cpp, objs\/%.o, $(SRCS))$/;"	m
+OBJS	try/Makefile	/^OBJS = $(patsubst src\/%.cpp, objs\/%.o, $(SRCS))$/;"	m
+SRCS	Makefile	/^SRCS = $(wildcard src\/*.cpp)$/;"	m
+SRCS	try/Makefile	/^SRCS = $(wildcard src\/*.cpp)$/;"	m
+bit_reverse4	src_jap0/jap_sqlite.cpp	/^int jap0_sqlite::bit_reverse4(int s) {$/;"	f	class:jap0_sqlite
+check_line	src_jap0/jap0.cpp	/^bool jap0::check_line(const std::string& text, std::string& prefix, int& no, std::string& line) {$/;"	f	class:jap0
+check_pattern	src_jap0/jap0.cpp	/^bool jap0::check_pattern(const std::string& text, const std::regex& pattern, std::vector<std::string>& result) {$/;"	f	class:jap0
+clearText	html/psv_to_tsv.html	/^        function clearText() {$/;"	f
+cols_	include/jap0.hpp	/^    int cols_;$/;"	m	class:jap0_term
+convertAndCopy	html/psv_to_tsv.html	/^        function convertAndCopy() {$/;"	f
+copyToClipboard	src_jap0/jap0_bord.cpp	/^void copyToClipboard(const std::string& text) {$/;"	f
+createMarkers	html/analog_clock.html	/^            function createMarkers() {$/;"	f
+cur_x_	include/jap0.hpp	/^    int cur_x_;$/;"	m	class:jap0_screen
+cur_y_	include/jap0.hpp	/^    int cur_y_;$/;"	m	class:jap0_screen
+cursor	src_jap0/jap0.cpp	/^void jap0_term::cursor(int row, int col) {$/;"	f	class:jap0_term
+drawLine	src_jap0/jap0.cpp	/^void jap0_screen::drawLine(int x0, int y0, int x1, int y1, char ch) {$/;"	f	class:jap0_screen
+esc_cursor	src_jap0/jap0.cpp	/^std::string jap0_term::esc_cursor(int row, int col){$/;"	f	class:jap0_term
+esc_end	src_jap0/jap0.cpp	/^std::string jap0_term::esc_end() {$/;"	f	class:jap0_term
+exec	src_jap0/jap_pipe.cpp	/^int jap_pipe::exec(const std::string& cmd) {$/;"	f	class:jap_pipe
+flush	src_jap0/jap0.cpp	/^void jap0_screen::flush(int x, int y) {$/;"	f	class:jap0_screen
+generate	html/psv_to_code.html	/^            function generate() {$/;"	f
+getLine	try/20260314_term.hpp	/^    bool getLine(int fd, std::string &line) {$/;"	f	class:term
+get_line	src_jap0/jap0.cpp	/^void jap0_term::get_line(std::string& line) {$/;"	f	class:jap0_term
+get_term_size	src_jap0/jap0.cpp	/^std::tuple<int, int> jap0_term::get_term_size() {$/;"	f	class:jap0_term
+height_	include/jap0.hpp	/^    int height_;$/;"	m	class:jap0_screen
+help	src_jap0/jap0.cpp	/^void jap0::help() {$/;"	f	class:jap0
+help	src_jap0/jap_sqlite.cpp	/^void jap0_sqlite::help() {$/;"	f	class:jap0_sqlite
+init	src_jap0/jap0.cpp	/^void jap0_screen::init(int width, int height) {$/;"	f	class:jap0_screen
+input	src_jap0/jap0.cpp	/^void jap0_screen::input(std::string& line) {$/;"	f	class:jap0_screen
+int64_to_char_big_endian	include/jap0.hpp	/^    void int64_to_char_big_endian(int64_t value, char buffer[8]) {$/;"	f	class:jap0_screen
+jap	include/jap.hpp	/^class jap {$/;"	c
+jap0	include/jap0.hpp	/^class jap0 : public jap {$/;"	c
+jap0_screen	include/jap0.hpp	/^    jap0_screen() {};$/;"	f	class:jap0_screen
+jap0_screen	include/jap0.hpp	/^class jap0_screen {$/;"	c
+jap0_sqlite	include/jap0.hpp	/^class jap0_sqlite : public jap {$/;"	c
+jap0_sqlite	src_jap0/jap_sqlite.cpp	/^jap0_sqlite::jap0_sqlite() {}$/;"	f	class:jap0_sqlite
+jap0_term	include/jap0.hpp	/^class jap0_term {$/;"	c
+jap0_term	src_jap0/jap0.cpp	/^jap0_term::jap0_term() {$/;"	f	class:jap0_term
+jap_pipe	include/jap_pipe.hpp	/^class jap_pipe {$/;"	c
+line_pattern_	include/jap0.hpp	/^    std::regex line_pattern_ = std::regex(R"(^([0-9]*)\\. (.*)$)");$/;"	m	class:jap0
+lscreen_	include/jap0.hpp	/^    jap0_screen lscreen_;$/;"	m	class:jap0_term
+main	src_jap0/jap0_main.cpp	/^int main(int argc, char** argv) {$/;"	f
+main	try/20260314_term.cpp	/^int main() {$/;"	f
+main	try/wait_for_stdin.cpp	/^int main() {$/;"	f
+millis	include/jap.hpp	/^    int millis() {$/;"	f	class:jap
+next	include/jap.hpp	/^    int next() {$/;"	f	class:jap
+next_millis	include/jap.hpp	/^    int next_millis;$/;"	m	class:jap
+off_screen_	include/jap0.hpp	/^    std::vector<uint64_t> off_screen_;$/;"	m	class:jap0_screen
+old_termios	include/jap0.hpp	/^    struct termios old_termios;$/;"	m	class:jap0_term	typeref:struct:jap0_term::termios
+override	include/jap0.hpp	/^        virtual bool run(const std::string& cmd, std::vector<std::string>& stack) override;$/;"	m	class:jap0_sqlite
+override	include/jap0.hpp	/^        virtual void help() override ;$/;"	m	class:jap0_sqlite
+override	include/jap0.hpp	/^    virtual bool run(const std::string &cmd, std::vector<std::string>& stack) override;$/;"	m	class:jap0
+override	include/jap0.hpp	/^    virtual void help() override;$/;"	m	class:jap0
+pexec	src_jap0/jap_pipe.cpp	/^std::string jap_pipe::pexec(const std::string& cmd) {$/;"	f	class:jap_pipe
+println	src_jap0/jap0.cpp	/^void jap0_screen::println(const std::string& line, int x, int y) {$/;"	f	class:jap0_screen
+println	src_jap0/jap0.cpp	/^void jap0_term::println(std::string& line, int row, int col) {$/;"	f	class:jap0_term
+put	src_jap0/jap0.cpp	/^void jap0_screen::put(int x, int y, char ch) {$/;"	f	class:jap0_screen
+rows_	include/jap0.hpp	/^    int rows_;$/;"	m	class:jap0_term
+rscreen_	include/jap0.hpp	/^    jap0_screen rscreen_;$/;"	m	class:jap0_term
+run	src_jap0/jap0.cpp	/^bool jap0::run(const std::string& cmd, std::vector<std::string>& stack) {$/;"	f	class:jap0
+run	src_jap0/jap_sqlite.cpp	/^bool jap0_sqlite::run(const std::string& cmd, std::vector<std::string>& stack) {$/;"	f	class:jap0_sqlite
+screen_	include/jap0.hpp	/^    std::vector<uint64_t> screen_;$/;"	m	class:jap0_screen
+set_next	include/jap.hpp	/^    void set_next(int n) {$/;"	f	class:jap
+sleepMillis	include/jap.hpp	/^    void sleepMillis(int milliseconds) {$/;"	f	class:jap
+speakTime	html/analog_clock.html	/^            function speakTime(h, m) {$/;"	f
+term	try/20260314_term.hpp	/^    term(){};$/;"	f	class:term
+term	try/20260314_term.hpp	/^class term {$/;"	c
+testClipboard	src_jap0/jap0_bord.cpp	/^int testClipboard() {$/;"	f
+update	html/analog_clock.html	/^            function update() {$/;"	f
+updateClock	html/analog_clock1.html	/^        function updateClock() {$/;"	f
+wait_for_stdin	try/wait_for_stdin.cpp	/^void wait_for_stdin() {$/;"	f
+width_	include/jap0.hpp	/^    int width_;$/;"	m	class:jap0_screen
+~jap	include/jap.hpp	/^    virtual ~jap() {};$/;"	f	class:jap
+~jap0_screen	include/jap0.hpp	/^    ~jap0_screen() {};$/;"	f	class:jap0_screen
+~jap0_sqlite	src_jap0/jap_sqlite.cpp	/^jap0_sqlite::~jap0_sqlite() {}$/;"	f	class:jap0_sqlite
+~jap0_term	src_jap0/jap0.cpp	/^jap0_term::~jap0_term() {$/;"	f	class:jap0_term
+~term	try/20260314_term.hpp	/^    ~term(){};$/;"	f	class:term
