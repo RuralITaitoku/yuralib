@@ -36,3 +36,5 @@
    - 時計盤には、時刻の刻印をする。
    1. [アナログ時計0](./prj/yura54/html/analog_clock.html) 
    2. [アナログ時計1](./prj/yura54/html/analog_clock1.html)
+5. ブラウザで開始日付と終了日付を入力して、「- [{{年}}年{{月}}月{{日}}日({{曜日}})]」形式のコードを出力するツール。
+    1. [日付生成](./prj/yura54/html/date_generator.html)

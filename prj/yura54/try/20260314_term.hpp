@@ -7,9 +7,7 @@ public:
     term(){};
     ~term(){};
 
-    bool getLine(int fd, std::string &line) {
-        std::cout << "test getLine " << std::endl;
-        return true;
-    }
+    bool getLine(int fd, std::string &line);
+
 };
 
