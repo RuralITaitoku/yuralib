@@ -530,3 +530,20 @@ bool diff_milli_secound(uint64_t start, uint64_t end) {
 
 # AIプロンプト
 1. ブラウザで開始日付と終了日付を入力して、「- [{{年}}年{{月}}月{{日}}日({{曜日}})]」形式のコードを出力するツール。
+
+
+# Raspberry Pi 5をWi-Fiアクセスポイント（AP）化して、他のデバイスが接続できるようにする方法
+sudo apt update && sudo apt upgrade -y
+1. Wi-Fi接続の作成
+    - 新しいネットワーク設定（名前は RPi-AP とします）を作成します。
+        - sudo nmcli con add type wifi ifname wlan0 mode ap con-name RPi-AP ssid MyRaspberryPi
+2. セキュリティ（パスワード）の設定
+    - パスワード（例: password123）と暗号化方式（WPA2）を設定します。
+        - sudo nmcli con modify RPi-AP wifi-sec.key-mgmt wpa-psk
+        - sudo nmcli con modify RPi-AP wifi-sec.psk password123
+3. IPアドレスと共有設定
+    - ラズパイ自体のIP固定と、インターネット共有（IPv4共有）を有効にします。
+        - sudo nmcli con modify RPi-AP ipv4.method shared
+4. アクセスポイントの起動
+    - sudo nmcli con up RPi-AP
+
