@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Dark Analog Clock with Voice</title>
+    <style>
+        :root {
+            --bg-color: #121212;
+            --clock-bg: #1e1e1e;
+            --text-color: #e0e0e0;
+            --accent-color: #00adb5;
+            --hand-hour: #ffffff;
+            --hand-min: #cccccc;
+            --hand-sec: #ff4d4d;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        canvas {
+            background-color: var(--clock-bg);
+            border-radius: 50%;
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+        }
+
+        .controls {
+            margin-top: 30px;
+        }
+
+        button {
+            padding: 12px 24px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            transition: opacity 0.3s;
+        }
+
+        button:hover {
+            opacity: 0.8;
+        }
+
+        button.active {
+            background-color: #ff4d4d;
+        }
+
+        .status {
+            margin-top: 10px;
+            font-size: 14px;
+            height: 1.2em;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="clock" width="400" height="400"></canvas>
+
+    <div class="controls">
+        <button id="speechBtn">5分おきの読み上げ：OFF</button>
+    </div>
+    <div id="status" class="status"></div>
+
+    <script>
+        const canvas = document.getElementById('clock');
+        const ctx = canvas.getContext('2d');
+        const radius = canvas.height / 2;
+        ctx.translate(radius, radius);
+        const drawRadius = radius * 0.90;
+
+        let isSpeechEnabled = false;
+        let lastSpokenMinute = -1;
+
+        const speechBtn = document.getElementById('speechBtn');
+        const statusDiv = document.getElementById('status');
+
+        speechBtn.addEventListener('click', () => {
+            isSpeechEnabled = !isSpeechEnabled;
+            speechBtn.textContent = `5分おきの読み上げ：${isSpeechEnabled ? 'ON' : 'OFF'}`;
+            speechBtn.classList.toggle('active', isSpeechEnabled);
+            
+            if (isSpeechEnabled) {
+                const msg = new SpeechSynthesisUtterance("読み上げを開始します");
+                window.speechSynthesis.speak(msg);
+            }
+        });
+
+        function drawClock() {
+            drawFace(ctx, drawRadius);
+            drawNumbers(ctx, drawRadius);
+            drawTime(ctx, drawRadius);
+            checkSpeech();
+        }
+
+        function drawFace(ctx, radius) {
+            ctx.beginPath();
+            ctx.arc(0, 0, radius, 0, 2 * Math.PI);
+            ctx.fillStyle = '#1e1e1e';
+            ctx.fill();
+
+            const grad = ctx.createRadialGradient(0, 0, radius * 0.95, 0, 0, radius * 1.05);
+            grad.addColorStop(0, '#333');
+            grad.addColorStop(0.5, '#555');
+            grad.addColorStop(1, '#333');
+            ctx.strokeStyle = grad;
+            ctx.lineWidth = radius * 0.1;
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(0, 0, radius * 0.05, 0, 2 * Math.PI);
+            ctx.fillStyle = '#fff';
+            ctx.fill();
+        }
+
+        function drawNumbers(ctx, radius) {
+            ctx.font = radius * 0.15 + "px Arial";
+            ctx.textBaseline = "middle";
+            ctx.textAlign = "center";
+            ctx.fillStyle = "#e0e0e0";
+            for (let num = 1; num <= 12; num++) {
+                let ang = num * Math.PI / 6;
+                ctx.rotate(ang);
+                ctx.translate(0, -radius * 0.85);
+                ctx.rotate(-ang);
+                ctx.fillText(num.toString(), 0, 0);
+                ctx.rotate(ang);
+                ctx.translate(0, radius * 0.85);
+                ctx.rotate(-ang);
+            }
+        }
+
+        function drawTime(ctx, radius) {
+            const now = new Date();
+            let hour = now.getHours();
+            let minute = now.getMinutes();
+            let second = now.getSeconds();
+
+            // Hour
+            hour = hour % 12;
+            hour = (hour * Math.PI / 6) + (minute * Math.PI / (6 * 60)) + (second * Math.PI / (360 * 60));
+            drawHand(ctx, hour, radius * 0.5, radius * 0.07, '#ffffff');
+
+            // Minute
+            minute = (minute * Math.PI / 30) + (second * Math.PI / (30 * 60));
+            drawHand(ctx, minute, radius * 0.8, radius * 0.07, '#cccccc');
+
+            // Second
+            second = (second * Math.PI / 30);
+            drawHand(ctx, second, radius * 0.9, radius * 0.02, '#ff4d4d');
+        }
+
+        function drawHand(ctx, pos, length, width, color) {
+            ctx.beginPath();
+            ctx.lineWidth = width;
+            ctx.lineCap = "round";
+            ctx.strokeStyle = color;
+            ctx.moveTo(0, 0);
+            ctx.rotate(pos);
+            ctx.lineTo(0, -length);
+            ctx.stroke();
+            ctx.rotate(-pos);
+        }
+
+        function checkSpeech() {
+            if (!isSpeechEnabled) return;
+
+            const now = new Date();
+            const min = now.getMinutes();
+            
+            // 5分おき、かつその分の最初の1回だけ実行
+            if (min % 5 === 0 && min !== lastSpokenMinute) {
+                const hour = now.getHours();
+                const timeStr = `${hour}時${min === 0 ? 'ちょうど' : min + '分'}です。`;
+                const msg = new SpeechSynthesisUtterance(timeStr);
+                window.speechSynthesis.speak(msg);
+                lastSpokenMinute = min;
+                statusDiv.textContent = `最終読み上げ: ${timeStr}`;
+            }
+        }
+
+        setInterval(drawClock, 1000);
+        drawClock();
+    </script>
+</body>
+</html>
