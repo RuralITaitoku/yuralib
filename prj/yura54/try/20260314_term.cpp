@@ -7,7 +7,7 @@
 #include "20260314_term.hpp"
 
 
-bool term::getLine(int fd, std::string &line) {
+bool term::getChart(int fd, std::string &ch) {
     fd_set readfds;
     struct timeval timeout;
 
@@ -30,9 +30,9 @@ bool term::getLine(int fd, std::string &line) {
         return false;
     } else if (retval) {
         // 入力があった場合
-        line.clear();
-        std::cin >> line;
-        std::cout << "入力された内容: " << line << std::endl;
+        ch.clear();
+        std::cin >> ch;
+        std::cout << "入力された内容: " << ch << std::endl;
         return false;
     } else {
         // タイムアウト（retval == 0）

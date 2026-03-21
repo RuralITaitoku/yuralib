@@ -9,4 +9,5 @@ elif [ "$1" = "run" ]; then
 else
     make
     make install
+    ctags -R .
 fi
