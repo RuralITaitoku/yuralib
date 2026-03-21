@@ -7,8 +7,9 @@
   - [yura54](#yura54)
 
 # 記録
-1. [予定と実績](./prj/yura54/md/2026年予実.md)
-2. [収入と支出](./prj/yura54/md/2026年収支.md)
+1. 2026年
+    1. [予定と実績](./prj/yura54/md/2026_Plan_vs_Actual.md)
+    2. [収入と支出](./prj/yura54/md/2026_Cash_Flow.md)
 
 # ブックマーク
 ## 開発
@@ -38,3 +39,6 @@
    2. [アナログ時計1](./prj/yura54/html/analog_clock1.html)
 5. ブラウザで開始日付と終了日付を入力して、「- [{{年}}年{{月}}月{{日}}日({{曜日}})]」形式のコードを出力するツール。
     1. [日付生成](./prj/yura54/html/date_generator.html)
+
+# その他
+

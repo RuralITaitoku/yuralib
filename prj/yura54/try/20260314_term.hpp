@@ -7,7 +7,7 @@ public:
     term(){};
     ~term(){};
 
-    bool getLine(int fd, std::string &line);
+    bool getChar(int fd, std::string &ch);
 
 };
 
