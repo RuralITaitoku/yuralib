@@ -31,7 +31,7 @@ bool term::getChar(int fd, std::string &ch) {
     FD_SET(0, &readfds);
 
     // 2. タイムアウト時間を1秒に設定
-    timeout.tv_sec = 0;
+    timeout.tv_sec = 1;
     timeout.tv_usec = 10000;
 
     // 3. selectの実行
