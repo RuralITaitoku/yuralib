@@ -17,6 +17,8 @@
     - [3Dモデリング](#3dモデリング)
 - [FORTH言語](#forth言語)
 - [Pomera DM100 Linux](#pomera-dm100-linux)
+- [AIプロンプト](#aiプロンプト)
+- [Raspberry Pi 5をWi-Fiアクセスポイント（AP）化して、他のデバイスが接続できるようにする方法](#raspberry-pi-5をwi-fiアクセスポイントap化して他のデバイスが接続できるようにする方法)
 
 # 2026年予定と実績
 
