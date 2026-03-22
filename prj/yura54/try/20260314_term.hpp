@@ -4,8 +4,8 @@
 
 class term {
 public:
-    term(){};
-    ~term(){};
+    term();
+    ~term();
 
     bool getChar(int fd, std::string &ch);
 

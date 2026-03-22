@@ -3,11 +3,16 @@
 #include <sys/select.h>
 #include <sys/time.h>
 #include <unistd.h>
-
 #include "20260314_term.hpp"
 
+term::term() {
 
-bool term::getChart(int fd, std::string &ch) {
+}
+
+term::~term() {
+}
+
+bool term::getChar(int fd, std::string &ch) {
     fd_set readfds;
     struct timeval timeout;
 
@@ -32,6 +37,9 @@ bool term::getChart(int fd, std::string &ch) {
         // 入力があった場合
         ch.clear();
         std::cin >> ch;
+        for (int i = 0; i < ch.size(); ++i) {
+            printf("%02x", ch[i]);
+        }
         std::cout << "入力された内容: " << ch << std::endl;
         return false;
     } else {
@@ -46,6 +54,8 @@ int main() {
     std::cout << "term test" << std::endl;
     term t;
     std::string line;
-    t.getLine(0, line);
+    for (;;) {
+        t.getChar(0, line);
+    }
     return 0;
 }
