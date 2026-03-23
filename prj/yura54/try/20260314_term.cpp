@@ -28,15 +28,16 @@ bool term::getChar(int fd, std::string &ch) {
 
     // 1. 監視対象のセットをクリアし、標準入力を登録
     FD_ZERO(&readfds);
-    FD_SET(0, &readfds);
+    FD_SET(fd, &readfds);
 
-    // 2. タイムアウト時間を1秒に設定
-    timeout.tv_sec = 0;
+    // 2. タイムアウト時間
+    timeout.tv_sec = 1;
     timeout.tv_usec = 10000;
 
     // 3. selectの実行
-    // 第1引数は「最大ファイル記述子 + 1」なので、0 + 1 = 1
-    int retval = select(1, &readfds, NULL, NULL, &timeout);
+    // 第1引数は「最大ファイル記述子 + 1」
+    auto max_fd = fd;
+    int retval = select(max_fd + 1, &readfds, NULL, NULL, &timeout);
 
     if (retval == -1) {
         perror("select()");
@@ -52,10 +53,9 @@ bool term::getChar(int fd, std::string &ch) {
             // printf("読み込んだデータ: %s", buf);
         }
         for (int i = 0; i < ch.size(); ++i) {
-            printf("%02x", ch[i]);
+            printf(" %02x", ch[i]);
         }
         std::cout << std::endl;
-        // std::cout << "入力された内容: " << ch << std::endl;
         return false;
     } else {
         // タイムアウト（retval == 0）
