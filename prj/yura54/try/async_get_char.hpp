@@ -9,7 +9,7 @@ public:
     jap_async();
     ~jap_async();
 
-    bool getChar(int fd, std::string &ch, bool debug = false);
+    bool getChar(int fd, std::string &ch, int usec, bool debug = false);
 
 };
 

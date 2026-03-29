@@ -20,15 +20,15 @@ jap_async::~jap_async() {
     tcsetattr(STDIN_FILENO, TCSANOW, &old_termios);
 }
 
-bool jap_async::getChar(int fd, std::string &ch, bool debug) {
+bool jap_async::getChar(int fd, std::string &ch, int usec, bool debug) {
     fd_set readfds;
     struct timeval timeout;
 
     FD_ZERO(&readfds);
     FD_SET(fd, &readfds);
 
-    timeout.tv_sec = 1;
-    timeout.tv_usec = 10000;
+    timeout.tv_sec = (usec / 1000000);
+    timeout.tv_usec = (usec % 1000000);
 
     auto max_fd = fd;
     int retval = select(max_fd + 1, &readfds, NULL, NULL, &timeout);
@@ -66,7 +66,7 @@ int main(int argc, char **argv) {
 
     std::string ch;
     for (;;) {
-       async.getChar(0, ch, true); 
+       async.getChar(0, ch, 1999999, true); 
     }
 }
 
