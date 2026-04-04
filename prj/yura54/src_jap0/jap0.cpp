@@ -188,6 +188,10 @@ jap0_term::~jap0_term() {
     std::cout << "~jap0_term" << std::endl;
 }
 
+bool jap0_term::async_get_char(int fd, std::string& ch) {
+
+    return false;
+}
 
 void jap0_term::get_line(std::string& line) {
     char buf[256];
