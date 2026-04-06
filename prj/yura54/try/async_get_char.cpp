@@ -3,9 +3,9 @@
 #include <sys/select.h>
 #include <sys/time.h>
 #include <unistd.h>
-#include "20260314_term.hpp"
+#include "async_get_char.hpp"
 
-term::term() {
+jap_async::jap_async() {
     tcgetattr(STDIN_FILENO, &old_termios);
     struct termios new_termios;
     new_termios = old_termios;
@@ -16,26 +16,20 @@ term::term() {
     tcsetattr(STDIN_FILENO, TCSANOW, &new_termios);
 }
 
-term::~term() {
+jap_async::~jap_async() {
     tcsetattr(STDIN_FILENO, TCSANOW, &old_termios);
 }
 
-bool term::getChar(int fd, std::string &ch) {
+bool jap_async::getChar(int fd, std::string &ch, int usec, bool debug) {
     fd_set readfds;
     struct timeval timeout;
 
-    // std::cout << "1秒以内に何か入力してエンターを押してください..." << std::endl;
-
-    // 1. 監視対象のセットをクリアし、標準入力を登録
     FD_ZERO(&readfds);
     FD_SET(fd, &readfds);
 
-    // 2. タイムアウト時間
-    timeout.tv_sec = 1;
-    timeout.tv_usec = 10000;
+    timeout.tv_sec = (usec / 1000000);
+    timeout.tv_usec = (usec % 1000000);
 
-    // 3. selectの実行
-    // 第1引数は「最大ファイル記述子 + 1」
     auto max_fd = fd;
     int retval = select(max_fd + 1, &readfds, NULL, NULL, &timeout);
 
@@ -50,27 +44,29 @@ bool term::getChar(int fd, std::string &ch) {
             int len = read(0, buf, sizeof(buf) - 1);
             buf[len] = '\0';
             ch = buf;
-            // printf("読み込んだデータ: %s", buf);
         }
+        printf("\e[0;0H");
         for (int i = 0; i < ch.size(); ++i) {
-            printf(" %02x", ch[i]);
+            if (ch[i] < 0x20) {
+                printf(" %02x", ch[i]);
+            } else {
+                printf(" %02x(%c)", ch[i], ch[i]);
+            }
         }
-        std::cout << std::endl;
+        std::cout << "\e[0K" << std::endl;
         return false;
     } else {
-        // タイムアウト（retval == 0）
-        std::cout << "-" << std::endl;
         return true;
     }
+
 }
 
+int main(int argc, char **argv) {
+    jap_async async;
 
-int main() {
-    std::cout << "term test" << std::endl;
-    term t;
-    std::string line;
+    std::string ch;
     for (;;) {
-        t.getChar(0, line);
+       async.getChar(0, ch, 1999999, true); 
     }
-    return 0;
 }
+

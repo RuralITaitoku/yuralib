@@ -5,5 +5,5 @@ if [ "$1" = "clean" ]; then
 elif [ "$1" = "run" ]; then
     ./try
 else
-    g++ 20260314_term.cpp -o try
+    g++ async_get_char.cpp -o try
 fi

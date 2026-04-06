@@ -6,13 +6,26 @@
 !_TAG_PROGRAM_VERSION	5.8	//
 CPP	Makefile	/^CPP=g++$/;"	m
 CPPFLAGS	Makefile	/^CPPFLAGS= -g -Wall -DDEBUG  -I.\/include\/ -std=c++20$/;"	m
+InteractiveProcess	20260324_interactive_process.cpp	/^    InteractiveProcess(const std::string& command) {$/;"	f	class:InteractiveProcess
+InteractiveProcess	20260324_interactive_process.cpp	/^class InteractiveProcess {$/;"	c	file:
 LIBS	Makefile	/^LIBS= -lsqlite3$/;"	m
 OBJS	Makefile	/^OBJS = $(patsubst src\/%.cpp, objs\/%.o, $(SRCS))$/;"	m
 SRCS	Makefile	/^SRCS = $(wildcard src\/*.cpp)$/;"	m
-getLine	20260314_term.cpp	/^bool term::getLine(int fd, std::string &line) {$/;"	f	class:term
+getChar	20260314_term.cpp	/^bool term::getChar(int fd, std::string &ch) {$/;"	f	class:term
+in_fp_	20260324_interactive_process.cpp	/^    FILE *in_fp_, *out_fp_;$/;"	m	class:InteractiveProcess	file:
+jap_async	async_get_char.hpp	/^class jap_async {$/;"	c
 main	20260314_term.cpp	/^int main() {$/;"	f
+main	20260324_interactive_process.cpp	/^int main() {$/;"	f
+main	pipe_fork.c	/^int main() {$/;"	f
 main	wait_for_stdin.cpp	/^int main() {$/;"	f
-term	20260314_term.hpp	/^    term(){};$/;"	f	class:term
+old_termios	20260314_term.hpp	/^    struct termios old_termios;$/;"	m	class:term	typeref:struct:term::termios
+old_termios	async_get_char.hpp	/^    struct termios old_termios;$/;"	m	class:jap_async	typeref:struct:jap_async::termios
+out_fp_	20260324_interactive_process.cpp	/^    FILE *in_fp_, *out_fp_;$/;"	m	class:InteractiveProcess	file:
+pid_	20260324_interactive_process.cpp	/^    pid_t pid_;$/;"	m	class:InteractiveProcess	file:
+receive_line	20260324_interactive_process.cpp	/^    std::string receive_line() {$/;"	f	class:InteractiveProcess
+send_line	20260324_interactive_process.cpp	/^    void send_line(const std::string& line) {$/;"	f	class:InteractiveProcess
+term	20260314_term.cpp	/^term::term() {$/;"	f	class:term
 term	20260314_term.hpp	/^class term {$/;"	c
 wait_for_stdin	wait_for_stdin.cpp	/^void wait_for_stdin() {$/;"	f
-~term	20260314_term.hpp	/^    ~term(){};$/;"	f	class:term
+~InteractiveProcess	20260324_interactive_process.cpp	/^    ~InteractiveProcess() {$/;"	f	class:InteractiveProcess
+~term	20260314_term.cpp	/^term::~term() {$/;"	f	class:term

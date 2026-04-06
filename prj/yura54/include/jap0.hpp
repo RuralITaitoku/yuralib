@@ -57,6 +57,7 @@ public:
     jap0_term();
     ~jap0_term();
 
+    bool async_get_char(int fd, std::string& ch);
     void get_line(std::string& line);
     void println(std::string& line, int row=0, int col=0);
     void cursor(int row=-1, int col=0);
