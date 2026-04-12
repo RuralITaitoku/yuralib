@@ -36,8 +36,8 @@ bool jap0::check_pattern(const std::string& text, const std::regex& pattern, std
     return false;
 }
 
-void jap0::help() {
-    std::cout << "jap0" << std::endl;
+std::string jap0::help() {
+    std::string help = "jap0";
 }
 bool jap0::run(const std::string& cmd, std::vector<std::string>& stack) {
     int row_no;

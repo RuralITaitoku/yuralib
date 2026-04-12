@@ -6,8 +6,8 @@ jap0_sqlite::jap0_sqlite() {}
 jap0_sqlite::~jap0_sqlite() {}
 
 
-void jap0_sqlite::help() {
-    std::cout << "jap0_sqlite_help" << std::endl;
+std::string jap0_sqlite::help() {
+    std::string help = "jap0_sqlite_help";
 }
 
 bool jap0_sqlite::run(const std::string& cmd, std::vector<std::string>& stack) {

@@ -57,6 +57,7 @@ install:
 	cp bin/jap0 ~/bin/jap0
 
 clean:
+	find . -name "*.o" -exec rm {} +
 	rm -r objs/*.o
 	rm bin/jap0
 
