@@ -2,6 +2,8 @@ bin
 .DS_Store
 *.o
 *.aac
+*.gcda
+*.gcno
 build
 *log.txt
 *.log

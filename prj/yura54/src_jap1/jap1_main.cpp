@@ -7,6 +7,7 @@ public:
 
     virtual std::string help() {
         std::string help = "help";
+	return help;
     }
 
 
