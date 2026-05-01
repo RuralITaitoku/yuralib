@@ -164,14 +164,14 @@ If the guess is correct, the game will print a congratulatory message and exit.
 
 ### Setting Up a New Project
 To set up a new project, go to the projects directory that you created in Chapter 1 and make a new project using Cargo, like so:
-
+``` bash
 $ cargo new guessing_game
 $ cd guessing_game
-
+```
 The first command, cargo new, takes the name of the project (guessing_game) as the first argument. The second command changes to the new project’s directory.
 
 Look at the generated Cargo.toml file:
-
+``` toml
 Filename: Cargo.toml
 　
 [package]
@@ -180,24 +180,24 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-
+```
 As you saw in Chapter 1, cargo new generates a “Hello, world!” program for you.
 Check out the src/main.rs file:
-
+``` rust
 Filename: src/main.rs
 
 fn main() {
     println!("Hello, world!");
 }
-
+```
 Now let’s compile this “Hello, world!” program and run it in the same step using the cargo run command:
-
+``` bash
 $ cargo run
    Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.08s
      Running `target/debug/guessing_game`
 Hello, world!
-
+```
 The run command comes in handy when you need to rapidly iterate on a project, as we’ll do in this game, quickly testing each iteration before moving on to the next one.
 
 Reopen the src/main.rs file. You’ll be writing all the code in this file.
@@ -205,7 +205,7 @@ Reopen the src/main.rs file. You’ll be writing all the code in this file.
 ### Processing a Guess
 The first part of the guessing game program will ask for user input, process that input, and check that the input is in the expected form.
 To start, we’ll allow the player to input a guess. Enter the code in Listing 2-1 into src/main.rs.
-⭐⭐⭐
+``` rust
 Filename: src/main.rs
 use std::io;
 
@@ -222,13 +222,19 @@ fn main() {
 
     println!("You guessed: {guess}");
 }
-Listing 2-1: Code that gets a guess from the user and prints it
-This code contains a lot of information, so let’s go over it line by line. To obtain user input and then print the result as output, we need to bring the io input/output library into scope. The io library comes from the standard library, known as std:
-
+```
+- Listing 2-1: Code that gets a guess from the user and prints it
+This code contains a lot of information, so let’s go over it line by line.
+To obtain user input and then print the result as output, we need to bring the io input/output library into scope.
+The io library comes from the standard library, known as std:
+``` rust
 use std::io;
-By default, Rust has a set of items defined in the standard library that it brings into the scope of every program. This set is called the prelude, and you can see everything in it in the standard library documentation.
+```
+By default, Rust has a set of items defined in the standard library that it brings into the scope of every program.
+This set is called the prelude, and you can see everything in it in the standard library documentation.
 
-If a type you want to use isn’t in the prelude, you have to bring that type into scope explicitly with a use statement. Using the std::io library provides you with a number of useful features, including the ability to accept user input.
+If a type you want to use isn’t in the prelude, you have to bring that type into scope explicitly with a use statement.
+Using the std::io library provides you with a number of useful features, including the ability to accept user input.
 
 As you saw in Chapter 1, the main function is the entry point into the program:
 
@@ -236,44 +242,79 @@ fn main() {
 The fn syntax declares a new function; the parentheses, (), indicate there are no parameters; and the curly bracket, {, starts the body of the function.
 
 As you also learned in Chapter 1, println! is a macro that prints a string to the screen:
-
+```
     println!("Guess the number!");
 
     println!("Please input your guess.");
+```
 This code is printing a prompt stating what the game is and requesting input from the user.
 
-Storing Values with Variables
+#### Storing Values with Variables
 Next, we’ll create a variable to store the user input, like this:
-
+```
     let mut guess = String::new();
-Now the program is getting interesting! There’s a lot going on in this little line. We use the let statement to create the variable. Here’s another example:
+```
+Now the program is getting interesting!
+There’s a lot going on in this little line.
+We use the let statement to create the variable.
 
+Here’s another example:  
+```
 let apples = 5;
-This line creates a new variable named apples and binds it to the value 5. In Rust, variables are immutable by default, meaning once we give the variable a value, the value won’t change. We’ll be discussing this concept in detail in the “Variables and Mutability” section in Chapter 3. To make a variable mutable, we add mut before the variable name:
-
+```
+This line creates a new variable named apples and binds it to the value 5. 
+In Rust, variables are immutable by default, meaning once we give the variable a value, the value won’t change.
+We’ll be discussing this concept in detail in the “Variables and Mutability” section in Chapter 3.
+To make a variable mutable, we add mut before the variable name:
+```
 let apples = 5; // immutable
 let mut bananas = 5; // mutable
-Note: The // syntax starts a comment that continues until the end of the line. Rust ignores everything in comments. We’ll discuss comments in more detail in Chapter 3.
+```
+Note: The // syntax starts a comment that continues until the end of the line.
+Rust ignores everything in comments.
+We’ll discuss comments in more detail in Chapter 3.
 
-Returning to the guessing game program, you now know that let mut guess will introduce a mutable variable named guess. The equal sign (=) tells Rust we want to bind something to the variable now. On the right of the equal sign is the value that guess is bound to, which is the result of calling String::new, a function that returns a new instance of a String. String is a string type provided by the standard library that is a growable, UTF-8 encoded bit of text.
+Returning to the guessing game program, you now know that let mut guess will introduce a mutable variable named guess.
+The equal sign (=) tells Rust we want to bind something to the variable now.
+On the right of the equal sign is the value that guess is bound to, which is the result of calling String::new, a function that returns a new instance of a String.
+String is a string type provided by the standard library that is a growable, UTF-8 encoded bit of text.
 
-The :: syntax in the ::new line indicates that new is an associated function of the String type. An associated function is a function that’s implemented on a type, in this case String. This new function creates a new, empty string. You’ll find a new function on many types because it’s a common name for a function that makes a new value of some kind.
+The :: syntax in the ::new line indicates that new is an associated function of the String type.
+An associated function is a function that’s implemented on a type, in this case String.
+This new function creates a new, empty string.
+You’ll find a new function on many types because it’s a common name for a function that makes a new value of some kind.
 
-In full, the let mut guess = String::new(); line has created a mutable variable that is currently bound to a new, empty instance of a String. Whew!
+In full, the 
+```
+let mut guess = String::new(); 
+```
+line has created a mutable variable that is currently bound to a new, empty instance of a String.
+Whew!
 
-Receiving User Input
-Recall that we included the input/output functionality from the standard library with use std::io; on the first line of the program. Now we’ll call the stdin function from the io module, which will allow us to handle user input:
-
+#### Receiving User Input
+Recall that we included the input/output functionality from the standard library with use std::io; on the first line of the program.
+Now we’ll call the stdin function from the io module, which will allow us to handle user input:
+```
     io::stdin()
         .read_line(&mut guess)
-If we hadn’t imported the io module with use std::io; at the beginning of the program, we could still use the function by writing this function call as std::io::stdin. The stdin function returns an instance of std::io::Stdin, which is a type that represents a handle to the standard input for your terminal.
+```
+If we hadn’t imported the io module with use std::io; at the beginning of the program, we could still use the function by writing this function call as std::io::stdin.
+The stdin function returns an instance of std::io::Stdin, which is a type that represents a handle to the standard input for your terminal.
 
-Next, the line .read_line(&mut guess) calls the read_line method on the standard input handle to get input from the user. We’re also passing &mut guess as the argument to read_line to tell it what string to store the user input in. The full job of read_line is to take whatever the user types into standard input and append that into a string (without overwriting its contents), so we therefore pass that string as an argument. The string argument needs to be mutable so that the method can change the string’s content.
+Next, the line .read_line(&mut guess) calls the read_line method on the standard input handle to get input from the user.
+We’re also passing &mut guess as the argument to read_line to tell it what string to store the user input in.
+The full job of read_line is to take whatever the user types into standard input and append that into a string (without overwriting its contents), so we therefore pass that string as an argument.
+The string argument needs to be mutable so that the method can change the string’s content.
 
-The & indicates that this argument is a reference, which gives you a way to let multiple parts of your code access one piece of data without needing to copy that data into memory multiple times. References are a complex feature, and one of Rust’s major advantages is how safe and easy it is to use references. You don’t need to know a lot of those details to finish this program. For now, all you need to know is that, like variables, references are immutable by default. Hence, you need to write &mut guess rather than &guess to make it mutable. (Chapter 4 will explain references more thoroughly.)
+The & indicates that this argument is a reference, which gives you a way to let multiple parts of your code access one piece of data without needing to copy that data into memory multiple times.
+References are a complex feature, and one of Rust’s major advantages is how safe and easy it is to use references.
+You don’t need to know a lot of those details to finish this program.
+For now, all you need to know is that, like variables, references are immutable by default.
+Hence, you need to write &mut guess rather than &guess to make it mutable.
+(Chapter 4 will explain references more thoroughly.)
 
-
-Handling Potential Failure with Result
+⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐
+#### Handling Potential Failure with Result
 We’re still working on this line of code. We’re now discussing a third line of text, but note that it’s still part of a single logical line of code. The next part is this method:
 
         .expect("Failed to read line");

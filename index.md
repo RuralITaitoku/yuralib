@@ -15,7 +15,8 @@
 # ブックマーク
 ## 開発
 1. [UTF-8文字コード](https://orange-factory.com/dnf/utf-8.html)
-
+2. Rust
+    - [The Rust Programming Language](https://doc.rust-lang.org/stable/book/title-page.html)
 ## 仕事
 1. [Teams](https://teams.microsoft.com/v2/)
 ## 生活
