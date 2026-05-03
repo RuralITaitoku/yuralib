@@ -1,3 +1,4 @@
+set -x
 
 if [ "$1" = "run" ]; then
 	cargo run

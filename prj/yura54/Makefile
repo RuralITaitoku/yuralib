@@ -21,10 +21,13 @@ JAP0_OBJS = $(patsubst src_jap0/%.cpp, objs0/%.o, $(JAP0_SRCS))
 JAP1_SRCS = $(wildcard src_jap1/*.cpp)
 JAP1_OBJS = $(patsubst src_jap1/%.cpp, objs1/%.o, $(JAP1_SRCS))
 
+JAP54_SRCS = $(shell find src_jap54 -name '*.cpp')
+JAP54_OBJS = $(patsubst src_jap54/%.cpp, objs54/%.o, $(JAP54_SRCS))
+
 TESTS_SRCS = $(shell find src_tests -name '*.cpp')
 TESTS_OBJS = $(patsubst src_tests/%.cpp, objs/%.o, $(TESTS_SRCS))
 
-all: bin/jap0 bin/jap1 bin/tests
+all: bin/jap0 bin/jap1 bin/jap54 bin/tests
 
 ########################################### Build jap0 command. 
 bin/jap0:  $(JAP0_OBJS)   | bin
@@ -40,6 +43,14 @@ bin/jap1:  $(JAP1_OBJS)   | bin
 	cp bin/jap1 ~/bin/jap1
 
 objs1/%.o: src_jap1/%.cpp | objs1
+	$(CPP) $(CPPFLAGS) -o $@ -c $<
+
+########################################### Build jap1 command. 
+bin/jap54:  $(JAP54_OBJS)   | bin
+	$(CPP) -o $@ $^ $(LIBS)
+	cp bin/jap54 ~/bin/jap54
+
+objs54/%.o: src_jap54/%.cpp | objs54
 	$(CPP) $(CPPFLAGS) -o $@ -c $<
 
 ########################################### Build jap tests command. 
@@ -62,6 +73,9 @@ objs0:
 
 objs1:
 	mkdir -p objs1
+
+objs54:
+	mkdir -p objs54
 
 install:
 	cp bin/jap0 ~/bin/jap0

@@ -148,7 +148,7 @@ If you have run this command, you can use the --offline flag with all cargo comm
 
 
 ## 2. Programming a Guessing Game
-⭐
+
 Let’s jump into Rust by working through a hands-on project together!
 This chapter introduces you to a few common Rust concepts by showing you how to use them in a real program.
 You’ll learn about let, match, methods, associated functions, external crates, and more!
@@ -168,7 +168,9 @@ To set up a new project, go to the projects directory that you created in Chapte
 $ cargo new guessing_game
 $ cd guessing_game
 ```
-The first command, cargo new, takes the name of the project (guessing_game) as the first argument. The second command changes to the new project’s directory.
+
+The first command, cargo new, takes the name of the project (guessing_game) as the first argument.
+The second command changes to the new project’s directory.
 
 Look at the generated Cargo.toml file:
 ``` toml
@@ -203,6 +205,7 @@ The run command comes in handy when you need to rapidly iterate on a project, as
 Reopen the src/main.rs file. You’ll be writing all the code in this file.
 
 ### Processing a Guess
+
 The first part of the guessing game program will ask for user input, process that input, and check that the input is in the expected form.
 To start, we’ll allow the player to input a guess. Enter the code in Listing 2-1 into src/main.rs.
 ``` rust
@@ -313,17 +316,23 @@ For now, all you need to know is that, like variables, references are immutable 
 Hence, you need to write &mut guess rather than &guess to make it mutable.
 (Chapter 4 will explain references more thoroughly.)
 
-⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐
 #### Handling Potential Failure with Result
-We’re still working on this line of code. We’re now discussing a third line of text, but note that it’s still part of a single logical line of code. The next part is this method:
-
+We’re still working on this line of code. We’re now discussing a third line of text, but note that it’s still part of a single logical line of code.
+The next part is this method:
+```
         .expect("Failed to read line");
+```
 We could have written this code as:
-
+```
 io::stdin().read_line(&mut guess).expect("Failed to read line");
-However, one long line is difficult to read, so it’s best to divide it. It’s often wise to introduce a newline and other whitespace to help break up long lines when you call a method with the .method_name() syntax. Now let’s discuss what this line does.
+```
+However, one long line is difficult to read, so it’s best to divide it.
+It’s often wise to introduce a newline and other whitespace to help break up long lines when you call a method with the .method_name() syntax.
+Now let’s discuss what this line does.
+⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐
 
-As mentioned earlier, read_line puts whatever the user enters into the string we pass to it, but it also returns a Result value. Result is an enumeration, often called an enum, which is a type that can be in one of multiple possible states. We call each possible state a variant.
+As mentioned earlier, read_line puts whatever the user enters into the string we pass to it, but it also returns a Result value.
+Result is an enumeration, often called an enum, which is a type that can be in one of multiple possible states. We call each possible state a variant.
 
 Chapter 6 will cover enums in more detail. The purpose of these Result types is to encode error-handling information.
 
