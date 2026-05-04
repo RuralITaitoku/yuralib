@@ -45,13 +45,13 @@ bin/jap1:  $(JAP1_OBJS)   | bin
 objs1/%.o: src_jap1/%.cpp | objs1
 	$(CPP) $(CPPFLAGS) -o $@ -c $<
 
-########################################### Build jap1 command. 
+########################################### Build jap54 command. 
 bin/jap54:  $(JAP54_OBJS)   | bin
-	$(CPP) -o $@ $^ $(LIBS)
+	$(CPP) -o $@ $^ $(LIBS) -lpthread -lgtest
 	cp bin/jap54 ~/bin/jap54
 
 objs54/%.o: src_jap54/%.cpp | objs54
-	$(CPP) $(CPPFLAGS) -o $@ -c $<
+	$(CPP) -DENABLE_TEST $(CPPFLAGS) -o $@ -c $<
 
 ########################################### Build jap tests command. 
 bin/tests: $(TESTS_OBJS) | bin
@@ -84,5 +84,8 @@ install:
 clean:
 	find . -name "*.o" -exec rm {} +
 	rm bin/*
-
+	rm -r objs
+	rm -r objs0
+	rm -r objs1
+	rm -r objs54
 

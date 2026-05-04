@@ -329,16 +329,25 @@ io::stdin().read_line(&mut guess).expect("Failed to read line");
 However, one long line is difficult to read, so it’s best to divide it.
 It’s often wise to introduce a newline and other whitespace to help break up long lines when you call a method with the .method_name() syntax.
 Now let’s discuss what this line does.
-⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐
 
 As mentioned earlier, read_line puts whatever the user enters into the string we pass to it, but it also returns a Result value.
-Result is an enumeration, often called an enum, which is a type that can be in one of multiple possible states. We call each possible state a variant.
+Result is an enumeration, often called an enum, which is a type that can be in one of multiple possible states. 
+We call each possible state a variant.
 
-Chapter 6 will cover enums in more detail. The purpose of these Result types is to encode error-handling information.
+Chapter 6 will cover enums in more detail.
+The purpose of these Result types is to encode error-handling information.
 
-Result’s variants are Ok and Err. The Ok variant indicates the operation was successful, and it contains the successfully generated value. The Err variant means the operation failed, and it contains information about how or why the operation failed.
+Result’s variants are Ok and Err.
+The Ok variant indicates the operation was successful, and it contains the successfully generated value.
+The Err variant means the operation failed, and it contains information about how or why the operation failed.
 
-Values of the Result type, like values of any type, have methods defined on them. An instance of Result has an expect method that you can call. If this instance of Result is an Err value, expect will cause the program to crash and display the message that you passed as an argument to expect. If the read_line method returns an Err, it would likely be the result of an error coming from the underlying operating system. If this instance of Result is an Ok value, expect will take the return value that Ok is holding and return just that value to you so that you can use it. In this case, that value is the number of bytes in the user’s input.
+Values of the Result type, like values of any type, have methods defined on them.
+An instance of Result has an expect method that you can call.
+If this instance of Result is an Err value, expect will cause the program to crash and display the message that you passed as an argument to expect.
+If the read_line method returns an Err, it would likely be the result of an error coming from the underlying operating system.
+If this instance of Result is an Ok value, expect will take the return value that Ok is holding and return just that value to you so that you can use it. 
+In this case, that value is the number of bytes in the user’s input.
+⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐
 
 If you don’t call expect, the program will compile, but you’ll get a warning:
 

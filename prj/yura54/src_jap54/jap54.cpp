@@ -1,76 +1,94 @@
 #include "jap54.hpp"
-#include <sys/epoll.h>
-#include <fcntl.h>
-#include <unistd.h>
-#include <stdexcept>
-#include <string>
-#include <cerrno>
 
-// STDIN を O_NONBLOCK に設定するユーティリティ
-static void jap54::set_nonblocking(int fd) {
-    int flags = fcntl(fd, F_GETFL, 0);
-    if (flags == -1)
-        throw std::runtime_error("fcntl F_GETFL failed");
-    if (fcntl(fd, F_SETFL, flags | O_NONBLOCK) == -1)
-        throw std::runtime_error("fcntl F_SETFL failed");
-}
 
-// 呼び出し前に set_nonblocking(STDIN_FILENO) を一度だけ呼ぶ想定
-std::string jap54::readline_epoll_nb(int epfd, int timeout_ms = -1) {
-    epoll_event events[1];
-    std::string line;
-    char buf[256];
+int jap54::get_utf8_byte_size(const std::string& str, size_t start_byte, int utf8_size) {
+    if (start_byte < 0 || start_byte >= str.length()) {
+        throw std::out_of_range("開始バイト位置が文字列の範囲外です。");
+    }
+    if (utf8_size <= 0) {
+        throw std::invalid_argument("UTF8の文字数は正の数である必要があります。");
+    }
 
-    while (true) {
-        // ① イベント待機（ここは O_NONBLOCK でもブロックする）
-        int n = epoll_wait(epfd, events, 1, timeout_ms);
-        if (n == -1)
-            throw std::runtime_error("epoll_wait failed");
-        if (n == 0)
-            throw std::runtime_error("timeout");
+    size_t current_byte = start_byte;
+    int processed_chars = 0;
 
-        if (!(events[0].events & EPOLLIN))
-            throw std::runtime_error("epoll error event");
+    while (processed_chars < utf8_size && current_byte < str.length()) {
+        unsigned char first_byte = static_cast<unsigned char>(str[current_byte]);
+        int char_bytes;
 
-        // ② EAGAIN になるまでバッファをまとめて読む
-        while (true) {
-            ssize_t r = read(STDIN_FILENO, buf, sizeof(buf));
-
-            if (r == 0)          // EOF
-                return line;
-
-            if (r == -1) {
-                if (errno == EAGAIN || errno == EWOULDBLOCK)
-                    break;       // ③ データ枯渇 → epoll_wait に戻る
-                throw std::runtime_error("read failed");
-            }
-
-            // ④ バッファ内を '\n' でスキャン
-            for (ssize_t i = 0; i < r; ++i) {
-                if (buf[i] == '\n')
-                    return line;  // 行完成
-                line += buf[i];
-            }
+        if ((first_byte & 0x80) == 0) { // 0xxxxxxx (1 byte)
+            char_bytes = 1;
+        } else if ((first_byte & 0xE0) == 0xC0) { // 110xxxxx (2 bytes)
+            char_bytes = 2;
+        } else if ((first_byte & 0xF0) == 0xE0) { // 1110xxxx (3 bytes)
+            char_bytes = 3;
+        } else if ((first_byte & 0xF8) == 0xF0) { // 11110xxx (4 bytes)
+            char_bytes = 4;
+        } else if ((first_byte & 0xFC) == 0xF8) { // 111110xx (5 bytes)
+            char_bytes = 5;
+        } else {
+            // 不正なUTF-8シーケンス
+            throw std::invalid_argument("不正なUTF-8シーケンスが文字列に含まれています。");
         }
+
+        if (current_byte + char_bytes > str.length()) {
+            // 文字列の終わりを超えた
+            throw std::out_of_range("指定されたUTF8文字数に対応するバイト数が文字列の範囲外です。");
+        }
+
+        current_byte += char_bytes;
+        processed_chars++;
     }
+    return current_byte - start_byte;
 }
-/**
-int main() {
-    set_nonblocking(STDIN_FILENO);
 
-    // epfd はプログラム起動時に一度だけ作る
-    int epfd = epoll_create1(0);
-    epoll_event ev{};
-    ev.events = EPOLLIN;
-    ev.data.fd = STDIN_FILENO;
-    epoll_ctl(epfd, EPOLL_CTL_ADD, STDIN_FILENO, &ev);
+#ifdef ENABLE_TEST
+TEST(TestJap54, get_utf8_byte_size_ut00) {
+    // int jap54::get_utf8_byte_size(const std::string& str, size_t start_byte, int utf8_size)
+    // test1
+    auto test_size = jap54::get_utf8_byte_size("テスト");
+    EXPECT_EQ(test_size, 9);
+    // test2 
+    test_size = jap54::get_utf8_byte_size("テaス0ト");
+    EXPECT_EQ(test_size, 11);
+    // test3 
+    test_size = jap54::get_utf8_byte_size("Ā");
+    EXPECT_EQ(test_size, 2);
+}
+#endif
 
-    try {
-        std::string line = readline_epoll_nb(epfd, 5000);
-        // line を使う処理...
-    } catch (const std::exception& e) {
-        // エラー処理
+
+int jap54::get_char_bytes(unsigned char first_byte) {
+    int char_bytes;
+    if ((first_byte & 0x80) == 0) { // 0xxxxxxx (1 byte)
+        char_bytes = 1;
+    } else if ((first_byte & 0xE0) == 0xC0) { // 110xxxxx (2 bytes)
+        char_bytes = 2;
+    } else if ((first_byte & 0xF0) == 0xE0) { // 1110xxxx (3 bytes)
+        char_bytes = 3;
+    } else if ((first_byte & 0xF8) == 0xF0) { // 11110xxx (4 bytes)
+        char_bytes = 4;
+    } else if ((first_byte & 0xFC) == 0xF8) { // 111110xx (5 bytes)
+        char_bytes = 5;
+    } else {
+        // 不正なUTF-8シーケンス
+        throw std::invalid_argument("不正なUTF-8シーケンスが文字列に含まれています。");
     }
+    return char_bytes;
+}
 
-    close(epfd);
-}*/
+#ifdef ENABLE_TEST
+TEST(TestJap54, get_char_bytes) {
+    // int jap54::get_char_bytes(unsigned char first_byte) {
+    // test1
+    std::string test_str = "あ";
+    auto test_size = jap54::get_char_bytes(test_str[0]);
+    EXPECT_EQ(test_size, 3);
+    // test2
+    test_str = "aaa";
+    test_size = jap54::get_char_bytes(test_str[0]);
+    EXPECT_EQ(test_size, 1);
+}
+#endif
+
+
