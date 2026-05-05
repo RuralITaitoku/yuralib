@@ -1,7 +1,7 @@
 
 # CPP=clang++
 CPP=g++
-CPPFLAGS= -g -Wall -DDEBUG  -I./include/ -std=c++20 --coverage -O0
+CPPFLAGS= -g -Wall -DDEBUG  -I./include/ -std=c++20 --coverage -fprofile-arcs -ftest-coverage -O0
 LIBS= -lsqlite3 --coverage
 
 #LIB_SRCS = $(wildcard lib/*.cpp)

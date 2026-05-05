@@ -3,10 +3,10 @@
 
 int jap54::get_utf8_byte_size(const std::string& str, size_t start_byte, int utf8_size) {
     if (start_byte < 0 || start_byte >= str.length()) {
-        throw std::out_of_range("開始バイト位置が文字列の範囲外です。");
+        throw std::out_of_range("The startting byte postion is outside the range of the string.");
     }
     if (utf8_size <= 0) {
-        throw std::invalid_argument("UTF8の文字数は正の数である必要があります。");
+        throw std::invalid_argument("The number of characters in a UTF-8 encoding must be a positive number.");
     }
 
     size_t current_byte = start_byte;
@@ -24,11 +24,9 @@ int jap54::get_utf8_byte_size(const std::string& str, size_t start_byte, int utf
             char_bytes = 3;
         } else if ((first_byte & 0xF8) == 0xF0) { // 11110xxx (4 bytes)
             char_bytes = 4;
-        } else if ((first_byte & 0xFC) == 0xF8) { // 111110xx (5 bytes)
-            char_bytes = 5;
         } else {
             // 不正なUTF-8シーケンス
-            throw std::invalid_argument("不正なUTF-8シーケンスが文字列に含まれています。");
+            throw std::invalid_argument("The string contains an invalid UTF-8 sequence.");
         }
 
         if (current_byte + char_bytes > str.length()) {
@@ -54,6 +52,46 @@ TEST(TestJap54, get_utf8_byte_size_ut00) {
     // test3 
     test_size = jap54::get_utf8_byte_size("Ā");
     EXPECT_EQ(test_size, 2);
+    // test4 
+    test_size = jap54::get_utf8_byte_size("𐄢");
+    EXPECT_EQ(test_size, 4);
+}
+TEST(TestJap54, get_utf8_byte_size_ut01) {
+    // int jap54::get_utf8_byte_size(const std::string& str, size_t start_byte, int utf8_size)
+    // test1
+    try {
+        jap54::get_utf8_byte_size("テスト", -1);
+        FAIL() << "The expected exception did not occur.";
+    } catch (const std::out_of_range &e) {
+        EXPECT_STREQ(e.what(), "The startting byte postion is outside the range of the string.");
+    } catch (...) {
+        FAIL() << "Unexpected exception error."; 
+    }
+}
+TEST(TestJap54, get_utf8_byte_size_ut02) {
+    // int jap54::get_utf8_byte_size(const std::string& str, size_t start_byte, int utf8_size)
+    // test1
+    try {
+        jap54::get_utf8_byte_size("テスト", 0, -1);
+        FAIL() << "The expected exception did not occur.";
+    } catch (const std::invalid_argument &e) {
+        EXPECT_STREQ(e.what(), "The number of characters in a UTF-8 encoding must be a positive number.");
+    } catch (...) {
+        FAIL() << "Unexpected exception error."; 
+    }
+}
+TEST(TestJap54, get_utf8_byte_size_ut03) {
+    // int jap54::get_utf8_byte_size(const std::string& str, size_t start_byte, int utf8_size)
+    try {
+        std::string test_str = "aaaa";
+        test_str[0] = (unsigned char)0xff;
+        jap54::get_utf8_byte_size(test_str);
+        FAIL() << "The expected exception did not occur.";
+    } catch (const std::invalid_argument &e) {
+        EXPECT_STREQ(e.what(), "The string contains an invalid UTF-8 sequence.");
+    } catch (...) {
+        FAIL() << "Unexpected exception error."; 
+    }
 }
 #endif
 
@@ -68,17 +106,15 @@ int jap54::get_char_bytes(unsigned char first_byte) {
         char_bytes = 3;
     } else if ((first_byte & 0xF8) == 0xF0) { // 11110xxx (4 bytes)
         char_bytes = 4;
-    } else if ((first_byte & 0xFC) == 0xF8) { // 111110xx (5 bytes)
-        char_bytes = 5;
     } else {
         // 不正なUTF-8シーケンス
-        throw std::invalid_argument("不正なUTF-8シーケンスが文字列に含まれています。");
+        throw std::invalid_argument("The string contains an invalid UTF-8 sequence.");
     }
     return char_bytes;
 }
 
 #ifdef ENABLE_TEST
-TEST(TestJap54, get_char_bytes) {
+TEST(TestJap54, get_char_bytes_ut_00) {
     // int jap54::get_char_bytes(unsigned char first_byte) {
     // test1
     std::string test_str = "あ";
@@ -88,6 +124,27 @@ TEST(TestJap54, get_char_bytes) {
     test_str = "aaa";
     test_size = jap54::get_char_bytes(test_str[0]);
     EXPECT_EQ(test_size, 1);
+    // test3
+    test_str = "Ā";
+    test_size = jap54::get_char_bytes(test_str[0]);
+    EXPECT_EQ(test_size, 2);
+    // test4 
+    test_str = "𐄢";
+    test_size = jap54::get_char_bytes(test_str[0]);
+    EXPECT_EQ(test_size, 4);
+}
+TEST(TestJap54, get_char_bytes_ut_01) {
+    // int jap54::get_char_bytes(unsigned char first_byte) {
+    try {
+        std::string test_str = "aaaa";
+        test_str[0] = (unsigned char)0xff;
+        jap54::get_char_bytes(test_str[0]);
+        FAIL() << "The expected exception did not occur.";
+    } catch (const std::invalid_argument &e) {
+        EXPECT_STREQ(e.what(), "The string contains an invalid UTF-8 sequence.");
+    } catch (...) {
+        FAIL() << "Unexpected exception error."; 
+    }
 }
 #endif
 
