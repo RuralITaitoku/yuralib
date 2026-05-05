@@ -12,7 +12,7 @@ elif [ "$1" = "run" ]; then
 
 elif [ "$1" = "lcov" ]; then
     lcov --capture --directory . --rc lcov_branch_coverage=1 --output-file coverage.info --ignore-errors mismatch
-    lcov --remove coverage.info '/usr/*' '*/gtest/*' --output-file coverage.info --ignore-errors unused
+    lcov --remove coverage.info '/usr/*' '*/gtest/*' --output-file coverage.info --ignore-errors unused --rc lcov_branch_coverage=1
     genhtml coverage.info --output-directory html --ignore-errors mismatch --branch-coverage
 else
     make 2>&1 | tee build.log 

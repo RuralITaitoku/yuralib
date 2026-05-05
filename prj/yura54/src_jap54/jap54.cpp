@@ -31,7 +31,7 @@ int jap54::get_utf8_byte_size(const std::string& str, size_t start_byte, int utf
 
         if (current_byte + char_bytes > str.length()) {
             // 文字列の終わりを超えた
-            throw std::out_of_range("指定されたUTF8文字数に対応するバイト数が文字列の範囲外です。");
+            throw std::out_of_range("UTF8 characters is outside the range of the string.");
         }
 
         current_byte += char_bytes;
@@ -89,6 +89,19 @@ TEST(TestJap54, get_utf8_byte_size_ut03) {
         FAIL() << "The expected exception did not occur.";
     } catch (const std::invalid_argument &e) {
         EXPECT_STREQ(e.what(), "The string contains an invalid UTF-8 sequence.");
+    } catch (...) {
+        FAIL() << "Unexpected exception error."; 
+    }
+}
+TEST(TestJap54, get_utf8_byte_size_ut04) {
+    // int jap54::get_utf8_byte_size(const std::string& str, size_t start_byte, int utf8_size)
+    try {
+        std::string test_str = "aaaa";
+        test_str.push_back((unsigned char)0xf0);
+        jap54::get_utf8_byte_size(test_str);
+        FAIL() << "The expected exception did not occur.";
+    } catch (const std::out_of_range &e) {
+        EXPECT_STREQ(e.what(), "UTF8 characters is outside the range of the string.");
     } catch (...) {
         FAIL() << "Unexpected exception error."; 
     }
