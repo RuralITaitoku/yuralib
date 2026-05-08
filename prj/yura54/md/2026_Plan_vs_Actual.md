@@ -353,10 +353,12 @@
 - [2026年5月6日(水)] 
 ---
 - [2026年5月7日(木)] Request for quotation confirmation and Review
-- [2026年5月8日(金)] Request for quote on test code modifications. ⭐️⭐️⭐️
+- [2026年5月8日(金)] Request for quote on test code modifications. 
 ---
-- [2026年5月9日(土)]
+- [2026年5月9日(土)] ⭐️⭐️⭐️
 1. [ ] 血圧計測 
+2. [ ] 培土引取り準備
+3. [ ] 水稲苗箱準備
 - [2026年5月10日(日)]
 ---
 - [2026年5月11日(月)]
