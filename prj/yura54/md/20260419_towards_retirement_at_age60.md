@@ -23,6 +23,9 @@
 2. 拠点
     - 株）フィールドプラン（佐賀県みやき町）
     - 西日本スカイテック（株）（三井郡大刀洗町）
+    - [ARIAKE DRONE STATION](https://kn-leap.com/)
+    - [マゼックス](https://mazex.jp/)
+    - [ドローキング佐賀](https://www.droneking.jp/base/p360/)]
 ## 3Dプリンタ副業
     1. [ ] Hellow World!3Dプリンタ購入
 
