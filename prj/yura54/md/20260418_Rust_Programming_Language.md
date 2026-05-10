@@ -168,7 +168,6 @@ To set up a new project, go to the projects directory that you created in Chapte
 $ cargo new guessing_game
 $ cd guessing_game
 ```
-
 The first command, cargo new, takes the name of the project (guessing_game) as the first argument.
 The second command changes to the new project’s directory.
 
@@ -347,10 +346,9 @@ If this instance of Result is an Err value, expect will cause the program to cra
 If the read_line method returns an Err, it would likely be the result of an error coming from the underlying operating system.
 If this instance of Result is an Ok value, expect will take the return value that Ok is holding and return just that value to you so that you can use it. 
 In this case, that value is the number of bytes in the user’s input.
-⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐
 
 If you don’t call expect, the program will compile, but you’ll get a warning:
-
+``` bash
 $ cargo build
    Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
 warning: unused `Result` that must be used
@@ -369,24 +367,34 @@ help: use `let _ = ...` to ignore the resulting value
 warning: `guessing_game` (bin "guessing_game") generated 1 warning
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.59s
 Rust warns that you haven’t used the Result value returned from read_line, indicating that the program hasn’t handled a possible error.
-
-The right way to suppress the warning is to actually write error-handling code, but in our case we just want to crash this program when a problem occurs, so we can use expect. You’ll learn about recovering from errors in Chapter 9.
+```
+The right way to suppress the warning is to actually write error-handling code, but in our case we just want to crash this program when a problem occurs, so we can use expect.
+You’ll learn about recovering from errors in Chapter 9.
 
 Printing Values with println! Placeholders
 Aside from the closing curly bracket, there’s only one more line to discuss in the code so far:
-
+``` c++
     println!("You guessed: {guess}");
-This line prints the string that now contains the user’s input. The {} set of curly brackets is a placeholder: Think of {} as little crab pincers that hold a value in place. When printing the value of a variable, the variable name can go inside the curly brackets. When printing the result of evaluating an expression, place empty curly brackets in the format string, then follow the format string with a comma-separated list of expressions to print in each empty curly bracket placeholder in the same order. Printing a variable and the result of an expression in one call to println! would look like this:
-
+```
+This line prints the string that now contains the user’s input.
+The {} set of curly brackets is a placeholder: Think of {} as little crab pincers that hold a value in place.
+When printing the value of a variable, the variable name can go inside the curly brackets.
+When printing the result of evaluating an expression,
+     place empty curly brackets in the format string,
+     then follow the format string with a comma-separated list of expressions to print in each empty curly bracket placeholder in the same order.
+Printing a variable and the result of an expression in one call to println! would look like this:
+```
 let x = 5;
 let y = 10;
 
 println!("x = {x} and y + 2 = {}", y + 2);
 This code would print x = 5 and y + 2 = 12.
-
-Testing the First Part
-Let’s test the first part of the guessing game. Run it using cargo run:
-
+```
+⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐
+#### Testing the First Part
+Let’s test the first part of the guessing game.
+Run it using cargo run:
+``` bash
 $ cargo run
    Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 6.44s
@@ -395,14 +403,19 @@ Guess the number!
 Please input your guess.
 6
 You guessed: 6
+```
 At this point, the first part of the game is done: We’re getting input from the keyboard and then printing it.
+#### Generating a Secret Number
+Next, we need to generate a secret number that the user will try to guess.
+The secret number should be different every time so that the game is fun to play more than once.
+We’ll use a random number between 1 and 100 so that the game isn’t too difficult.
+Rust doesn’t yet include random number functionality in its standard library.
+However, the Rust team does provide a rand crate with said functionality.
 
-Generating a Secret Number
-Next, we need to generate a secret number that the user will try to guess. The secret number should be different every time so that the game is fun to play more than once. We’ll use a random number between 1 and 100 so that the game isn’t too difficult. Rust doesn’t yet include random number functionality in its standard library. However, the Rust team does provide a rand crate with said functionality.
 
-
-Increasing Functionality with a Crate
-Remember that a crate is a collection of Rust source code files. The project we’ve been building is a binary crate, which is an executable. The rand crate is a library crate, which contains code that is intended to be used in other programs and can’t be executed on its own.
+#### Increasing Functionality with a Crate
+Remember that a crate is a collection of Rust source code files.
+The project we’ve been building is a binary crate, which is an executable. The rand crate is a library crate, which contains code that is intended to be used in other programs and can’t be executed on its own.
 
 Cargo’s coordination of external crates is where Cargo really shines. Before we can write code that uses rand, we need to modify the Cargo.toml file to include the rand crate as a dependency. Open that file now and add the following line to the bottom, beneath the [dependencies] section header that Cargo created for you. Be sure to specify rand exactly as we have here, with this version number, or the code examples in this tutorial may not work:
 
