@@ -38,12 +38,20 @@ namespace jap54 {
         return char_bytes;
     }
     /**
+     * @brief UTF8文字列を指定位置の指定文字数でのターミナル上の幅を取得する。
+     * @param str 文字列
+     * @param start_byte 指定位置をバイト数で指定。
+     * @param utf8_size 文字数
+     * @return ターミナル上の幅
+     */
+    int get_utf8_term_width(const std::string& str, size_t start_byte = 0, int utf8_size = INT_MAX);
+
+    /**
      * @brief UTF8文字列を指定位置の指定文字数での画面上の幅を取得する。
      * @param str 文字列
      * @param start_byte 指定位置をバイト数で指定。
      * @param utf8_size 文字数
      * @return 画面上の幅
      */
-    int get_utf8_term_width(const std::string& str, size_t start_byte = 0, int utf8_size = INT_MAX);
-
-}; 
+    uint32_t hash32(const void* data, size_t size);
+ }; 

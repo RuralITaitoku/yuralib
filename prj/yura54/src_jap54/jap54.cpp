@@ -161,4 +161,13 @@ int jap54::get_utf8_term_width(const std::string& str, size_t start_byte, int ut
     }
     return current_byte - start_byte;
 }
+uint32_t jap54::hash32(const void* data, size_t size) {
+    auto bytes = static_cast<const uint8_t*>(data);
+    uint32_t hash = 2166136261U; // offset_basis
 
+    for (size_t i = 0; i < size; ++i) {
+        hash ^= bytes[i];
+        hash *= 16777619U;        // FNV_prime
+    }
+    return hash;
+}
