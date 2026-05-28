@@ -1,0 +1,101 @@
+#include "jap54.hpp"
+
+
+TEST(TestJap54, get_utf8_byte_size_ut00) {
+    // int jap54::get_utf8_byte_size(const std::string& str, size_t start_byte, int utf8_size)
+    // test1
+    auto test_size = jap54::get_utf8_byte_size("テスト");
+    EXPECT_EQ(test_size, 9);
+    // test2 
+    test_size = jap54::get_utf8_byte_size("テaス0ト");
+    EXPECT_EQ(test_size, 11);
+    // test3 
+    test_size = jap54::get_utf8_byte_size("Ā");
+    EXPECT_EQ(test_size, 2);
+    // test4 
+    test_size = jap54::get_utf8_byte_size("𐄢");
+    EXPECT_EQ(test_size, 4);
+}
+TEST(TestJap54, get_utf8_byte_size_ut01) {
+    // int jap54::get_utf8_byte_size(const std::string& str, size_t start_byte, int utf8_size)
+    // test1
+    try {
+        jap54::get_utf8_byte_size("テスト", -1);
+        FAIL() << "The expected exception did not occur.";
+    } catch (const std::out_of_range &e) {
+        EXPECT_STREQ(e.what(), "The startting byte postion is outside the range of the string.");
+    } catch (...) {
+        FAIL() << "Unexpected exception error."; 
+    }
+}
+TEST(TestJap54, get_utf8_byte_size_ut02) {
+    // int jap54::get_utf8_byte_size(const std::string& str, size_t start_byte, int utf8_size)
+    // test1
+    try {
+        jap54::get_utf8_byte_size("テスト", 0, -1);
+        FAIL() << "The expected exception did not occur.";
+    } catch (const std::invalid_argument &e) {
+        EXPECT_STREQ(e.what(), "The number of characters in a UTF-8 encoding must be a positive number.");
+    } catch (...) {
+        FAIL() << "Unexpected exception error."; 
+    }
+}
+TEST(TestJap54, get_utf8_byte_size_ut03) {
+    // int jap54::get_utf8_byte_size(const std::string& str, size_t start_byte, int utf8_size)
+    try {
+        std::string test_str = "aaaa";
+        test_str[0] = (unsigned char)0xff;
+        jap54::get_utf8_byte_size(test_str);
+        FAIL() << "The expected exception did not occur.";
+    } catch (const std::invalid_argument &e) {
+        EXPECT_STREQ(e.what(), "The string contains an invalid UTF-8 sequence.");
+    } catch (...) {
+        FAIL() << "Unexpected exception error."; 
+    }
+}
+TEST(TestJap54, get_utf8_byte_size_ut04) {
+    // int jap54::get_utf8_byte_size(const std::string& str, size_t start_byte, int utf8_size)
+    try {
+        std::string test_str = "aaaa";
+        test_str.push_back((unsigned char)0xf0);
+        jap54::get_utf8_byte_size(test_str);
+        FAIL() << "The expected exception did not occur.";
+    } catch (const std::out_of_range &e) {
+        EXPECT_STREQ(e.what(), "UTF8 characters is outside the range of the string.");
+    } catch (...) {
+        FAIL() << "Unexpected exception error."; 
+    }
+}
+TEST(TestJap54, get_char_bytes_ut_00) {
+    // int jap54::get_char_bytes(unsigned char first_byte) {
+    // test1
+    std::string test_str = "あ";
+    auto test_size = jap54::get_char_bytes(test_str[0]);
+    EXPECT_EQ(test_size, 3);
+    // test2
+    test_str = "aaa";
+    test_size = jap54::get_char_bytes(test_str[0]);
+    EXPECT_EQ(test_size, 1);
+    // test3
+    test_str = "Ā";
+    test_size = jap54::get_char_bytes(test_str[0]);
+    EXPECT_EQ(test_size, 2);
+    // test4 
+    test_str = "𐄢";
+    test_size = jap54::get_char_bytes(test_str[0]);
+    EXPECT_EQ(test_size, 4);
+}
+TEST(TestJap54, get_char_bytes_ut_01) {
+    // int jap54::get_char_bytes(unsigned char first_byte) {
+    try {
+        std::string test_str = "aaaa";
+        test_str[0] = (unsigned char)0xff;
+        jap54::get_char_bytes(test_str[0]);
+        FAIL() << "The expected exception did not occur.";
+    } catch (const std::invalid_argument &e) {
+        EXPECT_STREQ(e.what(), "The string contains an invalid UTF-8 sequence.");
+    } catch (...) {
+        FAIL() << "Unexpected exception error."; 
+    }
+}
+
