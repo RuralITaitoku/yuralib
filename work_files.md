@@ -13,4 +13,6 @@ prj/yura54/try/20260324_interactive_process.cpp
 
 # 2026/6/1 Mon.
 prj/yura54/md/2026_Plan_vs_Actual.md:420
+## 2026/6/7 Sun.
+prj/yura54/md/2026_Plan_vs_Actual.md:434
 
