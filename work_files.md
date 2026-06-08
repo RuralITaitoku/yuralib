@@ -9,10 +9,10 @@ prj/yura54/md/2026_Cash_Flow.md
 prj/yura54/try/20260314_term.cpp
 prj/yura54/try/20260314_term.hpp
 prj/yura54/try/20260324_interactive_process.cpp
+Mon.Tue.Wed.Thu.Fri.Sat.Sun.
 
-
-# 2026/6/1 Mon.
+# 2026-06-01 Mon.
 prj/yura54/md/2026_Plan_vs_Actual.md:420
-## 2026/6/7 Sun.
+## 2026-06-07 Sun.
 prj/yura54/md/2026_Plan_vs_Actual.md:434
 
