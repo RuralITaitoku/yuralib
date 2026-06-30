@@ -4,6 +4,7 @@ bin
 *.aac
 *.gcda
 *.gcno
+target
 build
 *log.txt
 *.log
