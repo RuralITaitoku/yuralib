@@ -49,4 +49,10 @@ prj/yura54/md/2026_Cash_Flow.md:41
 prj/yura54/md/2026_Plan_vs_Actual.md:515
 prj/yura54/try_rust/jap54
 ```
+## 2026-07-26 Sun.
+```
+prj/yura54/md/2026_Cash_Flow.md:41
+prj/yura54/md/2026_Plan_vs_Actual.md:552
+prj/yura54/try_rust/jap54
+```
 
