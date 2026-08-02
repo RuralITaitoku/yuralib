@@ -436,10 +436,10 @@
 1. [x]  6:30 ~  7:30 第2回集落一斉防除 
 2. [x]  8:00 ~ 18:00 @11,12,5 施肥
 ---
-- [2026-06-08 Mon.] task: fix_test_code;
-- [2026-06-09 Tue.] task: fix_test_code;
-- [2026-06-10 Wed.] task: fix_test_code;
-- [2026-06-11 Thu.] task: fix_test_code;
+- [2026-06-08 Mon.] task: `fix_test_code;`
+- [2026-06-09 Tue.] task: `fix_test_code;`
+- [2026-06-10 Wed.] task: `fix_test_code;`
+- [2026-06-11 Thu.] task: `fix_test_code;`
 - [2026-06-12 Fri.]
 ---
 - [2026-06-13 Sat.]
