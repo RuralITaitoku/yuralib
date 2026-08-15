@@ -28,14 +28,28 @@ Sub GenerateMermaidFlowchart()
     ' 1. 入力シートからMermaid構文の読み込みとノード/接続の抽出
     Dim rowIdx As Long
     Dim cellText As String
+    Dim cellType As String
+    Dim cellLabel As String
     Dim nodeConnections As Collection
-    Set nodeConnections = New Collection
-    MsgBox "終了", vbInformation
-    rowIdx = 1
-    Do
-        cellText = Trim(wsInput.Cells(rowIdx, 1).Value)
+    Dim shapeType As MsoAutoShapeType
 
-        If cellText = "" Then Exit Do
+
+
+    Set nodeConnections = New Collection
+    rowIdx = 2
+    Do
+        cellLabel =  Trim(wsInput.Cells(rowIdx, 1).Value)
+        cellType = Trim(wsInput.Cells(rowIdx, 2).Value)
+        cellText = Trim(wsInput.Cells(rowIdx, 3).Value)
+
+        If cellLabel = "" And cellType = "" And cellText = "" Then Exit Do
+        If cellLabel = "" Then cellLabel = rowIdx.toString()
+
+        ' 図形作成
+
+
+
+        ' ----
         rowIdx = rowIdx + 1
     Loop
 

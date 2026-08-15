@@ -1,6 +1,7 @@
 bin
 .DS_Store
 *.o
+*.swp
 *.aac
 *.gcda
 *.gcno
