@@ -74,10 +74,10 @@ prj/yura54/md/2026_Plan_vs_Actual.md:621
 prj/yura54/
 ```
 
-## 2026-08-23 Sun.
+## 2026-08-30 Sun.
 ```
 prj/yura54/md/2026_Cash_Flow.md:41
-prj/yura54/md/2026_Plan_vs_Actual.md:640
+prj/yura54/md/2026_Plan_vs_Actual.md:650
 prj/yura54/
 ```
 
