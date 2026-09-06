@@ -4,19 +4,10 @@
 #include <sys/select.h>
 
 // ターミナルの設定を変更（1文字単位で即時入力できるようにする）
-void set_raw_mode(struct termios *orig_termios) {
-    struct termios raw;
-    tcgetattr(STDIN_FILENO, orig_termios);
-    raw = *orig_termios;
-    // カノニカルモード(ICANON)とエコー(ECHO)をオフにする
-    raw.c_lflag &= ~(ICANON | ECHO);
-    tcsetattr(STDIN_FILENO, TCSANOW, &raw);
-}
+void set_raw_mode(struct termios *orig_termios);
 
 // ターミナルの設定を元に戻す
-void restore_mode(struct termios *orig_termios) {
-    tcsetattr(STDIN_FILENO, TCSANOW, orig_termios);
-}
+void restore_mode(struct termios *orig_termios);
 
 // タイムアウト付き1文字入力（タイムアウト時は -1 を返す）
 int getchar_timeout(int seconds) {
