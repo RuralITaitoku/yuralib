@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>日付リスト生成ツール (コピー機能付)</title>
+    <style>
+        body { font-family: sans-serif; max-width: 600px; margin: 20px auto; padding: 20px; line-height: 1.6; background-color: #f9f9f9; }
+        .container { background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h2 { margin-top: 0; color: #333; font-size: 1.25rem; }
+        .input-group { margin-bottom: 15px; }
+        label { display: inline-block; width: 70px; font-weight: bold; }
+        input { padding: 8px; border: 1px solid #ccc; border-radius: 4px; width: 160px; }
+        .button-area { margin-top: 20px; display: flex; gap: 10px; }
+        button { padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; transition: 0.2s; }
+        .btn-gen { background-color: #007bff; color: white; flex: 1; }
+        .btn-gen:hover { background-color: #0056b3; }
+        .btn-copy { background-color: #28a745; color: white; display: none; } /* 初期は非表示 */
+        .btn-copy:hover { background-color: #218838; }
+        textarea { width: 100%; height: 250px; margin-top: 20px; padding: 10px; font-family: monospace; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; resize: vertical; }
+        .status-msg { color: #28a745; font-size: 0.9rem; margin-top: 5px; height: 1.2em; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>📅 日付リスト生成</h2>
+    
+    <div class="input-group">
+        <label for="startDate">開始日:</label>
+        <input type="date" id="startDate">
+    </div>
+    <div class="input-group">
+        <label for="endDate">終了日:</label>
+        <input type="date" id="endDate">
+    </div>
+    
+    <div class="button-area">
+        <button class="btn-gen" onclick="generateDates()">リストを生成</button>
+        <button id="copyBtn" class="btn-copy" onclick="copyToClipboard()">コピーする</button>
+    </div>
+
+    <div id="statusMsg" class="status-msg"></div>
+    <textarea id="result" readonly placeholder="ここに結果が出力されます"></textarea>
+</div>
+
+<script>
+    // 初期値として今日の日付をセット
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('startDate').value = today;
+    document.getElementById('endDate').value = today;
+
+    function generateDates() {
+        const startInput = document.getElementById('startDate').value;
+        const endInput = document.getElementById('endDate').value;
+        const resultArea = document.getElementById('result');
+        const copyBtn = document.getElementById('copyBtn');
+        const statusMsg = document.getElementById('statusMsg');
+
+        if (!startInput || !endInput) {
+            alert("日付を入力してください。");
+            return;
+        }
+
+        let current = new Date(startInput);
+        const end = new Date(endInput);
+        const dayNames = ["日", "月", "火", "水", "木", "金", "土"];
+        let result = "";
+
+        if (current > end) {
+            alert("終了日は開始日より後の日付にしてください。");
+            return;
+        }
+
+        while (current <= end) {
+            const y = current.getFullYear();
+            const m = current.getMonth() + 1;
+            const d = current.getDate();
+            const w = dayNames[current.getDay()];
+            result += `- [${y}年${m}月${d}日(${w})]\n`;
+            current.setDate(current.getDate() + 1);
+        }
+
+        resultArea.value = result;
+        statusMsg.innerText = "";
+        copyBtn.style.display = "inline-block"; // 生成されたらコピーボタンを表示
+    }
+
+    async function copyToClipboard() {
+        const resultArea = document.getElementById('result');
+        const statusMsg = document.getElementById('statusMsg');
+
+        try {
+            await navigator.clipboard.writeText(resultArea.value);
+            statusMsg.innerText = "✅ クリップボードにコピーしました！";
+            setTimeout(() => { statusMsg.innerText = ""; }, 3000);
+        } catch (err) {
+            // ブラウザのセキュリティ設定等で失敗した場合の予備
+            resultArea.select();
+            document.execCommand('copy');
+            statusMsg.innerText = "✅ コピーしました";
+        }
+    }
+</script>
+
+</body>
+</html>
