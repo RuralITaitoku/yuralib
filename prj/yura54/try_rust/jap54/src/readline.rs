@@ -1,11 +1,11 @@
 use crossterm::event::{self, Event, KeyCode};
 use std::time::Duration;
 
-fn readline() -> std::io::Result<()> {
+fn readline(timeout : i32) -> std::io::Result<()> {
     println!("3秒以内に何かキーを押してください...");
 
     // 1. タイムアウト時間を設定 (例: 3秒)
-    let timeout = Duration::from_secs(3);
+    // let timeout = Duration::from_secs(3);
 
     // 2. ターミナルを「生モード(Raw mode)」にする
     // これをしないと、エンターキーを押すまで入力がプログラムに渡りません
