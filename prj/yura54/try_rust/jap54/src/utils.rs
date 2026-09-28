@@ -1,7 +1,7 @@
 use crossterm::event::{self, Event, KeyCode};
 use std::time::Duration;
 
-fn readline(timeout : i32) -> std::io::Result<()> {
+pub fn readline(timeout : Duration) -> std::io::Result<char> {
     println!("3秒以内に何かキーを押してください...");
 
     // 1. タイムアウト時間を設定 (例: 3秒)
@@ -21,9 +21,15 @@ fn readline(timeout : i32) -> std::io::Result<()> {
                 crossterm::terminal::disable_raw_mode()?;
                 
                 match key_event.code {
-                    KeyCode::Char(c) => println!("\n入力された文字: {}", c),
-                    KeyCode::Esc => println!("\nEscキーが押されました"),
-                    _ => println!("\nその他のキーが押されました: {:?}", key_event.code),
+                    KeyCode::Char(c) => {
+                        println!("\n入力された文字: {}", c);
+                    },
+                    KeyCode::Esc => {
+                        println!("\nEscキーが押されました");
+                    },
+                    _ => {
+                        println!("\nその他のキーが押されました: {:?}", key_event.code);
+                    },
                 }
             } else {
                 // プレス以外のイベントだった場合は生モードを解除
@@ -36,5 +42,5 @@ fn readline(timeout : i32) -> std::io::Result<()> {
         println!("\nタイムアウトしました！何も入力されませんでした。");
     }
 
-    Ok(())
+    Ok('a')
 }

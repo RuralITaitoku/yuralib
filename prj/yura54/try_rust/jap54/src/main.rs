@@ -1,6 +1,8 @@
 use crossterm::event::{self, Event, KeyCode};
 use std::time::Duration;
 
+mod utils;
+
 fn main() -> std::io::Result<()> {
     println!("3秒以内に何かキーを押してください...");
 
@@ -35,6 +37,6 @@ fn main() -> std::io::Result<()> {
         crossterm::terminal::disable_raw_mode()?;
         println!("\nタイムアウトしました！何も入力されませんでした。");
     }
-
+    let _test_c = utils::readline(timeout);
     Ok(())
 }
