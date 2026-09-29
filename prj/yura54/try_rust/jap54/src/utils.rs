@@ -22,7 +22,7 @@ pub fn readline(timeout : Duration) -> std::io::Result<char> {
                 
                 match key_event.code {
                     KeyCode::Char(c) => {
-                        println!("\n入力された文字: {}", c);
+                        return Ok(c);
                     },
                     KeyCode::Esc => {
                         println!("\nEscキーが押されました");
