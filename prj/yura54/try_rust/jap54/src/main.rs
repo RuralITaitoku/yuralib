@@ -102,6 +102,7 @@ fn main() -> std::io::Result<()> {
                     },
                 }
                 if c == 'q' {
+                    println!("quit");
                     break Ok(());
                 }
             },
