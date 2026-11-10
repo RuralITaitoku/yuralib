@@ -16,5 +16,6 @@ elif [ "$1" = "start" ]; then
 elif [ "$1" = "stop" ]; then
     docker stop yura54_https 
 elif [ "$1" = "login" ]; then
+    docker start yura54_https 
     docker exec -it yura54_https bash
 fi
