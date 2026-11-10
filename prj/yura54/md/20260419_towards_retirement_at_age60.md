@@ -27,5 +27,5 @@
     - [マゼックス](https://mazex.jp/)
     - [ドローキング佐賀](https://www.droneking.jp/base/p360/)]
 ## 3Dプリンタ副業
-    1. [ ] Hellow World!3Dプリンタ購入
+    1. [ ] 3Dプリンタ購入
 
