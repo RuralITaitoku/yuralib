@@ -7,6 +7,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 # NginxとOpenSSLのインストール
 RUN apt-get update && \
     apt-get install -y nginx openssl && \
+    apt-get install -y git vim && \
     apt-get install -y curl build-essential && \
     rm -rf /var/lib/apt/lists/*
 
@@ -15,8 +16,6 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 ENV PATH="/root/.cargo/bin:${PATH}"
 # GOのインストール
 
-RUN apt install git
-RUN apt install vim
 # 証明書を格納するディレクトリを作成
 RUN mkdir -p /etc/nginx/ssl
 
