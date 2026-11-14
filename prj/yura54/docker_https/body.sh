@@ -16,5 +16,11 @@ elif [ "$1" = "start" ]; then
 elif [ "$1" = "stop" ]; then
     docker stop yura54_https 
 elif [ "$1" = "login" ]; then
+    docker start yura54_https 
     docker exec -it yura54_https bash
-fi
+elif [ "$1" = "key" ]; then
+    #  秘密鍵（server.key）の生成
+    openssl genrsa -out server.key 2048
+    # 証明書署名要求（CSR: server.csr）の作成
+    openssl req -new -key server.key -out server.csr -subj "/CN=localhost"
+ fi
