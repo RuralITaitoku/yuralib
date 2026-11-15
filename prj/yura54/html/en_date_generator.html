@@ -23,24 +23,24 @@
 <body>
 
 <div class="container">
-    <h2>📅 日付リスト生成</h2>
+    <h2>Date list generator</h2>
     
     <div class="input-group">
-        <label for="startDate">開始日:</label>
+        <label for="startDate">Start date:</label>
         <input type="date" id="startDate">
     </div>
     <div class="input-group">
-        <label for="endDate">終了日:</label>
+        <label for="endDate">End date:</label>
         <input type="date" id="endDate">
     </div>
     
     <div class="button-area">
-        <button class="btn-gen" onclick="generateDates()">リストを生成</button>
-        <button id="copyBtn" class="btn-copy" onclick="copyToClipboard()">コピーする</button>
+        <button class="btn-gen" onclick="generateDates()">Generate list</button>
+        <button id="copyBtn" class="btn-copy" onclick="copyToClipboard()">Copy</button>
     </div>
 
     <div id="statusMsg" class="status-msg"></div>
-    <textarea id="result" readonly placeholder="ここに結果が出力されます"></textarea>
+    <textarea id="result" readonly placeholder="Result appear here"></textarea>
 </div>
 
 <script>
