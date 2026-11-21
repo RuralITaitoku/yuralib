@@ -18,8 +18,13 @@ var (
     targetX = 0
     targetY = 0
 )
-
-// メインディスプレイ（座標 (0,0) を含む画面）の領域を取得する関数
+/**
+ * @brief メインディスプレイの領域を取得する
+ * @details 座標 (0,0) を含む画面をメインディスプレイとして判定し、
+ *          その表示領域を表す image.Rectangle を返します。
+ * 
+ * @return image.Rectangle メインディスプレイの領域（Rectangle）
+ */
 func getMainDisplayBounds() image.Rectangle {
 	n := screenshot.NumActiveDisplays()
 	for i := 0; i < n; i++ {
