@@ -7,8 +7,9 @@ package main
 */
 import "C"
 
-func getch_with_timeout() {
+func getch_with_timeout(timeout int) int {
 
-    C.getch_with_timeout(C.int(10))
+    ch := C.getch_with_timeout(C.int(timeout))
+    return int(ch);
 }
 
