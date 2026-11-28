@@ -9,6 +9,17 @@ import (
 	"github.com/kbinani/screenshot"
 )
 
+
+
+// go言語で次のコマンドを作って
+// find-img [-d display number] target_image_path
+// 引数のイメージ画像を指定されたディスプレイ番号のスクリーンショットからさがして、見つかればメッセージを出す。 
+
+
+
+
+
+
 // go言語のlog パッケージでログファイルと標準出力にログを出すには
 func main() {
     log.Println("test")
